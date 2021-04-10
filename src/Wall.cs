@@ -30,6 +30,7 @@ namespace gLTech2
             result->geom_start = start;
             return result;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static Wall_* Alloc(Vector start, float angle, float length, Material material)
         {
             Wall_* result = (Wall_*)Marshal.AllocHGlobal(sizeof(Wall_));
