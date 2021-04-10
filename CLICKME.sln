@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL Tech 2 Example", "test\GL Tech 2 Example\GL Tech 2 Example.csproj", "{60D58444-F495-4EFC-86B7-AE37EDD43D4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,18 @@ Global
 		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|x64.ActiveCfg = Release|x64
 		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|x64.Build.0 = Release|x64
 		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|x86.ActiveCfg = Release|Win32
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Debug|x64.Build.0 = Debug|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Debug|x86.Build.0 = Debug|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Release|x64.ActiveCfg = Release|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Release|x64.Build.0 = Release|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{60D58444-F495-4EFC-86B7-AE37EDD43D4F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

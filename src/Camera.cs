@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
 #define CPP
-#undef PARALLEL
+#define PARALLEL
 
 using System;
 using System.Diagnostics;
@@ -175,7 +175,7 @@ namespace gLTech2
                 {
                     timer.Restart();
                     Render();
-                    while (timer.ElapsedMilliseconds < 7)
+                    while (timer.ElapsedMilliseconds < 7) //Don't let the framerate go higher than 143 fps.
                         Thread.Yield();
 
                     OnRender?.Invoke(this, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
@@ -225,7 +225,9 @@ namespace gLTech2
 
         public void Turn(float amount) => unmanaged->camera_angle += amount;
 
-        [DllImport(@"glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
+        //Don't know how to pinvoke fromm current directory =/
+        [Obsolete("Don't change the directory of the files yet!")]
+        [DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeRender(Camera_* camera);
 
         private unsafe void Render()
@@ -236,9 +238,10 @@ namespace gLTech2
 #endif
             lock (locker)
             {
-                rendering = true;
+
+            rendering = true;
 #if PARALLEL
-                Parallel.For(0, data->bitmap_width, (ray_id) =>
+                Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {
 #else
                 for (int ray_id = 0; ray_id < unmanaged->bitmap_width; ray_id++)
