@@ -5,7 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace gLTech2
+namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)] 
     internal unsafe struct Sprite_

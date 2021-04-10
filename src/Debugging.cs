@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace gLTech2
+namespace GLTech2
 {
     internal static class Debugging
     {

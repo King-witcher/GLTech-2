@@ -8,7 +8,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace gLTech2
+namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Ray

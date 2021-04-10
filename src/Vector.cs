@@ -6,7 +6,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace gLTech2
+namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe readonly struct Vector

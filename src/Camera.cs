@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
-using static gLTech2.Debugging;
+using static GLTech2.Debugging;
 
-namespace gLTech2
+namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct Camera_ : IDisposable

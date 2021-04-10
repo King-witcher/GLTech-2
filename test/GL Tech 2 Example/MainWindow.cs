@@ -1,7 +1,7 @@
 ﻿using Game.Properties;
 using System;
 using System.Windows.Forms;
-using gLTech2;
+using GLTech2;
 
 namespace Game
 {

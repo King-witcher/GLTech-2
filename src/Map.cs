@@ -8,7 +8,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace gLTech2
+namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct Map_ : IDisposable
@@ -61,7 +61,12 @@ namespace gLTech2
         internal void AddSprite(Sprite s) => throw new NotImplementedException();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddWall(Wall w) => unmanaged->Add(w.unmanaged);
+        public void AddWall(Wall w)
+        {
+            if (unmanaged->wall_count >= unmanaged->wall_max)
+                throw new IndexOutOfRangeException("Wall limit reached.");
+            unmanaged->Add(w.unmanaged);
+        }
 
         public void AddWalls(params Wall[] walls)
         {
