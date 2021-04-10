@@ -89,7 +89,7 @@ namespace gLTech2
     {
         #region Fields
         [SecurityCritical]
-        internal Camera_* data;
+        internal Camera_* unmanaged;
         private Map refMap;
         private Bitmap bitmap_acessor;
         private bool beginRendering = false;
@@ -104,11 +104,11 @@ namespace gLTech2
         {
             const int pixelsize = 4;
 
-            data = Camera_.Alloc(width, height, map.data);
-            data->ReloadCaches();
-            bitmap_acessor = new Bitmap(width, height, width * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)data->bitmap_buffer);
+            unmanaged = Camera_.Alloc(width, height, map.unmanaged);
+            unmanaged->ReloadCaches();
+            bitmap_acessor = new Bitmap(width, height, width * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)unmanaged->bitmap_buffer);
             var temp = bitmap_acessor.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-            temp.Scan0 = (IntPtr)data->bitmap_buffer;
+            temp.Scan0 = (IntPtr)unmanaged->bitmap_buffer;
             bitmap_acessor.UnlockBits(temp);
             this.refMap = map;
         }
@@ -124,20 +124,20 @@ namespace gLTech2
                 lock (locker)
                 {
                     return new Bitmap(
-                        data->bitmap_width,
-                        data->bitmap_height,
-                        data->bitmap_width * 4,
+                        unmanaged->bitmap_width,
+                        unmanaged->bitmap_height,
+                        unmanaged->bitmap_width * 4,
                         PixelFormat.Format32bppArgb,
-                        (IntPtr)data->bitmap_buffer);
+                        (IntPtr)unmanaged->bitmap_buffer);
                 }
             }
         }
-        public float CameraAngle { get => data->camera_angle; set => data->camera_angle = value; }
+        public float CameraAngle { get => unmanaged->camera_angle; set => unmanaged->camera_angle = value; }
         public float FOV
         {
             get
             {
-                return data->camera_HFOV;
+                return unmanaged->camera_HFOV;
             }
             set
             {
@@ -145,17 +145,17 @@ namespace gLTech2
                     value = 179;
                 else if (value <= 0)
                     return;
-                data->camera_HFOV = value;
-                data->ReloadCaches();
+                unmanaged->camera_HFOV = value;
+                unmanaged->ReloadCaches();
             }
         }
-        public double AverateFrameTime => data->averageFrametime;
-        public int DisplayWidth { get => data->bitmap_width; private set => data->bitmap_width = value; }
-        public int DisplayHeight { get => data->bitmap_height; private set => data->bitmap_height = value; }
+        public double AverateFrameTime => unmanaged->averageFrametime;
+        public int DisplayWidth { get => unmanaged->bitmap_width; private set => unmanaged->bitmap_width = value; }
+        public int DisplayHeight { get => unmanaged->bitmap_height; private set => unmanaged->bitmap_height = value; }
         public int FrameCount { get => frame_count; private set => frame_count = value; }
         public object Locker { get => locker; }
         public Map Map => refMap;
-        public Vector Camera_Position { get => data->camera_position; set => data->camera_position = value; }
+        public Vector Camera_Position { get => unmanaged->camera_position; set => unmanaged->camera_position = value; }
         #endregion
 
         #region Events
@@ -185,8 +185,8 @@ namespace gLTech2
 
         public void Dispose()
         {
-            data->Dispose();
-            Marshal.FreeHGlobal((IntPtr)data);
+            unmanaged->Dispose();
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
         }
 
         public void Shoot()
@@ -198,8 +198,8 @@ namespace gLTech2
                 Stopwatch timer = Stopwatch.StartNew();
                 Render();
                 double currentframetime = timer.Elapsed.Ticks / (double) Stopwatch.Frequency;
-                double averageframetime = data->averageFrametime;
-                data->averageFrametime = 0.9 * averageframetime + 0.1 * currentframetime;
+                double averageframetime = unmanaged->averageFrametime;
+                unmanaged->averageFrametime = 0.9 * averageframetime + 0.1 * currentframetime;
                 OnRender?.Invoke(this, currentframetime);
             });
         }
@@ -208,22 +208,22 @@ namespace gLTech2
         {
             lock (locker)
             {
-                Marshal.ReAllocHGlobal((IntPtr)data->bitmap_buffer, (IntPtr) (4 * width * height));
-                data->bitmap_height = height;
-                data->bitmap_width = width;
-                data->ReloadCaches();
+                Marshal.ReAllocHGlobal((IntPtr)unmanaged->bitmap_buffer, (IntPtr) (4 * width * height));
+                unmanaged->bitmap_height = height;
+                unmanaged->bitmap_width = width;
+                unmanaged->ReloadCaches();
             }
         }
 
-        public void Step(float amount) => data->camera_position += new Vector(data->camera_angle) * amount;
+        public void Step(float amount) => unmanaged->camera_position += new Vector(unmanaged->camera_angle) * amount;
 
-        public void Step(float amount, float angle) => data->camera_position += new Vector(data->camera_angle + angle) * amount;
+        public void Step(float amount, float angle) => unmanaged->camera_position += new Vector(unmanaged->camera_angle + angle) * amount;
 
         public void StopShooting() => beginRendering = false;
 
         //private void TryStep(float amount) { }
 
-        public void Turn(float amount) => data->camera_angle += amount;
+        public void Turn(float amount) => unmanaged->camera_angle += amount;
 
         [DllImport(@"glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeRender(Camera_* camera);
@@ -231,7 +231,7 @@ namespace gLTech2
         private unsafe void Render()
         {
 #if CPP
-            NativeRender(data);
+            NativeRender(unmanaged);
             return;
 #endif
             lock (locker)
@@ -241,37 +241,37 @@ namespace gLTech2
                 Parallel.For(0, data->bitmap_width, (ray_id) =>
                 {
 #else
-                for (int ray_id = 0; ray_id < data->bitmap_width; ray_id++)
+                for (int ray_id = 0; ray_id < unmanaged->bitmap_width; ray_id++)
                 {
 #endif
                     //Debug("Ray id: " + ray_id);
-                    Ray ray = new Ray(data->camera_position, data->camera_angle + data->cache_angles[ray_id]);
+                    Ray ray = new Ray(unmanaged->camera_position, unmanaged->camera_angle + unmanaged->cache_angles[ray_id]);
 
                     //Cast the ray towards every wall.
-                    Wall_* nearest = ray.NearestWall(data->map, out float nearest_dist, out float nearest_ratio);
+                    Wall_* nearest = ray.NearestWall(unmanaged->map, out float nearest_dist, out float nearest_ratio);
                     if (nearest_dist != float.PositiveInfinity)
                     {
-                        float columnHeight = (data->cache_colHeight1 / (data->cache_cosines[ray_id] * nearest_dist));
-                        float fullColumnRatio = data->bitmap_height / columnHeight;
+                        float columnHeight = (unmanaged->cache_colHeight1 / (unmanaged->cache_cosines[ray_id] * nearest_dist));
+                        float fullColumnRatio = unmanaged->bitmap_height / columnHeight;
                         float topIndex = -(fullColumnRatio - 1f) / 2f;
-                        for (int line = 0; line < data->bitmap_height; line++)
+                        for (int line = 0; line < unmanaged->bitmap_height; line++)
                         {
-                            float vratio = topIndex + fullColumnRatio * line / data->bitmap_height;
+                            float vratio = topIndex + fullColumnRatio * line / unmanaged->bitmap_height;
                             if (vratio < 0f || vratio >= 1f)
                             {
-                                data->bitmap_buffer[data->bitmap_width * line + ray_id] = Background(line);
+                                unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = Background(line);
                             }
                             else
                             {
                                 int pixel = nearest->material.MapPixel(nearest_ratio, vratio);
-                                data->bitmap_buffer[data->bitmap_width * line + ray_id] = pixel;
+                                unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = pixel;
                             }
                         }
                     }
                     else
                     {
-                        for (int line = 0; line < data->bitmap_height; line++)
-                            data->bitmap_buffer[data->bitmap_width * line + ray_id] = Background(line);
+                        for (int line = 0; line < unmanaged->bitmap_height; line++)
+                            unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = Background(line);
                     }
 #if PARALLEL
                 });
@@ -283,7 +283,7 @@ namespace gLTech2
 
             int Background(int line)
             {
-                if (line < data->bitmap_height >> 1)
+                if (line < unmanaged->bitmap_height >> 1)
                     return -14_803_426;
                 else
                     return -12_171_706;

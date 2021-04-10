@@ -25,7 +25,7 @@ namespace gLTech2
         internal static Wall_* Alloc(Vector start, Vector end, Material material)
         {
             Wall_* result = (Wall_*)Marshal.AllocHGlobal(sizeof(Wall_));
-            result->material = *material.data;
+            result->material = *material.unmanaged;
             result->geom_direction = end - start;
             result->geom_start = start;
             return result;
@@ -34,7 +34,7 @@ namespace gLTech2
         {
             Wall_* result = (Wall_*)Marshal.AllocHGlobal(sizeof(Wall_));
             Vector dir = new Vector(angle) * length;
-            result->material = *material.data;
+            result->material = *material.unmanaged;
             result->geom_direction = dir;
             result->geom_start = start;
             return result;
@@ -44,25 +44,25 @@ namespace gLTech2
     public unsafe class Wall : IDisposable
     {
         [SecurityCritical]
-        internal Wall_* data;
+        internal Wall_* unmanaged;
         internal Material refMaterial;
 
         #region Constructors
         public Wall(Vector start, Vector end, Material material)
         {
-            data = Wall_.Alloc(start, end, material);
+            unmanaged = Wall_.Alloc(start, end, material);
             refMaterial = material;
         }
 
         public Wall(Vector start, float angle_deg, Material material)
         {
-            data = Wall_.Alloc(start, angle_deg, 1f, material);
+            unmanaged = Wall_.Alloc(start, angle_deg, 1f, material);
             refMaterial = material;
         }
         
         public Wall(Vector start, float angle_deg, float length, Material material)
         {
-            data = Wall_.Alloc(start, angle_deg, length, material);
+            unmanaged = Wall_.Alloc(start, angle_deg, length, material);
             refMaterial = material;
         }
         #endregion
@@ -70,17 +70,17 @@ namespace gLTech2
         #region Properties
         public float Angle
         {
-            get => data->geom_direction.Angle;
+            get => unmanaged->geom_direction.Angle;
             set
             {
-                data->geom_direction = data->geom_direction.Module * new Vector(value);
+                unmanaged->geom_direction = unmanaged->geom_direction.Module * new Vector(value);
             }
         }
 
         public float Length
         {
-            get => data->geom_direction.Module;
-            set => data->geom_direction *= value / data->geom_direction.Module;
+            get => unmanaged->geom_direction.Module;
+            set => unmanaged->geom_direction *= value / unmanaged->geom_direction.Module;
         }
 
         public Material Material
@@ -89,26 +89,26 @@ namespace gLTech2
             set
             {
                 refMaterial = value;
-                data->material = value;
+                unmanaged->material = value;
             }
         }
 
         public Vector Start
         {
-            get => data->geom_start;
-            set => data->geom_start = value;
+            get => unmanaged->geom_start;
+            set => unmanaged->geom_start = value;
         }
 
         public Vector Direction
         {
-            get => data->geom_direction;
-            set => data->geom_direction = value;
+            get => unmanaged->geom_direction;
+            set => unmanaged->geom_direction = value;
         }
 
         public Vector End
         {
-            get => data->geom_start + data->geom_direction;
-            set => data->geom_direction = value - data->geom_start;
+            get => unmanaged->geom_start + unmanaged->geom_direction;
+            set => unmanaged->geom_direction = value - unmanaged->geom_start;
         }
         #endregion
 
@@ -209,13 +209,13 @@ namespace gLTech2
             if (stretch)
             {
                 result[0] = new Wall(verts[0], verts[1], texture);
-                result[0].data->material.hrepeat = 1f / verts.Length;
-                result[0].data->material.hoffset = 0f;
+                result[0].unmanaged->material.hrepeat = 1f / verts.Length;
+                result[0].unmanaged->material.hoffset = 0f;
                 for (int i = 1; i < result.Length; i++)
                 {
                     result[i] = new Wall(verts[i], verts[i + 1], texture);
-                    result[i].data->material.hrepeat = 1f / verts.Length;
-                    result[i].data->material.hoffset = (float)i / verts.Length;
+                    result[i].unmanaged->material.hrepeat = 1f / verts.Length;
+                    result[i].unmanaged->material.hoffset = (float)i / verts.Length;
                 }
                 return result;
             }
@@ -238,18 +238,18 @@ namespace gLTech2
             for (int i = 0; i < edges - 1; i++)
             {
                 walls[i] = new Wall(vectors[i], vectors[i + 1], texture);
-                walls[i].data->material.hrepeat = 1f / edges;
-                walls[i].data->material.hoffset = (float) i / edges;
+                walls[i].unmanaged->material.hrepeat = 1f / edges;
+                walls[i].unmanaged->material.hoffset = (float) i / edges;
             }
             walls[edges - 1] = new Wall(vectors[edges - 1], vectors[0], texture);
-            walls[edges - 1].data->material.hrepeat = 1f / edges;
-            walls[edges - 1].data->material.hoffset = (float)(edges - 1) / edges;
+            walls[edges - 1].unmanaged->material.hrepeat = 1f / edges;
+            walls[edges - 1].unmanaged->material.hoffset = (float)(edges - 1) / edges;
             return walls;
         }
 
         public void Dispose()
         {
-            Marshal.FreeHGlobal((IntPtr) data);
+            Marshal.FreeHGlobal((IntPtr) unmanaged);
         }
         #endregion
     }

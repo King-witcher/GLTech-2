@@ -38,7 +38,7 @@ namespace gLTech2
 
         public static implicit operator Material_ (Material mat)
         {
-            return *mat.data;
+            return *mat.unmanaged;
         }
 
         public static implicit operator Material_ (Texture32_ tex)
@@ -56,20 +56,20 @@ namespace gLTech2
     public unsafe class Material : IDisposable
     {
         [SecurityCritical]
-        internal Material_* data;
+        internal Material_* unmanaged;
         private Texture32 refTexture;
 
 
         public float HorizontalOffset
         {
-            get => data->hoffset;
-            set => data->hoffset = value;
+            get => unmanaged->hoffset;
+            set => unmanaged->hoffset = value;
         }
 
         public float HorizontalRepeat
         {
-            get => data->hrepeat;
-            set => data->hrepeat = value;
+            get => unmanaged->hrepeat;
+            set => unmanaged->hrepeat = value;
         }
         public Texture32 Texture
         {
@@ -77,23 +77,23 @@ namespace gLTech2
             set
             {
                 refTexture = value;
-                data->texture = *value.data;
+                unmanaged->texture = *value.unmanaged;
             }
         }
 
         public Material (Texture32 texture)
         {
-            data = Material_.Alloc(0f, 1f, 0f, 1f, texture.data);
+            unmanaged = Material_.Alloc(0f, 1f, 0f, 1f, texture.unmanaged);
         }
 
         public Material(Texture32 texture, float hoffset, float hrepeat)
         {
-            data = Material_.Alloc(hoffset, hrepeat, 0f, 1f, texture.data);
+            unmanaged = Material_.Alloc(hoffset, hrepeat, 0f, 1f, texture.unmanaged);
         }
 
         public void Dispose()
         {
-            Marshal.FreeHGlobal((IntPtr)data);
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
         }
 
         //Estou deixando isso para facilitar a utilização de uma determinada texture em vários materiais sem necessidade de criar

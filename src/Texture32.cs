@@ -40,36 +40,36 @@ namespace gLTech2
 
         public static implicit operator Texture32_ (Texture32 tex)
         {
-            return *tex.data;
+            return *tex.unmanaged;
         }
     }
 
     public unsafe class Texture32 : IDisposable
     {
-        internal Texture32_* data;
+        internal Texture32_* unmanaged;
 
-        public Texture32(Bitmap bitmap) => data = Texture32_.Alloc(bitmap);
+        public Texture32(Bitmap bitmap) => unmanaged = Texture32_.Alloc(bitmap);
 
         public int this[int x, int y]
         {
             get
             {
-                if (x < 0 || y < 0 || x > data->width || y > data->height)
+                if (x < 0 || y < 0 || x > unmanaged->width || y > unmanaged->height)
                     throw new IndexOutOfRangeException();
-                return data->buffer[data->width * y + x];
+                return unmanaged->buffer[unmanaged->width * y + x];
             }
             set
             {
-                if (x < 0 || y < 0 || x > data->width || y > data->height)
+                if (x < 0 || y < 0 || x > unmanaged->width || y > unmanaged->height)
                     throw new IndexOutOfRangeException();
-                data->buffer[data->width * y + x] = value;
+                unmanaged->buffer[unmanaged->width * y + x] = value;
             }
         }
 
         public void Dispose()
         {
-            data->Dispose();
-            Marshal.FreeHGlobal((IntPtr)data);
+            unmanaged->Dispose();
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
         }
     }
 }

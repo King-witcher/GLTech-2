@@ -49,19 +49,19 @@ namespace gLTech2
 
     public unsafe sealed class Map : IDisposable
     {
-        internal Map_* data;
+        internal Map_* unmanaged;
 
-        public Map(int maxWalls, int maxSprities) => data = Map_.Alloc(maxWalls, maxSprities);
+        public Map(int maxWalls, int maxSprities) => unmanaged = Map_.Alloc(maxWalls, maxSprities);
 
-        public int MaxWalls => data->wall_max;
-        public int WallCount => data->wall_count;
+        public int MaxWalls => unmanaged->wall_max;
+        public int WallCount => unmanaged->wall_count;
         public Vector StartingPoint => Vector.Origin; //Precisa ser removido
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void AddSprite(Sprite s) => throw new NotImplementedException();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddWall(Wall w) => data->Add(w.data);
+        public void AddWall(Wall w) => unmanaged->Add(w.unmanaged);
 
         public void AddWalls(params Wall[] walls)
         {
@@ -75,8 +75,8 @@ namespace gLTech2
 
         public void Dispose()
         {
-            data->Dispose();
-            Marshal.FreeHGlobal((IntPtr)data);
+            unmanaged->Dispose();
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
         }
     }
 }

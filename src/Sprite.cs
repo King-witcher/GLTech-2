@@ -23,23 +23,23 @@ namespace gLTech2
         }
 
         public static implicit operator Sprite_(Sprite sprite) =>
-            *sprite.UnmanagedData;
+            *sprite.unmanaged;
     }
 
     internal unsafe sealed class Sprite : IDisposable
     {
-        internal Sprite_* UnmanagedData;
+        internal Sprite_* unmanaged;
 
         public Vector Position
         {
-            get => UnmanagedData->position;
-            set => UnmanagedData->position = value;
+            get => unmanaged->position;
+            set => unmanaged->position = value;
         }
 
         public Sprite(Vector position, Material material = null) =>
-            UnmanagedData = Sprite_.Alloc(position, material.data);
+            unmanaged = Sprite_.Alloc(position, material.unmanaged);
 
         public void Dispose() =>
-            Marshal.FreeHGlobal((IntPtr)UnmanagedData);
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
     }
 }
