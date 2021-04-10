@@ -39,8 +39,8 @@ struct Wall_
 
 struct Sprite_
 {
-	Material_ material;
 	Vector position;
+	Material_ material;
 };
 
 struct Map_
