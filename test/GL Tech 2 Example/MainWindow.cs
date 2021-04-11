@@ -1,5 +1,6 @@
 ﻿using Game.Properties;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using GLTech2;
 
@@ -9,6 +10,7 @@ namespace Game
     {
         Camera myCamera;
         Map myMap;
+        
 
         public MainWindow() =>
             InitializeComponent();
@@ -37,16 +39,24 @@ namespace Game
 
             //Create your camera.
             myCamera = new Camera(map: myMap, width: 640, height: 360);
-            myCamera.Skybox = cosmosTexture;
+            myCamera.Skybox = new Material(
+                texture: cosmosTexture,
+                hoffset: 0f,
+                hrepeat: 3f);
 
             //Take a PictureBox and subscribe to it's Paint event a function that updates it's display once again.
-            display.Paint += (a, aa) => display.Image = myCamera.BitmapCopy;
+            display.Paint += RefreshPictureBox;
 
             //Subscribe to camera.OnRender event your custom Update method wich will be called whenever the camera renders a new frame.
             myCamera.OnRender += (a, aa) => Update(a, aa);
 
             //Start a continuous rendering process.
             myCamera.StartShoting();
+        }
+
+        private void RefreshPictureBox(object sender, PaintEventArgs e)
+        {
+            (sender as PictureBox).Image = myCamera.BitmapCopy;
         }
 
         //Do whatever you want each time the engine generates a new frame.
