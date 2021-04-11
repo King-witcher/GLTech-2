@@ -28,6 +28,19 @@ pixel Background(int line, int height)
         return -12171706;
 }
 
+pixel SkyboxBackground(Camera_& camera, int ray_id, int line)
+{
+    float angle_deg = camera.camera_angle + camera.cache_angles[ray_id];
+    angle_deg = fmod(angle_deg, 360);
+    float hratio = angle_deg / 360 + 1;
+
+    float screenVratio = line / (float)camera.bitmap_height;
+    float cos = camera.cache_cosines[ray_id];
+    float vratio = (1 - cos) / 2 + cos * screenVratio;
+
+    return camera.skybox->MapPixel(hratio, vratio);
+}
+
 void NativeRender(Camera_& camera)
 {
     for (int ray_id = 0; ray_id < camera.bitmap_width; ray_id++)
@@ -47,7 +60,7 @@ void NativeRender(Camera_& camera)
                 float vratio = topIndex + fullColumnRatio * line / camera.bitmap_height;
                 if (vratio < 0.0f || vratio >= 1.0f)
                 {
-                    camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = Background(line, camera.bitmap_height);
+                    camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
                 }
                 else
                 {
@@ -59,7 +72,7 @@ void NativeRender(Camera_& camera)
         else
         {
             for (int line = 0; line < camera.bitmap_height; line++)
-                camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = Background(line, camera.bitmap_height);
+                camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
         }
 }
 }

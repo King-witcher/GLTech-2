@@ -1,7 +1,7 @@
 ﻿
 namespace Game
 {
-    partial class MainWindow
+    partial class mainWindow
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -28,6 +28,7 @@ namespace Game
             // 
             // display
             // 
+            this.display.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.display.Dock = System.Windows.Forms.DockStyle.Fill;
             this.display.Location = new System.Drawing.Point(0, 0);
             this.display.Name = "display";
@@ -35,16 +36,18 @@ namespace Game
             this.display.TabIndex = 0;
             this.display.TabStop = false;
             // 
-            // MainWindow
+            // mainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 360);
             this.Controls.Add(this.display);
+            this.Cursor = System.Windows.Forms.Cursors.No;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MainWindow";
+            this.Name = "mainWindow";
+            this.RightToLeftLayout = true;
             this.Text = "Main Window";
             this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.display)).EndInit();

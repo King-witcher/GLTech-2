@@ -1,8 +1,9 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#undef CPP
+#define CPP
 #define PARALLEL
 
+using GLTech2.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -88,10 +89,11 @@ namespace GLTech2
     public sealed unsafe class Camera : IDisposable
     {
         #region Fields
+        private Bitmap bitmap_acessor;
         [SecurityCritical]
         internal Camera_* unmanaged;
         private Map refMap;
-        private Bitmap bitmap_acessor;
+        private Material refSkybox;
         private bool keepRendering = false;
         private bool rendering = false;
         private int frame_count = 0;
@@ -110,12 +112,15 @@ namespace GLTech2
             var temp = bitmap_acessor.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             temp.Scan0 = (IntPtr)unmanaged->bitmap_buffer;
             bitmap_acessor.UnlockBits(temp);
+
+            Material skybox = new Texture32(Resources.Black); //Temporario
+            Skybox = skybox;
+
             this.refMap = map;
         }
         #endregion
 
         #region Properties
-        //private Bitmap Skybox { get => data->skybox; set => data->skybox = value; }
         [Obsolete]
         public Bitmap Frame => bitmap_acessor;
         public Bitmap BitmapCopy
@@ -156,6 +161,18 @@ namespace GLTech2
         public int FrameCount { get => frame_count; private set => frame_count = value; }
         public object Locker { get => locker; }
         public Map Map => refMap;
+        public Material Skybox //Testing
+        {
+            get
+            {
+                return refSkybox;
+            }
+            set
+            {
+                refSkybox = value ?? throw new ArgumentNullException();
+                unmanaged->skybox = value.unmanaged;
+            }
+        }
         public Vector Camera_Position { get => unmanaged->camera_position; set => unmanaged->camera_position = value; }
         #endregion
 
@@ -263,7 +280,7 @@ namespace GLTech2
                             float vratio = topIndex + fullColumnRatio * line / unmanaged->bitmap_height;
                             if (vratio < 0f || vratio >= 1f)
                             {
-                                unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = Background(line);
+                                unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = SkyboxBackground(ray_id, line);
                             }
                             else
                             {
@@ -275,7 +292,7 @@ namespace GLTech2
                     else
                     {
                         for (int line = 0; line < unmanaged->bitmap_height; line++)
-                            unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = Background(line);
+                            unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = SkyboxBackground(ray_id, line);
                     }
 #if PARALLEL
                 });
@@ -291,6 +308,19 @@ namespace GLTech2
                     return -14_803_426;
                 else
                     return -12_171_706;
+            }
+
+            //Not fully optimized
+            int SkyboxBackground(int ray_id, int line)
+            {
+                float angle = CameraAngle + unmanaged->cache_angles[ray_id] % 360 + 360;
+                float hratio = angle / 360 + 1;
+
+                float screenVratio = line / (float)unmanaged->bitmap_height;
+                float cos = unmanaged->cache_cosines[ray_id];
+                float vratio = (1 - cos)/2 + cos * screenVratio;
+
+                return unmanaged->skybox->MapPixel(hratio, vratio);
             }
         }
         #endregion
