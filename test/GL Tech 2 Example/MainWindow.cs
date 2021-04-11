@@ -17,7 +17,7 @@ namespace Game
         public void OnLoad(object sender, EventArgs e)
         {
             //Allocate space in memory to the map and create a camera.
-            myMap = new Map(500, 500);
+            myMap = new Map(maxWalls: 512, maxSprities: 512);
 
             //Texture32 is only alocated once for every object that refers to it.
             Texture32 myTexture = new Texture32(Resources.Universe);
@@ -35,7 +35,7 @@ namespace Game
             myMap.AddWalls(myWalls);
 
             //Create your camera.
-            myCamera = new Camera(myMap, 640, 360);
+            myCamera = new Camera(map: myMap, width: 640, height: 360);
 
             //Take a PictureBox and subscribe to it's Paint event a function that updates it's display once again.
             display.Paint += (a, aa) => display.Image = myCamera.BitmapCopy;
