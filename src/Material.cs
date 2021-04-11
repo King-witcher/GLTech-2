@@ -59,7 +59,6 @@ namespace GLTech2
         internal Material_* unmanaged;
         private Texture32 refTexture;
 
-
         public float HorizontalOffset
         {
             get => unmanaged->hoffset;
@@ -81,29 +80,19 @@ namespace GLTech2
             }
         }
 
-        public Material (Texture32 texture)
-        {
-            unmanaged = Material_.Alloc(0f, 1f, 0f, 1f, texture.unmanaged);
-        }
-
-        public Material(Texture32 texture, float hoffset, float hrepeat)
-        {
+        public Material(Texture32 texture, float hoffset = 0f, float hrepeat = 1f) =>
             unmanaged = Material_.Alloc(hoffset, hrepeat, 0f, 1f, texture.unmanaged);
-        }
 
-        public void Dispose()
-        {
+        public void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)unmanaged);
-        }
 
         //Estou deixando isso para facilitar a utilização de uma determinada texture em vários materiais sem necessidade de criar
         //inúmeros overloads para métodos. Dessa forma, é possível utilizar um Texture32 em qualquer lugar que se possa utilizar um
         //Material. Note que o mesmo não é válido para Texture32 com Bitmap, para evitar más práticas de gerenciamento de memória
         //e replicações desnecessárias, pois Texture32 possui recursos não gerenciados e o usuário precisará de sua referência para
         //liberá-los.
-        public static implicit operator Material(Texture32 texture)
-        {
-            return new Material(texture);
-        }
+
+        public static implicit operator Material(Texture32 texture) =>
+            new Material(texture);
     }
 }

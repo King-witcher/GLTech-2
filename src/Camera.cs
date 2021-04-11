@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#define CPP
+#undef CPP
 #define PARALLEL
 
 using System;
@@ -48,7 +48,7 @@ namespace GLTech2
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.
 
-            result->ReloadCaches();
+            result->RefreshCaches();
             return result;
         }
 
@@ -59,7 +59,7 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void ReloadCaches()
+        internal void RefreshCaches()
         {
             const double TORAD = Math.PI / 180.0f;
             double tan = Math.Tan(TORAD * camera_HFOV / 2);
@@ -92,7 +92,7 @@ namespace GLTech2
         internal Camera_* unmanaged;
         private Map refMap;
         private Bitmap bitmap_acessor;
-        private bool beginRendering = false;
+        private bool keepRendering = false;
         private bool rendering = false;
         private int frame_count = 0;
         private readonly object locker = new object();
@@ -100,12 +100,12 @@ namespace GLTech2
         #endregion
 
         #region Constructors
-        public Camera(Map map, int width, int height)
+        public Camera(Map map, int width = 640, int height = 360)
         {
             const int pixelsize = 4;
 
             unmanaged = Camera_.Alloc(width, height, map.unmanaged);
-            unmanaged->ReloadCaches();
+            unmanaged->RefreshCaches();
             bitmap_acessor = new Bitmap(width, height, width * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)unmanaged->bitmap_buffer);
             var temp = bitmap_acessor.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             temp.Scan0 = (IntPtr)unmanaged->bitmap_buffer;
@@ -116,6 +116,7 @@ namespace GLTech2
 
         #region Properties
         //private Bitmap Skybox { get => data->skybox; set => data->skybox = value; }
+        [Obsolete]
         public Bitmap Frame => bitmap_acessor;
         public Bitmap BitmapCopy
         {
@@ -146,7 +147,7 @@ namespace GLTech2
                 else if (value <= 0)
                     return;
                 unmanaged->camera_HFOV = value;
-                unmanaged->ReloadCaches();
+                unmanaged->RefreshCaches();
             }
         }
         public double AverateFrameTime => unmanaged->averageFrametime;
@@ -163,15 +164,15 @@ namespace GLTech2
         #endregion
 
         #region Methods
-        public void BeginShooting()
+        public void StartShoting()
         {
-            if (beginRendering == true)
+            if (keepRendering == true)
                 return;
-            beginRendering = true;
+            keepRendering = true;
             Task.Run(() =>
             {
                 Stopwatch timer = new Stopwatch();
-                while (beginRendering)
+                while (keepRendering)
                 {
                     timer.Restart();
                     Render();
@@ -189,7 +190,7 @@ namespace GLTech2
             Marshal.FreeHGlobal((IntPtr)unmanaged);
         }
 
-        public void Shoot()
+        public void Shot()
         {
             while (rendering)
                 Thread.Yield();
@@ -211,7 +212,7 @@ namespace GLTech2
                 Marshal.ReAllocHGlobal((IntPtr)unmanaged->bitmap_buffer, (IntPtr) (4 * width * height));
                 unmanaged->bitmap_height = height;
                 unmanaged->bitmap_width = width;
-                unmanaged->ReloadCaches();
+                unmanaged->RefreshCaches();
             }
         }
 
@@ -219,7 +220,7 @@ namespace GLTech2
 
         public void Step(float amount, float angle) => unmanaged->camera_position += new Vector(unmanaged->camera_angle + angle) * amount;
 
-        public void StopShooting() => beginRendering = false;
+        public void StopShooting() => keepRendering = false;
 
         //private void TryStep(float amount) { }
 

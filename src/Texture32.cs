@@ -33,23 +33,21 @@ namespace GLTech2
             return result;
         }
 
-        public void Dispose()
-        {
+        public void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)buffer);
-        }
 
-        public static implicit operator Texture32_ (Texture32 tex)
-        {
-            return *tex.unmanaged;
-        }
+        public static implicit operator Texture32_ (Texture32 tex) =>
+            *tex.unmanaged;
     }
 
     public unsafe class Texture32 : IDisposable
     {
         internal Texture32_* unmanaged;
 
-        public Texture32(Bitmap bitmap) => unmanaged = Texture32_.Alloc(bitmap);
+        public Texture32(Bitmap bitmap) =>
+            unmanaged = Texture32_.Alloc(bitmap);
 
+        [Obsolete]
         public int this[int x, int y]
         {
             get

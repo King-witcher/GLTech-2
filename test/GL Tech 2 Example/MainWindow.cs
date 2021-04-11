@@ -44,7 +44,7 @@ namespace Game
             myCamera.OnRender += (a, aa) => myCamera.Turn(0.3f);
 
             //Start a continuous rendering process.
-            myCamera.BeginShooting();
+            myCamera.StartShoting();
         }
     }
 }
