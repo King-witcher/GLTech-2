@@ -20,15 +20,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-pixel Background(int line, int height)
-{
-    if (line < height >> 1)
-        return -14803426;
-    else
-        return -12171706;
-}
-
-pixel SkyboxBackground(Camera_& camera, int ray_id, int line)
+pixel SkyboxBackground_Legacy(Camera_& camera, int ray_id, int line)
 {
     float angle_deg = camera.camera_angle + camera.cache_angles[ray_id];
     angle_deg = fmod(angle_deg, 360);
@@ -37,6 +29,16 @@ pixel SkyboxBackground(Camera_& camera, int ray_id, int line)
     float screenVratio = line / (float)camera.bitmap_height;
     float cos = camera.cache_cosines[ray_id];
     float vratio = (1 - cos) / 2 + cos * screenVratio;
+
+    return camera.skybox->MapPixel(hratio, vratio);
+}
+
+pixel SkyboxBackground(Camera_& camera, float ray_angle, float ray_cos, int line, int display_height)
+{
+    float hratio = ray_angle / 360;
+
+    float screenVratio = (float) line / display_height;
+    float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
 
     return camera.skybox->MapPixel(hratio, vratio);
 }
@@ -66,7 +68,7 @@ void NativeRender(Camera_& camera)
                 float vratio = topIndex + fullColumnRatio * line / display_height;
                 if (vratio < 0.0f || vratio >= 1.0f)
                 {
-                    camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
+                    camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_angle, ray_cos, line, display_height);
                 }
                 else
                 {
@@ -78,7 +80,7 @@ void NativeRender(Camera_& camera)
         else
         {
             for (int line = 0; line < display_height; line++)
-                camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
+                camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_angle, ray_cos, line, display_height);
         }
-}
+    }
 }

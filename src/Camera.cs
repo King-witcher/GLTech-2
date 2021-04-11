@@ -327,7 +327,7 @@ namespace GLTech2
 #endif
                 rendering = false;
 
-                int Background(int line)
+                int LegacyBackground(int line)
                 {
                     if (line < unmanaged->bitmap_height >> 1)
                         return -14_803_426;
