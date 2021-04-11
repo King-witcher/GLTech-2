@@ -47,7 +47,7 @@ namespace GLTech2
         [SecurityCritical]
         internal Wall_* unmanaged;
         internal Material refMaterial;
-
+        internal bool isBound = false;
         #region Constructors
         public Wall(Vector start, Vector end, Material material)
         {

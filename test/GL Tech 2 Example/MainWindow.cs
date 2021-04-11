@@ -36,8 +36,8 @@ namespace Game
 
             //Create a cilinder and add it to the map.
             Vector[] verts = Vector.GetPolygon(
-                center: new Vector(1f, 2f),
-                radius: 0.2f,
+                center: new Vector(3f, 2f),
+                radius: 4f,
                 edges: 400);
 
             Wall[] myWalls = Wall.CreatePolygon(wallMaterial, verts);
