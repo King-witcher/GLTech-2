@@ -138,7 +138,7 @@ namespace GLTech2
                 }
             }
         }
-        public float CameraAngle { get => unmanaged->camera_angle; set => unmanaged->camera_angle = value; }
+        public float CameraAngle { get => unmanaged->camera_angle; set => unmanaged->camera_angle = value % 360; }
         public float FOV
         {
             get
@@ -161,7 +161,7 @@ namespace GLTech2
         public int FrameCount { get => frame_count; private set => frame_count = value; }
         public object Locker { get => locker; }
         public Map Map => refMap;
-        public Material Skybox //Testing
+        public Material Skybox
         {
             get
             {
@@ -241,7 +241,7 @@ namespace GLTech2
 
         //private void TryStep(float amount) { }
 
-        public void Turn(float amount) => unmanaged->camera_angle += amount;
+        public void Turn(float amount) => CameraAngle += amount;
 
         //Don't know how to pinvoke fromm current directory =/
         [Obsolete("Don't change the directory of the files yet!")]
@@ -256,8 +256,9 @@ namespace GLTech2
 #endif
             lock (locker)
             {
-
-            rendering = true;
+                rendering = true;
+                int display_width = unmanaged->bitmap_width;
+                int display_height = unmanaged->bitmap_height;
 #if PARALLEL
                 Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {
@@ -266,33 +267,47 @@ namespace GLTech2
                 {
 #endif
                     //Debug("Ray id: " + ray_id);
-                    Ray ray = new Ray(unmanaged->camera_position, unmanaged->camera_angle + unmanaged->cache_angles[ray_id]);
+                    float ray_cos = unmanaged->cache_cosines[ray_id];
+                    float ray_angle = unmanaged->cache_angles[ray_id] + unmanaged->camera_angle;
+                    Ray ray = new Ray(unmanaged->camera_position, ray_angle);
+
+                    //Optimized, but not fully revised.
+                    int SkyboxBackground(int line)
+                    {
+                        float hratio = ray_angle / 360 + 1;
+
+                        float screenVratio = (float) line / display_height;
+                        float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+
+                        return unmanaged->skybox->MapPixel(hratio, vratio);
+                    }
+
 
                     //Cast the ray towards every wall.
                     Wall_* nearest = ray.NearestWall(unmanaged->map, out float nearest_dist, out float nearest_ratio);
                     if (nearest_dist != float.PositiveInfinity)
                     {
-                        float columnHeight = (unmanaged->cache_colHeight1 / (unmanaged->cache_cosines[ray_id] * nearest_dist));
-                        float fullColumnRatio = unmanaged->bitmap_height / columnHeight;
+                        float columnHeight = (unmanaged->cache_colHeight1 / (ray_cos * nearest_dist));
+                        float fullColumnRatio = display_height / columnHeight;
                         float topIndex = -(fullColumnRatio - 1f) / 2f;
-                        for (int line = 0; line < unmanaged->bitmap_height; line++)
+                        for (int line = 0; line < display_height; line++)
                         {
-                            float vratio = topIndex + fullColumnRatio * line / unmanaged->bitmap_height;
+                            float vratio = topIndex + fullColumnRatio * line / display_height;
                             if (vratio < 0f || vratio >= 1f)
                             {
-                                unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = SkyboxBackground(ray_id, line);
+                                unmanaged->bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(line);
                             }
                             else
                             {
                                 int pixel = nearest->material.MapPixel(nearest_ratio, vratio);
-                                unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = pixel;
+                                unmanaged->bitmap_buffer[display_width * line + ray_id] = pixel;
                             }
                         }
                     }
                     else
                     {
-                        for (int line = 0; line < unmanaged->bitmap_height; line++)
-                            unmanaged->bitmap_buffer[unmanaged->bitmap_width * line + ray_id] = SkyboxBackground(ray_id, line);
+                        for (int line = 0; line < display_height; line++)
+                            unmanaged->bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(line);
                     }
 #if PARALLEL
                 });
@@ -300,27 +315,14 @@ namespace GLTech2
                 }
 #endif
                 rendering = false;
-            }
 
-            int Background(int line)
-            {
-                if (line < unmanaged->bitmap_height >> 1)
-                    return -14_803_426;
-                else
-                    return -12_171_706;
-            }
-
-            //Not fully optimized
-            int SkyboxBackground(int ray_id, int line)
-            {
-                float angle = CameraAngle + unmanaged->cache_angles[ray_id] % 360 + 360;
-                float hratio = angle / 360 + 1;
-
-                float screenVratio = line / (float)unmanaged->bitmap_height;
-                float cos = unmanaged->cache_cosines[ray_id];
-                float vratio = (1 - cos)/2 + cos * screenVratio;
-
-                return unmanaged->skybox->MapPixel(hratio, vratio);
+                int Background(int line)
+                {
+                    if (line < unmanaged->bitmap_height >> 1)
+                        return -14_803_426;
+                    else
+                        return -12_171_706;
+                }
             }
         }
         #endregion

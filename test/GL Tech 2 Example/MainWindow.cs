@@ -35,13 +35,13 @@ namespace Game
             Wall[] myWalls = Wall.GetRegularPolygon(
                 center: Vector.Origin,
                 radius: 0.5f,
-                edges: 500,
+                edges: 200,
                 texture: wallTexture);
 
-            //myMap.AddWalls(myWalls);
+            myMap.AddWalls(myWalls);
 
             //Create your camera.
-            myCamera = new Camera(map: myMap, width: 640, height: 360);
+            myCamera = new Camera(map: myMap, width: 1600, height: 900);
             myCamera.Skybox = new Material(
                 texture: cosmosTexture,
                 hoffset: 0f,
@@ -71,7 +71,7 @@ namespace Game
             if (registryCount == 1000)
             {
                 Console.WriteLine("Average: " + timeRegistry.Average());
-                Console.WriteLine("SD: " + CalculateStandardDeviation(timeRegistry));
+                Console.WriteLine("SD: " + StdDeviation(timeRegistry));
                 registryCount = 0;
             }
 
@@ -79,23 +79,18 @@ namespace Game
             sender.CameraAngle += 50f * (float) deltaTime;
         }
 
-        private double CalculateStandardDeviation(IEnumerable<double> values)
+        private double StdDeviation(IEnumerable<double> values)
         {
-            double standardDeviation = 0;
+            double result = 0;
 
             if (values.Any())
             {
-                // Compute the average.     
-                double avg = values.Average();
-
-                // Perform the Sum of (value-avg)_2_2.      
-                double sum = values.Sum(d => Math.Pow(d - avg, 2));
-
-                // Put it all together.      
-                standardDeviation = Math.Sqrt((sum) / (values.Count() - 1));
+                double avg = values.Average();    
+                double sum = values.Sum(d => Math.Pow(d - avg, 2));  
+                result = Math.Sqrt((sum) / (values.Count() - 1));
             }
 
-            return standardDeviation;
+            return result;
         }
     }
 }

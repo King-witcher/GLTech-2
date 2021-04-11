@@ -32,7 +32,7 @@ namespace Game
             this.display.Dock = System.Windows.Forms.DockStyle.Fill;
             this.display.Location = new System.Drawing.Point(0, 0);
             this.display.Name = "display";
-            this.display.Size = new System.Drawing.Size(640, 360);
+            this.display.Size = new System.Drawing.Size(1600, 900);
             this.display.TabIndex = 0;
             this.display.TabStop = false;
             // 
@@ -40,7 +40,7 @@ namespace Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 360);
+            this.ClientSize = new System.Drawing.Size(1600, 900);
             this.Controls.Add(this.display);
             this.Cursor = System.Windows.Forms.Cursors.No;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
