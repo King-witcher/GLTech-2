@@ -318,11 +318,6 @@ namespace GLTech2
         {
             Marshal.FreeHGlobal((IntPtr) unmanaged);
         }
-
-        ~Wall()
-        {
-            this.Dispose();
-        }
         #endregion
     }
 }

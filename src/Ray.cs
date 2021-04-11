@@ -58,18 +58,18 @@ namespace GLTech2
             nearest_dist = float.PositiveInfinity;
             nearest_ratio = float.PositiveInfinity;
             int wallcount = map->wall_count;
-            Wall_* cur = map->walls;
+            Wall_** cur = map->walls;
             Wall_* nearest = null;
 
             for (int i = 0; i < wallcount; i++)
             {
                 if (cur == null) break;
-                GetCollisionData(cur, out float cur_dist, out float cur_ratio);
+                GetCollisionData(*cur, out float cur_dist, out float cur_ratio);
                 if (cur_dist < nearest_dist)
                 {
                     nearest_ratio = cur_ratio;
                     nearest_dist = cur_dist;
-                    nearest = cur;
+                    nearest = *cur;
                 }
                 cur++;
             }

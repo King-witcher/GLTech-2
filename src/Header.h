@@ -45,10 +45,10 @@ struct Sprite_
 
 struct Map_
 {
-	Sprite_* sprities;
+	Sprite_** sprities;
 	int sprite_count;
 	int sprite_max;
-	Wall_* walls;
+	Wall_** walls;
 	int wall_count;
 	int wall_max;
 };
