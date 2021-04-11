@@ -19,7 +19,6 @@ namespace GLTech2
             this.x = x;
             this.y = y;
         }
-
         public Vector(float angle)
         {
             x = (float)Math.Sin(angle * Math.PI / 180);
@@ -60,6 +59,14 @@ namespace GLTech2
                 return true;
             else
                 return false;
+        }
+
+        public static Vector[] GetPolygon (Vector center, float radius, int edges)
+        {
+            Vector[] result = new Vector[edges];
+            for (int i = 0; i < edges; i++)
+                result[i] = center + radius * new Vector(i * 360 / edges);
+            return result;
         }
 
         public static Vector operator +(Vector left, Vector right) => new Vector(left.X + right.X, left.Y + right.Y);
