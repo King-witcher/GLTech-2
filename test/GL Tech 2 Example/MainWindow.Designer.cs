@@ -1,7 +1,7 @@
 ﻿
 namespace Game
 {
-    partial class mainWindow
+    partial class MainWindow
     {
         private System.ComponentModel.IContainer components = null;
 

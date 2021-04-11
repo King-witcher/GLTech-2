@@ -5,12 +5,12 @@ using GLTech2;
 
 namespace Game
 {
-    public partial class mainWindow : Form
+    public partial class MainWindow : Form
     {
         Camera myCamera;
         Map myMap;
 
-        public mainWindow() =>
+        public MainWindow() =>
             InitializeComponent();
 
 
@@ -37,8 +37,6 @@ namespace Game
 
             //Create your camera.
             myCamera = new Camera(map: myMap, width: 640, height: 360);
-
-            //Change a skybox.
             myCamera.Skybox = cosmosTexture;
 
             //Take a PictureBox and subscribe to it's Paint event a function that updates it's display once again.
