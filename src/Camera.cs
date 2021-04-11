@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#undef CPP
+#define CPP
 #undef PARALLEL
 
 using GLTech2.Properties;
@@ -27,7 +27,7 @@ namespace GLTech2
         internal float* cache_angles;
         internal float cache_colHeight1;
         internal float* cache_cosines;
-        internal float camera_angle;
+        internal float camera_angle; //MUST be 0 <= x < 360
         internal float camera_HFOV;
         internal Vector camera_position;
         internal Map_* map;
@@ -138,7 +138,18 @@ namespace GLTech2
                 }
             }
         }
-        public float CameraAngle { get => unmanaged->camera_angle; set => unmanaged->camera_angle = value % 360; }
+        public float CameraAngle
+        {
+            get => unmanaged->camera_angle;
+            set
+            {
+                //Ensures the angle restriction
+                if (value >= 0)
+                    unmanaged->camera_angle = value % 360;
+                else
+                    unmanaged->camera_angle = value % 360 + 1;
+            }
+        }
         public float FOV
         {
             get
@@ -274,7 +285,7 @@ namespace GLTech2
                     //Optimized, but not fully revised.
                     int SkyboxBackground(int line)
                     {
-                        float hratio = ray_angle / 360 + 1;
+                        float hratio = ray_angle / 360;
 
                         float screenVratio = (float) line / display_height;
                         float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;

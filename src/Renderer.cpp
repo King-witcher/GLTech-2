@@ -43,36 +43,42 @@ pixel SkyboxBackground(Camera_& camera, int ray_id, int line)
 
 void NativeRender(Camera_& camera)
 {
+    int display_height = camera.bitmap_height;
+    int display_width = camera.bitmap_width;
+
     for (int ray_id = 0; ray_id < camera.bitmap_width; ray_id++)
     {
-        Ray ray = Ray(camera.camera_position, camera.camera_angle + camera.cache_angles[ray_id]);
+        float ray_angle = camera.cache_angles[ray_id] + camera.camera_angle;
+        float ray_cos = camera.cache_cosines[ray_id];
+
+        Ray ray = Ray(camera.camera_position, ray_angle);
 
         //Cast the ray towards every wall.
         float nearest_dist, nearest_ratio;
         Wall_* nearest = ray.NearestWall(camera.map, nearest_dist, nearest_ratio);
         if (nearest_dist != FLT_MAX)
         {
-            float columnHeight = (camera.cache_colHeight1 / (camera.cache_cosines[ray_id] * nearest_dist));
-            float fullColumnRatio = camera.bitmap_height / columnHeight;
+            float columnHeight = (camera.cache_colHeight1 / (ray_cos * nearest_dist));
+            float fullColumnRatio = display_height / columnHeight;
             float topIndex = -(fullColumnRatio - 1.0f) / 2.0f;
-            for (int line = 0; line < camera.bitmap_height; line++)
+            for (int line = 0; line < display_height; line++)
             {
-                float vratio = topIndex + fullColumnRatio * line / camera.bitmap_height;
+                float vratio = topIndex + fullColumnRatio * line / display_height;
                 if (vratio < 0.0f || vratio >= 1.0f)
                 {
-                    camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
+                    camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
                 }
                 else
                 {
                     int pixel = nearest->material.MapPixel(nearest_ratio, vratio);
-                    camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = pixel;
+                    camera.bitmap_buffer[display_width * line + ray_id] = pixel;
                 }
             }
         }
         else
         {
-            for (int line = 0; line < camera.bitmap_height; line++)
-                camera.bitmap_buffer[camera.bitmap_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
+            for (int line = 0; line < display_height; line++)
+                camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_id, line);
         }
 }
 }
