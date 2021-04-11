@@ -35,7 +35,7 @@ pixel SkyboxBackground_Legacy(Camera_& camera, int ray_id, int line)
 
 pixel SkyboxBackground(Material_ skybox, float ray_angle, float ray_cos, int line, int display_height)
 {
-    float hratio = ray_angle / 360;
+    float hratio = ray_angle / 360 + 180;
 
     float screenVratio = (float) line / display_height;
     float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;

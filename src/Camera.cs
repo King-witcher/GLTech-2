@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
 #undef CPP
-#undef PARALLEL
+#define PARALLEL
 
 using GLTech2.Properties;
 using System;
@@ -288,14 +288,12 @@ namespace GLTech2
                     //Optimized, but not fully revised.
                     int SkyboxBackground(int line)
                     {
-                        float hratio = ray_angle / 360;
+                        float hratio = ray_angle / 360 + 180; //Temporary bugfix to avoid hratio being < 0
 
                         float screenVratio = (float) line / display_height;
                         float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-
                         return skybox.MapPixel(hratio, vratio);
                     }
-
 
                     //Cast the ray towards every wall.
                     Wall_* nearest = ray.NearestWall(unmanaged->map, out float nearest_dist, out float nearest_ratio);
@@ -329,14 +327,6 @@ namespace GLTech2
                 }
 #endif
                 rendering = false;
-
-                int LegacyBackground(int line)
-                {
-                    if (line < unmanaged->bitmap_height >> 1)
-                        return -14_803_426;
-                    else
-                        return -12_171_706;
-                }
             }
         }
         #endregion

@@ -184,6 +184,7 @@ namespace GLTech2
             return walls;
         }
 
+        [Obsolete("Creating walls without can lead to errors.", true)]
         public static Wall[] GetWalls(params Vector[] verts)
         {
             if (verts == null)
@@ -199,10 +200,11 @@ namespace GLTech2
 
         }
 
+        [Obsolete]
         public static Wall[] GetWalls(Texture32 texture, bool stretch, params Vector[] verts)
         {
             if (verts == null)
-                throw new ArgumentException("Verts cannot be null.");
+                throw new ArgumentNullException("Verts cannot be null.");
             if (verts.Length <= 1)
                 throw new ArgumentException("At least two verts should be passed.");
 
@@ -229,8 +231,64 @@ namespace GLTech2
             }
         }
 
-        public static Wall[] GetRegularPolygon(Vector center, float radius, int edges, Texture32 texture)
+        public static Wall[] CreateSequence(Material material, params Vector[] verts)
+        {
+            if (verts == null)
+                throw new ArgumentNullException("Verts cannot be null.");
+            if (verts.Length <= 1)
+                return new Wall[0];
 
+            Wall[] result = new Wall[verts.Length - 1];
+            Material_ material_ = *material.unmanaged;
+            int walls = verts.Length - 1;
+
+            float material_voffset = material_.voffset;
+            float material_vrepeat = material_.vrepeat;
+            float material_hrepeat = material_.hrepeat / walls;
+
+            for (int i = 0; i < walls; i++)
+            {
+                float material_hoffset = material_.hoffset + material_.hrepeat * i / walls;
+                Material currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
+                result[i] = new Wall(verts[i], verts[i + 1], currentMaterial);
+            }
+
+            return result;
+        }
+
+        public static Wall[] CreatePolygon(Material material, params Vector[] verts) //Beta
+        {
+            if (verts == null)
+                throw new ArgumentNullException("Verts cannot be null.");
+            if (verts.Length <= 1)
+                return new Wall[0];
+
+            Wall[] result = new Wall[verts.Length];
+            Material_ material_ = *material.unmanaged;
+            int total_walls = verts.Length;
+
+            float material_voffset = material_.voffset;
+            float material_vrepeat = material_.vrepeat;
+            float material_hrepeat = material_.hrepeat / total_walls;
+            float material_hoffset;
+            Material currentMaterial;
+
+            for (int i = 0; i < total_walls - 1; i++)
+            {
+                material_hoffset = material_.hoffset + material_.hrepeat * i / (total_walls);
+                currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
+                result[i] = new Wall(verts[i], verts[i + 1], currentMaterial);
+            }
+
+            material_hoffset = material_.hoffset + material_.hrepeat * (total_walls - 1) / total_walls;
+            currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
+            result[total_walls - 1] = new Wall(verts[total_walls - 1], verts[0], currentMaterial);
+
+            return result;
+        }
+
+        [Obsolete]
+        public static Wall[] GetRegularPolygon(Vector center, float radius, int edges, Texture32 texture)
         {
             Vector[] vectors = new Vector[edges];
             Wall[] walls = new Wall[edges];
@@ -240,12 +298,20 @@ namespace GLTech2
             {
                 walls[i] = new Wall(vectors[i], vectors[i + 1], texture);
                 walls[i].unmanaged->material.hrepeat = 1f / edges;
-                walls[i].unmanaged->material.hoffset = (float) i / edges;
+                walls[i].unmanaged->material.hoffset = (float)i / edges;
             }
             walls[edges - 1] = new Wall(vectors[edges - 1], vectors[0], texture);
             walls[edges - 1].unmanaged->material.hrepeat = 1f / edges;
             walls[edges - 1].unmanaged->material.hoffset = (float)(edges - 1) / edges;
             return walls;
+        }
+
+        [Obsolete]
+        public static Wall[] GetRegularPolygon(Vector center, float radius, int edges, Material material)
+        {
+            Vector[] polygon = Vector.GetPolygon(center, radius, edges);
+            Wall[] result = CreateSequence(material, polygon);
+            return result;
         }
 
         public void Dispose()

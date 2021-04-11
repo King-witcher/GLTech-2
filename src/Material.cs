@@ -80,8 +80,11 @@ namespace GLTech2
             }
         }
 
-        public Material(Texture32 texture, float hoffset = 0f, float hrepeat = 1f) =>
+        public Material(Texture32 texture, float hoffset = 0f, float hrepeat = 1f)
+        {
             unmanaged = Material_.Alloc(hoffset, hrepeat, 0f, 1f, texture.unmanaged);
+            refTexture = texture;
+        }
 
         public void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)unmanaged);
@@ -94,5 +97,10 @@ namespace GLTech2
 
         public static implicit operator Material(Texture32 texture) =>
             new Material(texture);
+
+        ~Material()
+        {
+            this.Dispose();
+        }
     }
 }

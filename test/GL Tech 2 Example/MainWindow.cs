@@ -29,14 +29,18 @@ namespace Game
             Texture32 cosmosTexture = new Texture32(Resources.Universe);
 
             //Material is a flyweight structure that refers to a texture and is alocated one for each object that uses.
-            Material myMaterial = new Material(wallTexture);
+            Material wallMaterial = new Material(
+                texture: wallTexture,
+                hoffset: 0,
+                hrepeat: 2);
 
-            //Create your walls and add them to the map.
-            Wall[] myWalls = Wall.GetRegularPolygon(
-                center: Vector.Origin,
-                radius: 0.5f,
-                edges: 200,
-                texture: wallTexture);
+            //Create a cilinder and add it to the map.
+            Vector[] verts = Vector.GetPolygon(
+                center: new Vector(1f, 2f),
+                radius: 0.2f,
+                edges: 400);
+
+            Wall[] myWalls = Wall.CreatePolygon(wallMaterial, verts);
 
             myMap.AddWalls(myWalls);
 
@@ -75,8 +79,8 @@ namespace Game
                 registryCount = 0;
             }
 
-            sender.Step(2f * (float) deltaTime);
-            sender.CameraAngle += 50f * (float) deltaTime;
+            sender.Step(1f * (float) deltaTime);
+            sender.CameraAngle += 25f * (float) deltaTime;
         }
 
         private double StdDeviation(IEnumerable<double> values)
