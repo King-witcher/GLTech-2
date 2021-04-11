@@ -36,7 +36,7 @@ namespace Game
             this.display.TabIndex = 0;
             this.display.TabStop = false;
             // 
-            // mainWindow
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -46,7 +46,7 @@ namespace Game
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "mainWindow";
+            this.Name = "MainWindow";
             this.RightToLeftLayout = true;
             this.Text = "Main Window";
             this.Load += new System.EventHandler(this.OnLoad);

@@ -1,6 +1,9 @@
 ﻿using Game.Properties;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using GLTech2;
 
@@ -35,7 +38,7 @@ namespace Game
                 edges: 500,
                 texture: wallTexture);
 
-            myMap.AddWalls(myWalls);
+            //myMap.AddWalls(myWalls);
 
             //Create your camera.
             myCamera = new Camera(map: myMap, width: 640, height: 360);
@@ -60,10 +63,39 @@ namespace Game
         }
 
         //Do whatever you want each time the engine generates a new frame.
+        double[] timeRegistry = new double[1000];
+        int registryCount = 0;
         public void Update(Camera sender, double deltaTime)
         {
+            timeRegistry[registryCount++] = deltaTime * 1000;
+            if (registryCount == 1000)
+            {
+                Console.WriteLine("Average: " + timeRegistry.Average());
+                Console.WriteLine("SD: " + CalculateStandardDeviation(timeRegistry));
+                registryCount = 0;
+            }
+
             sender.Step(2f * (float) deltaTime);
             sender.CameraAngle += 50f * (float) deltaTime;
+        }
+
+        private double CalculateStandardDeviation(IEnumerable<double> values)
+        {
+            double standardDeviation = 0;
+
+            if (values.Any())
+            {
+                // Compute the average.     
+                double avg = values.Average();
+
+                // Perform the Sum of (value-avg)_2_2.      
+                double sum = values.Sum(d => Math.Pow(d - avg, 2));
+
+                // Put it all together.      
+                standardDeviation = Math.Sqrt((sum) / (values.Count() - 1));
+            }
+
+            return standardDeviation;
         }
     }
 }
