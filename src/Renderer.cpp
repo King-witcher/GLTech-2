@@ -33,20 +33,22 @@ pixel SkyboxBackground_Legacy(Camera_& camera, int ray_id, int line)
     return camera.skybox->MapPixel(hratio, vratio);
 }
 
-pixel SkyboxBackground(Camera_& camera, float ray_angle, float ray_cos, int line, int display_height)
+pixel SkyboxBackground(Material_ skybox, float ray_angle, float ray_cos, int line, int display_height)
 {
     float hratio = ray_angle / 360;
 
     float screenVratio = (float) line / display_height;
     float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
 
-    return camera.skybox->MapPixel(hratio, vratio);
+    return skybox.MapPixel(hratio, vratio);
 }
 
 void NativeRender(Camera_& camera)
 {
     int display_height = camera.bitmap_height;
     int display_width = camera.bitmap_width;
+    Material_ skybox = *camera.skybox;
+    pixel* buffer = camera.bitmap_buffer;
 
     for (int ray_id = 0; ray_id < camera.bitmap_width; ray_id++)
     {
@@ -68,19 +70,21 @@ void NativeRender(Camera_& camera)
                 float vratio = topIndex + fullColumnRatio * line / display_height;
                 if (vratio < 0.0f || vratio >= 1.0f)
                 {
-                    camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_angle, ray_cos, line, display_height);
+                    buffer[display_width * line + ray_id] = SkyboxBackground(skybox, ray_angle, ray_cos, line, display_height);
                 }
                 else
                 {
                     int pixel = nearest->material.MapPixel(nearest_ratio, vratio);
-                    camera.bitmap_buffer[display_width * line + ray_id] = pixel;
+                    buffer[display_width * line + ray_id] = pixel;
                 }
             }
         }
         else
         {
             for (int line = 0; line < display_height; line++)
-                camera.bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(camera, ray_angle, ray_cos, line, display_height);
+            {
+                buffer[display_width * line + ray_id] = SkyboxBackground(skybox, ray_angle, ray_cos, line, display_height);
+            }
         }
     }
 }

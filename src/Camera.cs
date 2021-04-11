@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#define CPP
+#undef CPP
 #undef PARALLEL
 
 using GLTech2.Properties;
@@ -268,8 +268,11 @@ namespace GLTech2
             lock (locker)
             {
                 rendering = true;
+
+                //Caching frequently used values.
                 int display_width = unmanaged->bitmap_width;
                 int display_height = unmanaged->bitmap_height;
+                Material_ skybox = *unmanaged->skybox;
 #if PARALLEL
                 Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {
@@ -277,7 +280,7 @@ namespace GLTech2
                 for (int ray_id = 0; ray_id < unmanaged->bitmap_width; ray_id++)
                 {
 #endif
-                    //Debug("Ray id: " + ray_id);
+                    //Caching
                     float ray_cos = unmanaged->cache_cosines[ray_id];
                     float ray_angle = unmanaged->cache_angles[ray_id] + unmanaged->camera_angle;
                     Ray ray = new Ray(unmanaged->camera_position, ray_angle);
@@ -290,7 +293,7 @@ namespace GLTech2
                         float screenVratio = (float) line / display_height;
                         float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
 
-                        return unmanaged->skybox->MapPixel(hratio, vratio);
+                        return skybox.MapPixel(hratio, vratio);
                     }
 
 
