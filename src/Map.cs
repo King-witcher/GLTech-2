@@ -13,10 +13,10 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct Map_ : IDisposable
     {
-        internal Sprite_* sprities;
+        internal Sprite_** sprities;
         internal int sprite_count;
         internal int sprite_max;
-        internal Wall_* walls;
+        internal Wall_** walls;
         internal int wall_count;
         internal int wall_max;
 
@@ -24,8 +24,8 @@ namespace GLTech2
         internal static Map_* Alloc(int maxWalls, int masSprities)
         {
             Map_* result = (Map_*)Marshal.AllocHGlobal(sizeof(Map_));
-            result->sprities = (Sprite_*)Marshal.AllocHGlobal(masSprities * sizeof(void*)); // Not implemented yet
-            result->walls = (Wall_*)Marshal.AllocHGlobal(maxWalls * sizeof(Wall_));
+            result->sprities = (Sprite_**)Marshal.AllocHGlobal(masSprities * sizeof(Sprite_*)); // Not implemented yet
+            result->walls = (Wall_**)Marshal.AllocHGlobal(maxWalls * sizeof(Wall_*));
             result->sprite_count = 0;
             result->sprite_max = masSprities;
             result->wall_count = 0;
@@ -41,7 +41,7 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Add(Wall_* wall) => walls[wall_count++] = *wall;
+        internal void Add(Wall_* wall) => walls[wall_count++] = wall;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void Add(void* sprite) => throw new NotImplementedException();

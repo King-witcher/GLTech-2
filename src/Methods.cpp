@@ -42,19 +42,19 @@ Wall_* Ray::NearestWall(Map_* map, float& nearest_dist, float& nearest_ratio)
     nearest_dist = FLT_MAX;
     nearest_ratio = FLT_MAX;
     int wallcount = map->wall_count;
-    Wall_* cur = map->walls;
+    Wall_** cur = map->walls;
     Wall_* nearest = NULL;
 
     for (int i = 0; i < wallcount; i++)
     {
         if (cur == NULL) break;
         float cur_dist, cur_ratio;
-        GetCollisionData(cur, cur_dist, cur_ratio);
+        GetCollisionData(*cur, cur_dist, cur_ratio);
         if (cur_dist < nearest_dist)
         {
             nearest_ratio = cur_ratio;
             nearest_dist = cur_dist;
-            nearest = cur;
+            nearest = *cur;
         }
         cur++;
     }
