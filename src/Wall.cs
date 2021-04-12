@@ -184,53 +184,6 @@ namespace GLTech2
             return walls;
         }
 
-        [Obsolete("Creating walls without can lead to errors.", true)]
-        public static Wall[] GetWalls(params Vector[] verts)
-        {
-            if (verts == null)
-                throw new ArgumentException("Verts cannot be null.");
-            if (verts.Length <= 1)
-                throw new ArgumentException("At least two verts should be passed.");
-
-            Wall[] result = new Wall[verts.Length - 1];
-            result[0] = new Wall(verts[0], verts[1], null);
-            for (int i = 1; i < result.Length; i++)
-                result[i] = new Wall(verts[i], verts[i + 1], null);
-            return result;
-
-        }
-
-        [Obsolete]
-        public static Wall[] GetWalls(Texture32 texture, bool stretch, params Vector[] verts)
-        {
-            if (verts == null)
-                throw new ArgumentNullException("Verts cannot be null.");
-            if (verts.Length <= 1)
-                throw new ArgumentException("At least two verts should be passed.");
-
-            Wall[] result = new Wall[verts.Length - 1];
-            if (stretch)
-            {
-                result[0] = new Wall(verts[0], verts[1], texture);
-                result[0].unmanaged->material.hrepeat = 1f / verts.Length;
-                result[0].unmanaged->material.hoffset = 0f;
-                for (int i = 1; i < result.Length; i++)
-                {
-                    result[i] = new Wall(verts[i], verts[i + 1], texture);
-                    result[i].unmanaged->material.hrepeat = 1f / verts.Length;
-                    result[i].unmanaged->material.hoffset = (float)i / verts.Length;
-                }
-                return result;
-            }
-            else
-            {
-                result[0] = new Wall(verts[0], verts[1], texture);
-                for (int i = 1; i < result.Length; i++)
-                    result[i] = new Wall(verts[i], verts[i + 1], texture);
-                return result;
-            }
-        }
-
         public static Wall[] CreateSequence(Material material, params Vector[] verts)
         {
             if (verts == null)
@@ -284,33 +237,6 @@ namespace GLTech2
             currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
             result[total_walls - 1] = new Wall(verts[total_walls - 1], verts[0], currentMaterial);
 
-            return result;
-        }
-
-        [Obsolete]
-        public static Wall[] GetRegularPolygon(Vector center, float radius, int edges, Texture32 texture)
-        {
-            Vector[] vectors = new Vector[edges];
-            Wall[] walls = new Wall[edges];
-            for (int i = 0; i < edges; i++)
-                vectors[i] = center + radius * new Vector(i * 360 / edges);
-            for (int i = 0; i < edges - 1; i++)
-            {
-                walls[i] = new Wall(vectors[i], vectors[i + 1], texture);
-                walls[i].unmanaged->material.hrepeat = 1f / edges;
-                walls[i].unmanaged->material.hoffset = (float)i / edges;
-            }
-            walls[edges - 1] = new Wall(vectors[edges - 1], vectors[0], texture);
-            walls[edges - 1].unmanaged->material.hrepeat = 1f / edges;
-            walls[edges - 1].unmanaged->material.hoffset = (float)(edges - 1) / edges;
-            return walls;
-        }
-
-        [Obsolete]
-        public static Wall[] GetRegularPolygon(Vector center, float radius, int edges, Material material)
-        {
-            Vector[] polygon = Vector.GetPolygon(center, radius, edges);
-            Wall[] result = CreateSequence(material, polygon);
             return result;
         }
 

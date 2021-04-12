@@ -85,11 +85,14 @@ namespace GLTech2
         }
     }
 
+    [Obsolete]
     public delegate void FrameCallBack(Camera sender, double secs);
+
+    public delegate void FrameUpdateCallback(double renderTime, double elapsedTime);
 
     public unsafe class Camera : IDisposable
     {
-        public Camera(Map map, Material background, PictureBox output, int width = 640, int height = 360)
+        public Camera(Map map, Material background, PictureBox output, FrameUpdateCallback updateCallback, int width = 640, int height = 360)
         {
             const int pixelsize = 4;
 
@@ -97,6 +100,8 @@ namespace GLTech2
             unmanaged = Camera_.Alloc(width, height, map.unmanaged);
             Background = background;
             SetOutput(output);
+
+            RenderCallback = updateCallback;
 
             //Possibly obsolete
             bufferBitmap = new Bitmap(width, height, width * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)unmanaged->bitmap_buffer);
@@ -186,6 +191,7 @@ namespace GLTech2
         public object Locker { get => locker; }
         public Vector Camera_Position { get => unmanaged->camera_position; set => unmanaged->camera_position = value; }
 
+        [Obsolete]
         public event FrameCallBack OnRender;
 
         public void Dispose()
@@ -228,22 +234,22 @@ namespace GLTech2
             Output.Paint += RePaint;
         }
 
-
+        private FrameUpdateCallback RenderCallback;
 
         private bool rendering = false;
         [Obsolete]
-        public void RenderOnce()
+        public void Render()
         {
             while (rendering)
                 Thread.Yield();
             Task.Run(() =>
             {
                 Stopwatch timer = Stopwatch.StartNew();
-                Render();
+                CLRRender();
                 double currentframetime = timer.Elapsed.Ticks / (double)Stopwatch.Frequency;
                 double averageframetime = unmanaged->averageFrametime;
                 unmanaged->averageFrametime = 0.9 * averageframetime + 0.1 * currentframetime;
-                OnRender?.Invoke(this, currentframetime);
+                RenderCallback(0, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
             });
         }
 
@@ -259,11 +265,12 @@ namespace GLTech2
                 while (keepRendering)
                 {
                     timer.Restart();
-                    Render();
+                    CLRRender();
                     while (timer.ElapsedMilliseconds < 7) //Don't let the framerate go higher than 143 fps.
                         Thread.Yield();
-
-                    OnRender?.Invoke(this, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
+                    //Mexer no frametime
+                    RenderCallback(0, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
+                    //OnRender?.Invoke(this, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
                 }
             });
         }
@@ -276,7 +283,7 @@ namespace GLTech2
         [DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeRender(Camera_* camera);
 
-        private unsafe void Render()
+        private unsafe void CLRRender()
         {
 #if CPP
             NativeRender(unmanaged);
@@ -291,7 +298,7 @@ namespace GLTech2
                 int display_height = unmanaged->bitmap_height;
                 Material_ background = *unmanaged->background;
 #if PARALLEL
-                Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
+                ParallelLoopResult plr = Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {
 #else
                 for (int ray_id = 0; ray_id < unmanaged->bitmap_width; ray_id++)

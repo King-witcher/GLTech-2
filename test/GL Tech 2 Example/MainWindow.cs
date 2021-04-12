@@ -16,7 +16,6 @@ namespace Game
         public MainWindow() =>
             InitializeComponent();
 
-
         public void OnLoad(object sender, EventArgs e)
         {
             //Allocate space in memory to the map and create a camera.
@@ -51,6 +50,7 @@ namespace Game
             myCamera = new Camera(
                 map: myMap,
                 background: cosmosMaterial,
+                updateCallback: Update2,
                 output: display,
                 width: 1600,
                 height: 900);
@@ -82,6 +82,20 @@ namespace Game
 
             sender.Step(1f * (float) deltaTime);
             sender.CameraAngle += 25f * (float) deltaTime;
+        }
+
+        public void Update2(double a, double deltaTime)
+        {
+            timeRegistry[registryCount++] = deltaTime * 1000;
+            if (registryCount == 1000)
+            {
+                Console.WriteLine("Average: " + timeRegistry.Average());
+                Console.WriteLine("SD: " + StdDeviation(timeRegistry));
+                registryCount = 0;
+            }
+
+            myCamera.Step(1f * (float)deltaTime);
+            myCamera.CameraAngle += 25f * (float)deltaTime;
         }
 
         private double StdDeviation(IEnumerable<double> values)
