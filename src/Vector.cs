@@ -9,10 +9,10 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct Vector
+    public unsafe struct Vector : IMovable
     {
-        private readonly float x;
-        private readonly float y;
+        private float x;
+        private float y;
 
         public Vector(float x, float y)
         {
@@ -35,8 +35,14 @@ namespace GLTech2
             }
         }
         public float Module { get => (float)Math.Sqrt(X * X + Y * Y); }
-        public float X { get => x; }
-        public float Y { get => y; }
+        public float X { get => x; set => x = value; }
+        public float Y { get => y; set => y = value; }
+        public Vector Position
+        {
+            get => this;
+            set => this = value;
+        }
+        public float Rotation { get => 0; set { } } //Caution
         public static Vector Origin { get => new Vector(0, 0); }
         public static Vector FromAngle(float angle) => new Vector(angle);
         public static Vector FromAngle(float angle, float module)

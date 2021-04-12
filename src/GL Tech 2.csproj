@@ -46,9 +46,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Debugging.cs" />
-    <Compile Include="Display.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="IMovable.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -41,10 +41,5 @@ namespace GLTech2
 
         public void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)unmanaged);
-
-        ~Sprite()
-        {
-            this.Dispose();
-        }
     }
 }

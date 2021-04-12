@@ -16,6 +16,8 @@ namespace Game
         public MainWindow() =>
             InitializeComponent();
 
+        Wall mover = new Wall(Vector.Origin, 90, 6f, new Material(new Texture32(Resources.Wall)));
+
         public void OnLoad(object sender, EventArgs e)
         {
             //Allocate space in memory to the map and create a camera.
@@ -45,18 +47,18 @@ namespace Game
             Wall[] myWalls = Wall.CreatePolygon(wallMaterial, verts);
 
             myMap.AddWalls(myWalls);
+            myMap.AddWall(mover);
 
             //Create your camera.
             myCamera = new Camera(
                 map: myMap,
                 background: cosmosMaterial,
-                updateCallback: Update2,
+                updateCallback: Update,
                 output: display,
                 width: 1600,
                 height: 900);
 
             //Subscribe to camera.OnRender event your custom Update method wich will be called whenever the camera renders a new frame.
-            myCamera.OnRender += (a, aa) => Update(a, aa);
 
             //Start a continuous rendering process.
             myCamera.StartRendering();
@@ -70,21 +72,8 @@ namespace Game
         //Do whatever you want each time the engine generates a new frame.
         double[] timeRegistry = new double[1000];
         int registryCount = 0;
-        public void Update(Camera sender, double deltaTime)
-        {
-            timeRegistry[registryCount++] = deltaTime * 1000;
-            if (registryCount == 1000)
-            {
-                Console.WriteLine("Average: " + timeRegistry.Average());
-                Console.WriteLine("SD: " + StdDeviation(timeRegistry));
-                registryCount = 0;
-            }
 
-            sender.Step(1f * (float) deltaTime);
-            sender.CameraAngle += 25f * (float) deltaTime;
-        }
-
-        public void Update2(double a, double deltaTime)
+        public void Update(double a, double deltaTime)
         {
             timeRegistry[registryCount++] = deltaTime * 1000;
             if (registryCount == 1000)
@@ -95,7 +84,8 @@ namespace Game
             }
 
             myCamera.Step(1f * (float)deltaTime);
-            myCamera.CameraAngle += 25f * (float)deltaTime;
+            mover.Start = mover.Start * 1.005f + new Vector(0f, 0.001f);
+            myCamera.CameraAngle += 2f * (float)deltaTime;
         }
 
         private double StdDeviation(IEnumerable<double> values)
