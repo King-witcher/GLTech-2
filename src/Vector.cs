@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe readonly struct Vector
+    public unsafe struct Vector
     {
         private readonly float x;
         private readonly float y;
@@ -25,7 +25,15 @@ namespace GLTech2
             y = (float)Math.Cos(angle * Math.PI / 180);
         }
 
-        public float Angle { get => 180 * (float)Math.Asin(X / Module) / (float)Math.PI; }
+        public float Angle
+        {
+            get
+            {
+                if (Module == 0)
+                    return 0;
+                return 180 * (float)Math.Asin(X / Module) / (float)Math.PI;
+            }
+        }
         public float Module { get => (float)Math.Sqrt(X * X + Y * Y); }
         public float X { get => x; }
         public float Y { get => y; }
@@ -37,10 +45,10 @@ namespace GLTech2
             float y = (float)Math.Cos(angle * Math.PI / 180);
             return new Vector(module * x, module * y);
         }
-        public float GetDistance(Vector p)
+        public float GetDistance(Vector vector)
         {
-            float dx = p.X - X;
-            float dy = p.Y - Y;
+            float dx = vector.X - X;
+            float dy = vector.Y - Y;
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
         public override string ToString()
@@ -63,6 +71,9 @@ namespace GLTech2
 
         public static Vector[] GetPolygon (Vector center, float radius, int edges)
         {
+            if (edges == 0)
+                throw new ArgumentException("\"edges\" cannot be 0.", "edges");
+
             Vector[] result = new Vector[edges];
             for (int i = 0; i < edges; i++)
                 result[i] = center + radius * new Vector(i * 360 / edges);
@@ -75,7 +86,7 @@ namespace GLTech2
         public static Vector operator *(float scalar, Vector vector) => new Vector(vector.X * scalar, vector.Y * scalar);
         public static Vector operator *(Vector vector, float scalar) => scalar * vector;
         public static Vector operator /(Vector vector, float scalar) => new Vector(vector.X / scalar, vector.Y / scalar);
-        public static bool operator ==(Vector left, Vector right)
+        /*public static bool operator ==(Vector left, Vector right)
         {
             bool xeq = left.x == right.x;
             bool yeq = left.y == right.y;
@@ -86,6 +97,6 @@ namespace GLTech2
             bool xdif = left.x != right.x;
             bool ydif = left.y != right.y;
             return xdif || ydif;
-        }
+        }*/
     }
 }

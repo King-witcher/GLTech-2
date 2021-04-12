@@ -1,10 +1,12 @@
 # GL Tech 2
-GL Tech 2 is a  3D engine designed with it's interface entirely in C# and parts of the rendering engine made in C++ that renders that allows you to render 2D maps as if they are 3D due to the _ray casting_ technique, without need of a GPU. The engine was entirely projected by Giuseppe Lanna, but still in development stage.
+GL Tech 2 is a 3D engine designed with it's interface entirely in C# and parts of the rendering engine made in C++ that renders that allows you to render 2D maps as if they are 3D due to the _ray casting_ technique, without need of a GPU.The engine was entirely projected by Giuseppe Lanna, but still in development stage.
 
 **How to build**
 If you already have Visual Studio Community 2019 installed, just open `solution.sln` and press F5 or make whatever you want with the IDE.
+
 ## Hello World game
 In this tutorial, you'll learn the basics of how to use the engine to build maps and render from whatever perspective you want.
+
 After adding a libary reference in your Windows Forms Application project and referencing it with `using GLTech2`, we start double clicking the main Form and allocating space in memory for the map int the Form_Load method:
 ```
 Map map = new Map(maxWalls: 500, maxSprities:5);
@@ -39,9 +41,6 @@ Wall wall = new Wall(
 map.AddWall(wall);
 ```
 There are many ways to create sets of walls that build an object at once, but this tutorial won't aproach this owing to briefness.
-
-> Remarks:
-> As you probably guessed, you also should dispose walls. However, it's just for now, and the `Wall` class wont store unmanaged resources anymore in a while.
 
 After designing our raycastable map, we'll finally create our ```Camera : IDisposable``` and set it up to render whatever it sees in the map. Cameras doesn't need to be part of the map structure; they are only objects that navigates through the map information.
 Using a camera, for now, isn't as simple as it could. You need, first, to instantiate a camera with a map and the dimentions of the screen:
