@@ -69,5 +69,10 @@ namespace GLTech2
             unmanaged->Dispose();
             Marshal.FreeHGlobal((IntPtr)unmanaged);
         }
+
+        ~Texture32()
+        {
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
+        }
     }
 }
