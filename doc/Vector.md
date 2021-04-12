@@ -1,3 +1,4 @@
+
 # Struct Vector
 
 Representa um par ordenado de coordenadas que define um vetor ou ponto no espaço bidimensional.
@@ -29,9 +30,9 @@ Inicializa uma nova instância de Vector que tenha módulo 1 e a o ângulo dado 
 
 ### Vector.Angle
 
-Obtém o ângulo do vetor.
+Obtém ou altera diretamente o ângulo do vetor.
 
-	public float Angle { get; }
+	public float Angle { get; set; }
     
 **Exemplo**
 
@@ -45,28 +46,38 @@ Obtém o ângulo do vetor.
 
 >Caso o vetor tenha módulo zero, o ângulo retornado será sempre zero.
 
-
-
 ### Vector.Module
 
-Obtém o módulo do vetor.
+Obtém ou altera diretamente o módulo do vetor.
 
-	public float Module { get; }
-
-
-
-### Vector.X e Vector.Y
-
-Obtém uma coordenada do vetor.
-
-	public float X { get; }
-	public float Y { get; }
+	public float Module { get; set; }
     
 ### Vector.Origin
 
 Obtém uma instância do vetor central (0, 0).
 
 	public static Vector Origin { get; }
+    
+### IMovable.Position
+
+Fornece uma implementação para a interface ```IMovable``` que obtém ou define a posição atual do vetor. Em outras palavras, retorna o vetor atual.
+
+	public static Vector Position { get; set; }
+    
+### IMovable.Rotation
+
+Fornece uma implementação para a interface ```IMovable``` que obtém ou define a rotação atual do vetor. No caso de um vetor, o eixo de rotação será sempre a origem e não sua posição.
+
+Idêntico a Vector.Angle.
+
+	public static float Rotation { get; set; }
+
+### Vector.X e Vector.Y
+
+Obtém ou define uma coordenada do vetor.
+
+	public float X { get; set; }
+	public float Y { get; set; }
 
 ## Métodos
 
@@ -131,10 +142,13 @@ Obtém uma matriz de vetores que compoem os vértices de um polígono regular da
 
 ### Vector.\*(Vector, Vector)
 
-Obtém o produto vetorial no plano bidimensional entre os dois vetores.
+Define a multiplicação entre dois vetores no plano complexo.
 
 	public static Vector operator *(Vector left, Vector right)
 
+**Observações**
+
+>O vetor resultante tera módulo equivalente ao produto dos módulos dos fatores e ângulo equivalente à soma dos ângulos dos mesmos.
 ### Vector.\*(Vector, float) e Vector.\*(float, Vector)
 
 Obtém o resultado da multiplicação de um vetor por ume scalar. O Vetor resultante terá mesma direção que o inicial e seu módulo será multiplicado pelo escalar.

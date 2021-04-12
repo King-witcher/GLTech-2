@@ -36,6 +36,8 @@ namespace GLTech2
             set => unmanaged->position = value;
         }
 
+        public float Rotation { get; set; }
+
         public Sprite(Vector position, Material material = null) =>
             unmanaged = Sprite_.Alloc(position, material.unmanaged);
 

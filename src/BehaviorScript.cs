@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
-    internal interface IMovable
+    internal abstract class BehaviorScript
     {
-        Vector Position { get; set; }
-        float Rotation { get; set; }
+        public abstract void Update();
+        public abstract void Start();
     }
 }

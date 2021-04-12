@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct Vector : IMovable
+    public unsafe struct Vector
     {
         private float x;
         private float y;
@@ -33,8 +33,23 @@ namespace GLTech2
                     return 0;
                 return 180 * (float)Math.Asin(X / Module) / (float)Math.PI;
             }
+            set
+            {
+                float delta = value - this.Angle;
+                this *= new Vector(delta);
+            }
         }
-        public float Module { get => (float)Math.Sqrt(X * X + Y * Y); }
+
+        public float Module
+        {
+            get => (float)Math.Sqrt(X * X + Y * Y);
+            set
+            {
+                float delta = value / Module;
+                this *= delta;
+            }
+        }
+
         public float X { get => x; set => x = value; }
         public float Y { get => y; set => y = value; }
         public Vector Position
@@ -42,7 +57,11 @@ namespace GLTech2
             get => this;
             set => this = value;
         }
-        public float Rotation { get => 0; set { } } //Caution
+        public float Rotation
+        {
+            get => Angle;
+            set => Angle = this.Angle;
+        }
         public static Vector Origin { get => new Vector(0, 0); }
         public static Vector FromAngle(float angle) => new Vector(angle);
         public static Vector FromAngle(float angle, float module)
@@ -86,12 +105,29 @@ namespace GLTech2
             return result;
         }
 
-        public static Vector operator +(Vector left, Vector right) => new Vector(left.X + right.X, left.Y + right.Y);
-        public static Vector operator -(Vector left, Vector right) => new Vector(left.X - right.X, left.Y - right.Y);
-        public static Vector operator *(Vector left, Vector right) => new Vector(left.X * right.X, left.Y * right.Y);
-        public static Vector operator *(float scalar, Vector vector) => new Vector(vector.X * scalar, vector.Y * scalar);
-        public static Vector operator *(Vector vector, float scalar) => scalar * vector;
-        public static Vector operator /(Vector vector, float scalar) => new Vector(vector.X / scalar, vector.Y / scalar);
+        public static Vector operator +(Vector left, Vector right) =>
+            new Vector(
+                left.X + right.X,
+                left.Y + right.Y);
+        public static Vector operator -(Vector left, Vector right) =>
+            new Vector(
+                left.X - right.X,
+                left.Y - right.Y);
+        public static Vector operator *(Vector left, Vector right) =>
+            new Vector(
+                left.X * right.X - left.Y * right.Y,
+                left.X * right.Y + left.Y + right.X);
+        public static Vector operator *(float scalar, Vector vector) =>
+            new Vector(
+                vector.X * scalar,
+                vector.Y * scalar);
+        public static Vector operator *(Vector vector, float scalar) =>
+            scalar * vector;
+        public static Vector operator /(Vector vector, float scalar) =>
+            new Vector(
+                vector.X / scalar,
+                vector.Y / scalar);
+
         /*public static bool operator ==(Vector left, Vector right)
         {
             bool xeq = left.x == right.x;
