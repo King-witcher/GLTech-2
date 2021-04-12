@@ -77,7 +77,7 @@ struct Camera_
 	float camera_HFOV;
 	Vector camera_position;
 	Map_* map;
-	Material_* skybox;
+	Material_* background;
 };
 
 extern "C"

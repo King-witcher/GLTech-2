@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#define CPP
-#undef PARALLEL
+#undef CPP
+#define PARALLEL
 
 using GLTech2.Properties;
 using System;
@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static GLTech2.Debugging;
 
 namespace GLTech2
@@ -31,7 +32,7 @@ namespace GLTech2
         internal float camera_HFOV;
         internal Vector camera_position;
         internal Map_* map;
-        internal Material_* skybox; //Ainda não implmentado.
+        internal Material_* background;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static Camera_* Alloc(int width, int height, Map_* map)
@@ -44,7 +45,7 @@ namespace GLTech2
             result->camera_angle = 0f;
             result->camera_HFOV = 90f;
             result->map = map;
-            result->skybox = null;
+            result->background = null;
             result->camera_position = Vector.Origin;
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.
@@ -86,43 +87,49 @@ namespace GLTech2
 
     public delegate void FrameCallBack(Camera sender, double secs);
 
-    public sealed unsafe class Camera : IDisposable
+    public unsafe class Camera : IDisposable
     {
-        #region Fields
-        private Bitmap bitmap_acessor;
-        [SecurityCritical]
-        internal Camera_* unmanaged;
-        private Map refMap;
-        private Material refSkybox;
-        private bool keepRendering = false;
-        private bool rendering = false;
-        private int frame_count = 0;
-        private readonly object locker = new object();
-        private readonly Random random = new Random();
-        #endregion
-
-        #region Constructors
-        public Camera(Map map, int width = 640, int height = 360)
+        public Camera(Map map, Material background, PictureBox output, int width = 640, int height = 360)
         {
             const int pixelsize = 4;
 
+            refMap = map;
             unmanaged = Camera_.Alloc(width, height, map.unmanaged);
-            unmanaged->RefreshCaches();
-            bitmap_acessor = new Bitmap(width, height, width * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)unmanaged->bitmap_buffer);
-            var temp = bitmap_acessor.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            Background = background;
+            SetOutput(output);
+
+            //Possibly obsolete
+            bufferBitmap = new Bitmap(width, height, width * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)unmanaged->bitmap_buffer);
+            var temp = bufferBitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             temp.Scan0 = (IntPtr)unmanaged->bitmap_buffer;
-            bitmap_acessor.UnlockBits(temp);
-
-            Material skybox = new Texture32(Resources.Black); //Temporario
-            Skybox = skybox;
-
-            this.refMap = map;
+            bufferBitmap.UnlockBits(temp);
         }
-        #endregion
 
-        #region Properties
+        [SecurityCritical]
+        internal Camera_* unmanaged;
+        private readonly Random random = new Random();
+
+
+        private Map refMap;
+        public Map Map => refMap;
+
+        private Material refBackground;
+        public Material Background
+        {
+            get
+            {
+                return refBackground;
+            }
+            set
+            {
+                refBackground = value ?? throw new ArgumentNullException();
+                unmanaged->background = value.unmanaged;
+            }
+        }
+
         [Obsolete]
-        public Bitmap Frame => bitmap_acessor;
+        public Bitmap BufferBitmap => bufferBitmap;
+        private Bitmap bufferBitmap;
         public Bitmap BitmapCopy
         {
             get
@@ -150,6 +157,7 @@ namespace GLTech2
                     unmanaged->camera_angle = value % 360 + 1;
             }
         }
+
         public float FOV
         {
             get
@@ -160,39 +168,87 @@ namespace GLTech2
             {
                 if (value > 179)
                     value = 179;
-                else if (value <= 0)
-                    return;
+                else if (value < 1)
+                    value = 1;
                 unmanaged->camera_HFOV = value;
                 unmanaged->RefreshCaches();
             }
         }
-        public double AverateFrameTime => unmanaged->averageFrametime;
+
+        public double AverageFrameTime => unmanaged->averageFrametime;
         public int DisplayWidth { get => unmanaged->bitmap_width; private set => unmanaged->bitmap_width = value; }
         public int DisplayHeight { get => unmanaged->bitmap_height; private set => unmanaged->bitmap_height = value; }
+        private int frame_count = 0;
         public int FrameCount { get => frame_count; private set => frame_count = value; }
+
+        private readonly object locker = new object();
+        [Obsolete]
         public object Locker { get => locker; }
-        public Map Map => refMap;
-        public Material Skybox
+        public Vector Camera_Position { get => unmanaged->camera_position; set => unmanaged->camera_position = value; }
+
+        public event FrameCallBack OnRender;
+
+        public void Dispose()
         {
-            get
+            unmanaged->Dispose();
+            Marshal.FreeHGlobal((IntPtr)unmanaged);
+        }
+
+        public void SetResolution(int width, int height)
+        {
+            lock (locker)
             {
-                return refSkybox;
-            }
-            set
-            {
-                refSkybox = value ?? throw new ArgumentNullException();
-                unmanaged->skybox = value.unmanaged;
+                Marshal.ReAllocHGlobal((IntPtr)unmanaged->bitmap_buffer, (IntPtr) (4 * width * height));
+                unmanaged->bitmap_height = height;
+                unmanaged->bitmap_width = width;
+                unmanaged->RefreshCaches();
             }
         }
-        public Vector Camera_Position { get => unmanaged->camera_position; set => unmanaged->camera_position = value; }
-        #endregion
 
-        #region Events
-        public event FrameCallBack OnRender;
-        #endregion
+        [Obsolete]
+        public void Step(float amount) => unmanaged->camera_position += new Vector(unmanaged->camera_angle) * amount;
 
-        #region Methods
-        public void StartShoting()
+        [Obsolete]
+        public void Step(float amount, float angle) => unmanaged->camera_position += new Vector(unmanaged->camera_angle + angle) * amount;
+
+
+        [Obsolete]
+        public void Turn(float amount) => CameraAngle += amount;
+
+
+        public PictureBox Output { get; private set; }
+        private void RePaint(object sender, PaintEventArgs e) =>
+            ((PictureBox)sender).Image = BitmapCopy;
+        public void SetOutput(PictureBox pictureBox)
+        {
+            if (Output != null)
+                Output.Paint -= RePaint;
+            if (pictureBox != null)
+                Output = pictureBox;
+            Output.Paint += RePaint;
+        }
+
+
+
+        private bool rendering = false;
+        [Obsolete]
+        public void RenderOnce()
+        {
+            while (rendering)
+                Thread.Yield();
+            Task.Run(() =>
+            {
+                Stopwatch timer = Stopwatch.StartNew();
+                Render();
+                double currentframetime = timer.Elapsed.Ticks / (double)Stopwatch.Frequency;
+                double averageframetime = unmanaged->averageFrametime;
+                unmanaged->averageFrametime = 0.9 * averageframetime + 0.1 * currentframetime;
+                OnRender?.Invoke(this, currentframetime);
+            });
+        }
+
+        private bool keepRendering = false;
+        public void StartRendering()
         {
             if (keepRendering == true)
                 return;
@@ -212,47 +268,8 @@ namespace GLTech2
             });
         }
 
-        public void Dispose()
-        {
-            unmanaged->Dispose();
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
-        }
-
-        public void Shot()
-        {
-            while (rendering)
-                Thread.Yield();
-            Task.Run(() =>
-            {
-                Stopwatch timer = Stopwatch.StartNew();
-                Render();
-                double currentframetime = timer.Elapsed.Ticks / (double) Stopwatch.Frequency;
-                double averageframetime = unmanaged->averageFrametime;
-                unmanaged->averageFrametime = 0.9 * averageframetime + 0.1 * currentframetime;
-                OnRender?.Invoke(this, currentframetime);
-            });
-        }
-
-        public void SetResolution(int width, int height)
-        {
-            lock (locker)
-            {
-                Marshal.ReAllocHGlobal((IntPtr)unmanaged->bitmap_buffer, (IntPtr) (4 * width * height));
-                unmanaged->bitmap_height = height;
-                unmanaged->bitmap_width = width;
-                unmanaged->RefreshCaches();
-            }
-        }
-
-        public void Step(float amount) => unmanaged->camera_position += new Vector(unmanaged->camera_angle) * amount;
-
-        public void Step(float amount, float angle) => unmanaged->camera_position += new Vector(unmanaged->camera_angle + angle) * amount;
-
-        public void StopShooting() => keepRendering = false;
-
-        //private void TryStep(float amount) { }
-
-        public void Turn(float amount) => CameraAngle += amount;
+        public void StopRendering() =>
+            keepRendering = false;
 
         //Don't know how to pinvoke fromm current directory =/
         [Obsolete("Don't change the directory of the files yet!")]
@@ -272,7 +289,7 @@ namespace GLTech2
                 //Caching frequently used values.
                 int display_width = unmanaged->bitmap_width;
                 int display_height = unmanaged->bitmap_height;
-                Material_ skybox = *unmanaged->skybox;
+                Material_ background = *unmanaged->background;
 #if PARALLEL
                 Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {
@@ -285,14 +302,13 @@ namespace GLTech2
                     float ray_angle = unmanaged->cache_angles[ray_id] + unmanaged->camera_angle;
                     Ray ray = new Ray(unmanaged->camera_position, ray_angle);
 
-                    //Optimized, but not fully revised.
-                    int SkyboxBackground(int line)
+                    int GetBackground(int line)
                     {
-                        float hratio = ray_angle / 360 + 180; //Temporary bugfix to avoid hratio being < 0
+                        float hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
 
                         float screenVratio = (float) line / display_height;
                         float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        return skybox.MapPixel(hratio, vratio);
+                        return background.MapPixel(hratio, vratio);
                     }
 
                     //Cast the ray towards every wall.
@@ -307,7 +323,7 @@ namespace GLTech2
                             float vratio = topIndex + fullColumnRatio * line / display_height;
                             if (vratio < 0f || vratio >= 1f)
                             {
-                                unmanaged->bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(line);
+                                unmanaged->bitmap_buffer[display_width * line + ray_id] = GetBackground(line);
                             }
                             else
                             {
@@ -319,7 +335,7 @@ namespace GLTech2
                     else
                     {
                         for (int line = 0; line < display_height; line++)
-                            unmanaged->bitmap_buffer[display_width * line + ray_id] = SkyboxBackground(line);
+                            unmanaged->bitmap_buffer[display_width * line + ray_id] = GetBackground(line);
                     }
 #if PARALLEL
                 });
@@ -329,6 +345,5 @@ namespace GLTech2
                 rendering = false;
             }
         }
-        #endregion
     }
 }

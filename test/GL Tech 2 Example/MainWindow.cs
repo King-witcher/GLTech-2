@@ -29,8 +29,13 @@ namespace Game
             //Material is a flyweight structure that refers to a texture and is alocated one for each object that uses.
             Material wallMaterial = new Material(
                 texture: wallTexture,
-                hoffset: 0,
-                hrepeat: 2);
+                hoffset: 0f,
+                hrepeat: 12f);
+
+            Material cosmosMaterial = new Material(
+                texture: cosmosTexture,
+                hoffset: 0f,
+                hrepeat: 3f);
 
             //Create a cilinder and add it to the map.
             Vector[] verts = Vector.GetPolygon(
@@ -43,20 +48,18 @@ namespace Game
             myMap.AddWalls(myWalls);
 
             //Create your camera.
-            myCamera = new Camera(map: myMap, width: 1600, height: 900);
-            myCamera.Skybox = new Material(
-                texture: cosmosTexture,
-                hoffset: 0f,
-                hrepeat: 3f);
-
-            //Take a PictureBox and subscribe to it's Paint event a function that updates it's display once again.
-            display.Paint += RefreshPictureBox;
+            myCamera = new Camera(
+                map: myMap,
+                background: cosmosMaterial,
+                output: display,
+                width: 1600,
+                height: 900);
 
             //Subscribe to camera.OnRender event your custom Update method wich will be called whenever the camera renders a new frame.
             myCamera.OnRender += (a, aa) => Update(a, aa);
 
             //Start a continuous rendering process.
-            myCamera.StartShoting();
+            myCamera.StartRendering();
         }
 
         private void RefreshPictureBox(object sender, PaintEventArgs e)

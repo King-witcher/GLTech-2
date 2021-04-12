@@ -30,24 +30,24 @@ pixel SkyboxBackground_Legacy(Camera_& camera, int ray_id, int line)
     float cos = camera.cache_cosines[ray_id];
     float vratio = (1 - cos) / 2 + cos * screenVratio;
 
-    return camera.skybox->MapPixel(hratio, vratio);
+    return camera.background->MapPixel(hratio, vratio);
 }
 
-pixel SkyboxBackground(Material_ skybox, float ray_angle, float ray_cos, int line, int display_height)
+pixel GetBackground(Material_ background, float ray_angle, float ray_cos, int line, int display_height)
 {
-    float hratio = ray_angle / 360 + 180;
+    float hratio = ray_angle / 360 + 1;
 
     float screenVratio = (float) line / display_height;
     float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
 
-    return skybox.MapPixel(hratio, vratio);
+    return background.MapPixel(hratio, vratio);
 }
 
 void NativeRender(Camera_& camera)
 {
     int display_height = camera.bitmap_height;
     int display_width = camera.bitmap_width;
-    Material_ skybox = *camera.skybox;
+    Material_ background = *camera.background;
     pixel* buffer = camera.bitmap_buffer;
 
     for (int ray_id = 0; ray_id < camera.bitmap_width; ray_id++)
@@ -70,7 +70,7 @@ void NativeRender(Camera_& camera)
                 float vratio = topIndex + fullColumnRatio * line / display_height;
                 if (vratio < 0.0f || vratio >= 1.0f)
                 {
-                    buffer[display_width * line + ray_id] = SkyboxBackground(skybox, ray_angle, ray_cos, line, display_height);
+                    buffer[display_width * line + ray_id] = GetBackground(background, ray_angle, ray_cos, line, display_height);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ void NativeRender(Camera_& camera)
         {
             for (int line = 0; line < display_height; line++)
             {
-                buffer[display_width * line + ray_id] = SkyboxBackground(skybox, ray_angle, ray_cos, line, display_height);
+                buffer[display_width * line + ray_id] = GetBackground(background, ray_angle, ray_cos, line, display_height);
             }
         }
     }
