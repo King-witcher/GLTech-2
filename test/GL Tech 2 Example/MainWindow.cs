@@ -70,13 +70,13 @@ namespace Game
         }
 
         //Do whatever you want each time the engine generates a new frame.
-        double[] timeRegistry = new double[1000];
+        double[] timeRegistry = new double[100];
         int registryCount = 0;
 
         public void Update(double a, double deltaTime)
         {
             timeRegistry[registryCount++] = deltaTime * 1000;
-            if (registryCount == 1000)
+            if (registryCount == 100)
             {
                 Console.WriteLine("Average: " + timeRegistry.Average());
                 Console.WriteLine("SD: " + StdDeviation(timeRegistry));

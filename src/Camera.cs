@@ -266,10 +266,11 @@ namespace GLTech2
                 {
                     timer.Restart();
                     CLRRender();
+                    double render_time = timer.Elapsed.Ticks / (double)Stopwatch.Frequency;
                     while (timer.ElapsedMilliseconds < 7) //Don't let the framerate go higher than 143 fps.
                         Thread.Yield();
                     //Mexer no frametime
-                    RenderCallback(0, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
+                    RenderCallback(render_time, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
                     //OnRender?.Invoke(this, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
                 }
             });
