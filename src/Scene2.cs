@@ -24,11 +24,6 @@ namespace GLTech2
             get => refMap;
         }
 
-        //public Material Background
-        //{
-            //get => refCamera.Background;
-            //set => refCamera.Background = value;
-        //}
         public Vector CameraPosition
         {
             get => cameraptr->camera_position;

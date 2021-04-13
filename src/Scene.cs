@@ -59,11 +59,9 @@ namespace GLTech2
     public unsafe sealed class Scene : IDisposable
     {
         internal SceneData* unmanaged;
-        //internal Material refBackground;
 
         public Scene(Material background, int maxWalls = 512, int maxSprities = 512)
         {
-            //refBackground = background;
             unmanaged = SceneData.Alloc(maxWalls, maxSprities, background);
         }
 
