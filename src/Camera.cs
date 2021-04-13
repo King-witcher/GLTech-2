@@ -81,13 +81,13 @@ namespace GLTech2
         }
     }
 
+    [Obsolete]
     internal unsafe class Camera : IDisposable
     {
         public Camera(Scene map, PictureBox output, Action<double, double> updateCallback, int width = 640, int height = 360)
         {
             const int pixelsize = 4;
 
-            refMap = map;
             unmanaged = RenderStruct.Alloc(width, height, map.unmanaged);
             SetOutput(output);
 
@@ -103,10 +103,6 @@ namespace GLTech2
         [SecurityCritical]
         internal RenderStruct* unmanaged;
         private readonly Random random = new Random();
-
-
-        private Scene refMap;
-        public Scene Map => refMap;
 
         [Obsolete]
         public Bitmap BufferBitmap => bufferBitmap;

@@ -8,7 +8,7 @@ namespace GLTech2
 {
     public abstract class Behavior
     {
-        public abstract void Update();
+        public abstract void Update(double deltatime, double frametime);
         public abstract void Start();
     }
 }

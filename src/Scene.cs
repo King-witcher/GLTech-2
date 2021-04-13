@@ -5,6 +5,8 @@
 //See Sprite.cs before
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -13,7 +15,7 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SceneData : IDisposable
     {
-        internal Sprite_** sprities; //obsolete
+        internal SpriteData** sprities; //obsolete
         internal int sprite_count;
         internal int sprite_max;
         internal WallData** walls;
@@ -60,24 +62,24 @@ namespace GLTech2
     {
         internal SceneData* unmanaged;
 
-        public Scene(Material background, int maxWalls = 512, int maxSprities = 512)
-        {
+        public Scene(Material background, int maxWalls = 512, int maxSprities = 512) =>
             unmanaged = SceneData.Alloc(maxWalls, maxSprities, background);
-        }
+
 
         public int MaxWalls => unmanaged->wall_max;
         public int WallCount => unmanaged->wall_count;
-        public Vector StartingPoint => Vector.Origin; //Precisa ser removido
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+
+
+
+        private List<Element> Elements = new List<Element>();
         internal void AddSprite(Sprite s) => throw new NotImplementedException();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddWall(Wall w)
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
-            unmanaged->Add(w.unmanaged);
+            unmanaged->Add(w.walldata);
+            Elements.Add(null);
         }
 
         public void AddWalls(params Wall[] walls)
@@ -90,10 +92,12 @@ namespace GLTech2
             }
         }
 
-        public void Dispose()
+
+        public void Dispose()   //must change
         {
             unmanaged->Dispose();
             Marshal.FreeHGlobal((IntPtr)unmanaged);
+            Elements.Clear();
         }
     }
 }

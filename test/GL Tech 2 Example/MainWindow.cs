@@ -18,10 +18,6 @@ namespace Example
 
         public void OnLoad(object sender, EventArgs e)
         {
-
-
-
-
             //Texture32 is only alocated once for every object that refers to it.
             Texture32 wallTexture = new Texture32(Resources.Wall);
             Texture32 cosmosTexture = new Texture32(Resources.Universe);
@@ -73,7 +69,7 @@ namespace Example
                 registryCount = 0;
             }
 
-            mover.Start = mover.Start * 1.005f + new Vector(0f, 0.001f);
+            mover.StartPoint = mover.StartPoint * 1.005f + new Vector(0f, 0.001f);
         }
 
         private double StdDeviation(IEnumerable<double> values)

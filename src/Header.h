@@ -37,7 +37,7 @@ struct WallData
 	Material material;
 };
 
-struct Sprite_
+struct SpriteData
 {
 	Vector position;
 	Material material;
@@ -45,7 +45,7 @@ struct Sprite_
 
 struct SceneData
 {
-	Sprite_** sprities;
+	SpriteData** sprities;
 	int sprite_count;
 	int sprite_max;
 	WallData** walls;

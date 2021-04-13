@@ -10,6 +10,6 @@ namespace GLTech2
     internal sealed class Group : Element
     {
         public override Vector Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override Vector Rotation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override float Rotation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

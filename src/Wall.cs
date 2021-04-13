@@ -14,90 +14,66 @@ using System.Security;
 
 namespace GLTech2
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct WallData
+    public unsafe class Wall : Element
     {
-        internal Vector geom_direction;
-        internal Vector geom_start;
-        internal Material material; //Propositalmente por valor.
+        internal WallData* walldata;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static WallData* Alloc(Vector start, Vector end, Material material)
-        {
-            WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
-            result->material = material;
-            result->geom_direction = end - start;
-            result->geom_start = start;
-            return result;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [Obsolete]
-        internal static WallData* Alloc(Vector start, float angle, float length, Material material)
-        {
-            WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
-            Vector dir = new Vector(angle) * length;
-            result->material = material;
-            result->geom_direction = dir;
-            result->geom_start = start;
-            return result;
-        }
-    }
 
-    public unsafe class Wall : IDisposable
-    {
-        [SecurityCritical]
-        internal WallData* unmanaged;
-
-        #region Constructors
-        public Wall(Vector start, Vector end, Material material)
+        public Vector StartPoint
         {
-            unmanaged = WallData.Alloc(start, end, material);
+            get => walldata->geom_start;
+            set => walldata->geom_start = value;
         }
-        
-        public Wall(Vector start, float angle_deg, float length, Material material)
-        {
-            unmanaged = WallData.Alloc(start, angle_deg, length, material);
-        }
-        #endregion
 
-        #region Properties
-        public float Rotation
+        public Vector EndPoint
         {
-            get => unmanaged->geom_direction.Angle;
-            set
-            {
-                unmanaged->geom_direction = unmanaged->geom_direction.Module * new Vector(value);
-            }
+            get => walldata->geom_start + walldata->geom_direction;
+            set => walldata->geom_direction = value - walldata->geom_start;
         }
 
         public float Length
         {
-            get => unmanaged->geom_direction.Module;
-            set => unmanaged->geom_direction *= value / unmanaged->geom_direction.Module;
+            get => walldata->geom_direction.Module;
+            set => walldata->geom_direction *= value / walldata->geom_direction.Module;
         }
 
         public Material Material
         {
             set
             {
-                unmanaged->material = value;
+                walldata->material = value;
             }
         }
 
-        public Vector Start
+        public override Vector Position
         {
-            get => unmanaged->geom_start;
-            set => unmanaged->geom_start = value;
+            get => StartPoint;
+            set => StartPoint = value;
         }
 
-        public Vector End
+        public override float Rotation
         {
-            get => unmanaged->geom_start + unmanaged->geom_direction;
-            set => unmanaged->geom_direction = value - unmanaged->geom_start;
+            get => walldata->geom_direction.Angle;
+            set
+            {
+                walldata->geom_direction = walldata->geom_direction.Module * new Vector(value);
+            }
         }
-        #endregion
 
-        #region Methods
+
+
+        public Wall(Vector start, Vector end, Material material)
+        {
+            walldata = WallData.Alloc(start, end, material);
+        }
+        
+        public Wall(Vector start, float angle_deg, float length, Material material)
+        {
+            walldata = WallData.Alloc(start, angle_deg, length, material);
+        }
+
+
+
 
         public static Wall[] FromBitmap(Bitmap source, params Color[] ignoreList)
         {
@@ -179,7 +155,7 @@ namespace GLTech2
             Material material_ = material;
             int walls = verts.Length - 1;
 
-            material_.hrepeat = material_.hrepeat / walls;
+            material_.hrepeat /= walls;
 
             for (int i = 0; i < walls; i++)
             {
@@ -201,7 +177,7 @@ namespace GLTech2
             Wall[] result = new Wall[total_walls];
 
             Material currentMaterial = material;
-            currentMaterial.hrepeat = currentMaterial.hrepeat / total_walls;
+            currentMaterial.hrepeat /= total_walls;
 
             for (int i = 0; i < total_walls - 1; i++)
             {
@@ -215,10 +191,9 @@ namespace GLTech2
             return result;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            Marshal.FreeHGlobal((IntPtr) unmanaged);
+            Marshal.FreeHGlobal((IntPtr) walldata);
         }
-        #endregion
     }
 }

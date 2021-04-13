@@ -7,22 +7,54 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
-    public abstract class Element
+    public abstract class Element : IDisposable
     {
         public abstract Vector Position { get; set; }
-        public abstract Vector Rotation { get; set; }
+        public abstract float Rotation { get; set; }
 
-        internal bool isInitialized;
-        private List<Behavior> scripts;
+
+        private List<Behavior> behaviors = new List<Behavior>();
+        private List<Element> childs = new List<Element>();
+
 
         public Element()
         {
-            scripts = new List<Behavior>();
         }
 
-        public void AddScript(Behavior script)
+        public void AddBehavior(Behavior behavior)
         {
-            scripts.Add(script);
+            behaviors.Add(behavior);
+        }
+
+
+        public void Push(Vector direction)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Rotate(float roation)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public virtual void Dispose()
+        {
+
+        }
+
+
+        internal void Start()
+        {
+            foreach(Behavior behavior in behaviors)
+                behavior.Start();
+        }
+
+        internal void Update(double deltatime, double frametime)
+        {
+            foreach (Behavior behavior in behaviors)
+                behavior.Update(deltatime, frametime);
         }
     }
 }
