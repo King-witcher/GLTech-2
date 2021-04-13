@@ -19,13 +19,13 @@ namespace GLTech2
     {
         internal Vector geom_direction;
         internal Vector geom_start;
-        internal Material_ material; //Propositalmente por valor.
+        internal Material material; //Propositalmente por valor.
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static WallData* Alloc(Vector start, Vector end, Material material)
         {
             WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
-            result->material = *material.unmanaged;
+            result->material = material;
             result->geom_direction = end - start;
             result->geom_start = start;
             return result;
@@ -36,7 +36,7 @@ namespace GLTech2
         {
             WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             Vector dir = new Vector(angle) * length;
-            result->material = *material.unmanaged;
+            result->material = material;
             result->geom_direction = dir;
             result->geom_start = start;
             return result;
@@ -176,18 +176,15 @@ namespace GLTech2
                 return new Wall[0];
 
             Wall[] result = new Wall[verts.Length - 1];
-            Material_ material_ = *material.unmanaged;
+            Material material_ = material;
             int walls = verts.Length - 1;
 
-            float material_voffset = material_.voffset;
-            float material_vrepeat = material_.vrepeat;
-            float material_hrepeat = material_.hrepeat / walls;
+            material_.hrepeat = material_.hrepeat / walls;
 
             for (int i = 0; i < walls; i++)
             {
-                float material_hoffset = material_.hoffset + material_.hrepeat * i / walls;
-                Material currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
-                result[i] = new Wall(verts[i], verts[i + 1], currentMaterial);
+                material_.hoffset = material.hoffset + material.hrepeat * i / walls;
+                result[i] = new Wall(verts[i], verts[i + 1], material_);
             }
 
             return result;
@@ -200,25 +197,19 @@ namespace GLTech2
             if (verts.Length <= 1)
                 return new Wall[0];
 
-            Wall[] result = new Wall[verts.Length];
-            Material_ material_ = *material.unmanaged;
             int total_walls = verts.Length;
+            Wall[] result = new Wall[total_walls];
 
-            float material_voffset = material_.voffset;
-            float material_vrepeat = material_.vrepeat;
-            float material_hrepeat = material_.hrepeat / total_walls;
-            float material_hoffset;
-            Material currentMaterial;
+            Material currentMaterial = material;
+            currentMaterial.hrepeat = currentMaterial.hrepeat / total_walls;
 
             for (int i = 0; i < total_walls - 1; i++)
             {
-                material_hoffset = material_.hoffset + material_.hrepeat * i / (total_walls);
-                currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
+                currentMaterial.hoffset = material.hoffset + material.hrepeat * i / (total_walls);
                 result[i] = new Wall(verts[i], verts[i + 1], currentMaterial);
             }
 
-            material_hoffset = material_.hoffset + material_.hrepeat * (total_walls - 1) / total_walls;
-            currentMaterial = new Material(material.Texture, material_hoffset, material_hrepeat);
+            currentMaterial.hoffset = material.hoffset + material.hrepeat * (total_walls - 1) / total_walls;
             result[total_walls - 1] = new Wall(verts[total_walls - 1], verts[0], currentMaterial);
 
             return result;

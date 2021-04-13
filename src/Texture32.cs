@@ -46,7 +46,6 @@ namespace GLTech2
 
         public Texture32(Bitmap bitmap) =>
             unmanaged = Texture32_.Alloc(bitmap);
-
         public void Dispose()
         {
             unmanaged->Dispose();

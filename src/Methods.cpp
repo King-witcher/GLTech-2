@@ -1,6 +1,6 @@
 #include "PCH.h"
 
-pixel Material_::MapPixel(float hratio, float vratio)
+pixel Material::MapPixel(float hratio, float vratio)
 {
     int x = (int)(texture.width * (hrepeat * hratio + hoffset)) % texture.width;
     int y = (int)(texture.height * vratio) % texture.height;

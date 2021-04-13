@@ -60,6 +60,8 @@ namespace Example
                 width: 1600,
                 height: 900);
 
+            myCamera.Turn(60);
+
             //Subscribe to camera.OnRender event your custom Update method wich will be called whenever the camera renders a new frame.
 
             //Start a continuous rendering process.

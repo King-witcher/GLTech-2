@@ -11,14 +11,14 @@ namespace GLTech2
     internal unsafe struct Sprite_
     {
         internal Vector position;
-        internal Material_ material;
+        internal Material material;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Sprite_* Alloc(Vector position, Material_* material)
+        internal static Sprite_* Alloc(Vector position, Material material)
         {
             Sprite_* result = (Sprite_*)Marshal.AllocHGlobal(sizeof(Sprite_));
             result->position = position;
-            result->material = *material;
+            result->material = material;
             return result;
         }
 
@@ -38,8 +38,8 @@ namespace GLTech2
 
         public float Rotation { get; set; }
 
-        public Sprite(Vector position, Material material = null) =>
-            unmanaged = Sprite_.Alloc(position, material.unmanaged);
+        public Sprite(Vector position, Material material) =>
+            unmanaged = Sprite_.Alloc(position, material);
 
         public void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)unmanaged);

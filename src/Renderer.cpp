@@ -33,7 +33,7 @@ pixel SkyboxBackground_Legacy(RenderStruct& camera, int ray_id, int line)
     return camera.scene->background.MapPixel(hratio, vratio);
 }
 
-pixel GetBackground(Material_ background, float ray_angle, float ray_cos, int line, int display_height)
+pixel GetBackground(Material background, float ray_angle, float ray_cos, int line, int display_height)
 {
     float hratio = ray_angle / 360 + 1;
 
@@ -47,7 +47,7 @@ void NativeRender(RenderStruct& camera)
 {
     int display_height = camera.bitmap_height;
     int display_width = camera.bitmap_width;
-    Material_ background = camera.scene->background;
+    Material background = camera.scene->background;
     pixel* buffer = camera.bitmap_buffer;
 
     for (int ray_id = 0; ray_id < camera.bitmap_width; ray_id++)

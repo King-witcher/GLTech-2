@@ -13,7 +13,7 @@ struct Texture32_
 	int width;
 };
 
-struct Material_
+struct Material
 {
 	float hoffset;
 	float hrepeat;
@@ -34,13 +34,13 @@ struct WallData
 {
 	Vector geom_direction;
 	Vector geom_start;
-	Material_ material;
+	Material material;
 };
 
 struct Sprite_
 {
 	Vector position;
-	Material_ material;
+	Material material;
 };
 
 struct SceneData
@@ -51,7 +51,7 @@ struct SceneData
 	WallData** walls;
 	int wall_count;
 	int wall_max;
-	Material_ background;
+	Material background;
 };
 
 struct Ray

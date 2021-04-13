@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
 #undef CPP
-#undef PARALLEL
+#define PARALLEL
 
 using GLTech2.Properties;
 using System;
@@ -267,7 +267,7 @@ namespace GLTech2
                 //Caching frequently used values.
                 int display_width = unmanaged->bitmap_width;
                 int display_height = unmanaged->bitmap_height;
-                Material_ background = unmanaged->scene->background;
+                Material background = unmanaged->scene->background;
 #if PARALLEL
                 ParallelLoopResult plr = Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {

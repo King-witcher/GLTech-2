@@ -8,7 +8,7 @@ using System.Security;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct Material_
+    public unsafe struct Material
     {
         internal float hoffset;
         internal float hrepeat;
@@ -16,16 +16,25 @@ namespace GLTech2
         internal float voffset; //Ainda não implementado
         internal float vrepeat; //Ainda não implmenetado
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Material_* Alloc(float hoffset, float hrepeat, float voffset, float vrepeat, Texture32_* texture)
+        public float HorizontalOffset
         {
-            Material_* mat = (Material_*)Marshal.AllocHGlobal(sizeof(Material_));
-            mat->hoffset = hoffset;
-            mat->hrepeat = hrepeat;
-            mat->texture = *texture;
-            mat->voffset = voffset;
-            mat->vrepeat = vrepeat;
-            return mat;
+            get => hoffset;
+            set => hoffset = value;
+        }
+
+        public float HorizontalRepeat
+        {
+            get => hrepeat;
+            set => hrepeat = value;
+        }
+
+        public Material(Texture32 texture, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
+        {
+            this.hoffset = hoffset;
+            this.hrepeat = hrepeat;
+            this.texture = *texture.unmanaged;
+            this.voffset = voffset;
+            this.vrepeat = vrepeat;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -36,59 +45,6 @@ namespace GLTech2
             return texture.buffer[texture.width * y + x];
         }
 
-        public static implicit operator Material_ (Material mat)
-        {
-            return *mat.unmanaged;
-        }
-
-        public static implicit operator Material_ (Texture32_ tex)
-        {
-            var temp = new Material_();
-            temp.hoffset = 0f;
-            temp.hrepeat = 1f;
-            temp.voffset = 0f;
-            temp.vrepeat = 1f;
-            temp.texture = tex;
-            return temp;
-        }
-    }
-
-    public unsafe class Material : IDisposable
-    {
-        [SecurityCritical]
-        internal Material_* unmanaged;
-        private Texture32 refTexture;
-
-        public float HorizontalOffset
-        {
-            get => unmanaged->hoffset;
-            set => unmanaged->hoffset = value;
-        }
-
-        public float HorizontalRepeat
-        {
-            get => unmanaged->hrepeat;
-            set => unmanaged->hrepeat = value;
-        }
-        public Texture32 Texture
-        {
-            get => refTexture;
-            set
-            {
-                refTexture = value;
-                unmanaged->texture = *value.unmanaged;
-            }
-        }
-
-        public Material(Texture32 texture, float hoffset = 0f, float hrepeat = 1f)
-        {
-            unmanaged = Material_.Alloc(hoffset, hrepeat, 0f, 1f, texture.unmanaged);
-            refTexture = texture;
-        }
-
-        public void Dispose() =>
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
-
         //Estou deixando isso para facilitar a utilização de uma determinada texture em vários materiais sem necessidade de criar
         //inúmeros overloads para métodos. Dessa forma, é possível utilizar um Texture32 em qualquer lugar que se possa utilizar um
         //Material. Note que o mesmo não é válido para Texture32 com Bitmap, para evitar más práticas de gerenciamento de memória
@@ -97,10 +53,5 @@ namespace GLTech2
 
         public static implicit operator Material(Texture32 texture) =>
             new Material(texture);
-
-        ~Material()
-        {
-            this.Dispose();
-        }
     }
 }

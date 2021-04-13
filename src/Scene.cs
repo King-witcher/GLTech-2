@@ -19,10 +19,10 @@ namespace GLTech2
         internal WallData** walls;
         internal int wall_count;
         internal int wall_max;
-        internal Material_ background;
+        internal Material background;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SceneData* Alloc(int maxWalls, int masSprities, Material_ background)
+        internal static SceneData* Alloc(int maxWalls, int masSprities, Material background)
         {
             SceneData* result = (SceneData*)Marshal.AllocHGlobal(sizeof(SceneData));
             result->sprities = (Sprite_**)Marshal.AllocHGlobal(masSprities * sizeof(Sprite_*)); // Not implemented yet
@@ -57,7 +57,7 @@ namespace GLTech2
         public Scene(Material background, int maxWalls = 512, int maxSprities = 512)
         {
             //refBackground = background;
-            unmanaged = SceneData.Alloc(maxWalls, maxSprities, *background.unmanaged);
+            unmanaged = SceneData.Alloc(maxWalls, maxSprities, background);
         }
 
         public int MaxWalls => unmanaged->wall_max;
