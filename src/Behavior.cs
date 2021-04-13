@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
-    internal abstract class BehaviorScript
+    public abstract class Behavior
     {
         public abstract void Update();
         public abstract void Start();

@@ -1,17 +1,16 @@
-﻿using Game.Properties;
+﻿using Example.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using GLTech2;
 
-namespace Game
+namespace Example
 {
     public partial class MainWindow : Form
     {
         Camera myCamera;
-        Map myMap;
-        
+        Scene myMap;
 
         public MainWindow() =>
             InitializeComponent();
@@ -20,8 +19,11 @@ namespace Game
 
         public void OnLoad(object sender, EventArgs e)
         {
+
+
+
             //Allocate space in memory to the map and create a camera.
-            myMap = new Map(maxWalls: 512, maxSprities: 512);
+            myMap = new Scene(maxWalls: 512, maxSprities: 512);
 
             //Texture32 is only alocated once for every object that refers to it.
             Texture32 wallTexture = new Texture32(Resources.Wall);

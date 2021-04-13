@@ -92,7 +92,7 @@ namespace GLTech2
 
     public unsafe class Camera : IDisposable
     {
-        public Camera(Map map, Material background, PictureBox output, FrameUpdateCallback updateCallback, int width = 640, int height = 360)
+        public Camera(Scene map, Material background, PictureBox output, FrameUpdateCallback updateCallback, int width = 640, int height = 360)
         {
             const int pixelsize = 4;
 
@@ -115,8 +115,8 @@ namespace GLTech2
         private readonly Random random = new Random();
 
 
-        private Map refMap;
-        public Map Map => refMap;
+        private Scene refMap;
+        public Scene Map => refMap;
 
         private Material refBackground;
         public Material Background

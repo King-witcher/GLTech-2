@@ -47,11 +47,11 @@ namespace GLTech2
         internal void Add(void* sprite) => throw new NotImplementedException();
     }
 
-    public unsafe sealed class Map : IDisposable
+    public unsafe sealed class Scene : IDisposable
     {
         internal Map_* unmanaged;
 
-        public Map(int maxWalls = 512, int maxSprities = 512) => unmanaged = Map_.Alloc(maxWalls, maxSprities);
+        public Scene(int maxWalls = 512, int maxSprities = 512) => unmanaged = Map_.Alloc(maxWalls, maxSprities);
 
         public int MaxWalls => unmanaged->wall_max;
         public int WallCount => unmanaged->wall_count;

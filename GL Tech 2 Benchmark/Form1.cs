@@ -20,7 +20,7 @@ namespace GL_Tech_2_Benchmark
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Map map = new Map();
+            Scene map = new Scene();
 
             Material bricks = new Texture32(Resources.Wall);
             bricks.HorizontalRepeat = 12.6f;
