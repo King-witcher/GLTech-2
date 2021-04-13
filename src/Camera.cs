@@ -19,9 +19,8 @@ using static GLTech2.Debugging;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct Camera_ : IDisposable
+    internal unsafe struct RenderStruct : IDisposable
     {
-        internal double averageFrametime;
         internal volatile Int32* bitmap_buffer;
         internal int bitmap_height;
         internal int bitmap_width;
@@ -34,13 +33,12 @@ namespace GLTech2
         internal SceneData* scene;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Camera_* Alloc(int width, int height, SceneData* map)
+        internal static RenderStruct* Alloc(int width, int height, SceneData* map)
         {
-            Camera_* result = (Camera_*)Marshal.AllocHGlobal(sizeof(Camera_));
+            RenderStruct* result = (RenderStruct*)Marshal.AllocHGlobal(sizeof(RenderStruct));
             result->bitmap_height = height;
             result->bitmap_width = width;
             result->bitmap_buffer = (Int32*)Marshal.AllocHGlobal(sizeof(Int32) * width * height);
-            result->averageFrametime = 0f;
             result->camera_angle = 0f;
             result->camera_HFOV = 90f;
             result->scene = map;
@@ -93,7 +91,7 @@ namespace GLTech2
             const int pixelsize = 4;
 
             refMap = map;
-            unmanaged = Camera_.Alloc(width, height, map.unmanaged);
+            unmanaged = RenderStruct.Alloc(width, height, map.unmanaged);
             SetOutput(output);
 
             RenderCallback = updateCallback;
@@ -106,7 +104,7 @@ namespace GLTech2
         }
 
         [SecurityCritical]
-        internal Camera_* unmanaged;
+        internal RenderStruct* unmanaged;
         private readonly Random random = new Random();
 
 
@@ -161,7 +159,6 @@ namespace GLTech2
             }
         }
 
-        public double AverageFrameTime => unmanaged->averageFrametime;
         public int DisplayWidth { get => unmanaged->bitmap_width; private set => unmanaged->bitmap_width = value; }
         public int DisplayHeight { get => unmanaged->bitmap_height; private set => unmanaged->bitmap_height = value; }
         private int frame_count = 0;
@@ -223,9 +220,6 @@ namespace GLTech2
             {
                 Stopwatch timer = Stopwatch.StartNew();
                 CLRRender();
-                double currentframetime = timer.Elapsed.Ticks / (double)Stopwatch.Frequency;
-                double averageframetime = unmanaged->averageFrametime;
-                unmanaged->averageFrametime = 0.9 * averageframetime + 0.1 * currentframetime;
                 RenderCallback(0, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
             });
         }
@@ -258,7 +252,7 @@ namespace GLTech2
 
         //Don't know how to pinvoke fromm current directory =/
         [DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void NativeRender(Camera_* camera);
+        private static extern void NativeRender(RenderStruct* camera);
 
         private unsafe void CLRRender()
         {
@@ -296,7 +290,7 @@ namespace GLTech2
                     }
 
                     //Cast the ray towards every wall.
-                    Wall_* nearest = ray.NearestWall(unmanaged->scene, out float nearest_dist, out float nearest_ratio);
+                    WallData* nearest = ray.NearestWall(unmanaged->scene, out float nearest_dist, out float nearest_ratio);
                     if (nearest_dist != float.PositiveInfinity)
                     {
                         float columnHeight = (unmanaged->cache_colHeight1 / (ray_cos * nearest_dist));

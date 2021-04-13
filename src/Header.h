@@ -30,7 +30,7 @@ struct Vector
 	float Y;
 };
 
-struct Wall_
+struct WallData
 {
 	Vector geom_direction;
 	Vector geom_start;
@@ -48,7 +48,7 @@ struct SceneData
 	Sprite_** sprities;
 	int sprite_count;
 	int sprite_max;
-	Wall_** walls;
+	WallData** walls;
 	int wall_count;
 	int wall_max;
 	Material_ background;
@@ -61,13 +61,12 @@ struct Ray
 
 	Ray(Vector, float);
 
-	void GetCollisionData(Wall_*, float&, float&);
-	Wall_* NearestWall(SceneData*, float&, float&);
+	void GetCollisionData(WallData*, float&, float&);
+	WallData* NearestWall(SceneData*, float&, float&);
 };
 
-struct Camera_
+struct RenderStruct
 {
-	double averageFrametime;
 	pixel* bitmap_buffer;
 	int bitmap_height;
 	int bitmap_width;
@@ -82,7 +81,7 @@ struct Camera_
 
 extern "C"
 {
-	external void NativeRender(Camera_&);
+	external void NativeRender(RenderStruct&);
 	external void SayHello()
 	{
 		cout << endl << "Hello" << endl;

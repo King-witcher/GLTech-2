@@ -15,25 +15,26 @@ using System.Security;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct Wall_
+    internal unsafe struct WallData
     {
         internal Vector geom_direction;
         internal Vector geom_start;
         internal Material_ material; //Propositalmente por valor.
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Wall_* Alloc(Vector start, Vector end, Material material)
+        internal static WallData* Alloc(Vector start, Vector end, Material material)
         {
-            Wall_* result = (Wall_*)Marshal.AllocHGlobal(sizeof(Wall_));
+            WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             result->material = *material.unmanaged;
             result->geom_direction = end - start;
             result->geom_start = start;
             return result;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Wall_* Alloc(Vector start, float angle, float length, Material material)
+        [Obsolete]
+        internal static WallData* Alloc(Vector start, float angle, float length, Material material)
         {
-            Wall_* result = (Wall_*)Marshal.AllocHGlobal(sizeof(Wall_));
+            WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             Vector dir = new Vector(angle) * length;
             result->material = *material.unmanaged;
             result->geom_direction = dir;
@@ -45,31 +46,22 @@ namespace GLTech2
     public unsafe class Wall : IDisposable
     {
         [SecurityCritical]
-        internal Wall_* unmanaged;
-        internal Material refMaterial;
-        internal bool isBound = false;
+        internal WallData* unmanaged;
+
         #region Constructors
         public Wall(Vector start, Vector end, Material material)
         {
-            unmanaged = Wall_.Alloc(start, end, material);
-            refMaterial = material;
-        }
-
-        public Wall(Vector start, float angle_deg, Material material)
-        {
-            unmanaged = Wall_.Alloc(start, angle_deg, 1f, material);
-            refMaterial = material;
+            unmanaged = WallData.Alloc(start, end, material);
         }
         
         public Wall(Vector start, float angle_deg, float length, Material material)
         {
-            unmanaged = Wall_.Alloc(start, angle_deg, length, material);
-            refMaterial = material;
+            unmanaged = WallData.Alloc(start, angle_deg, length, material);
         }
         #endregion
 
         #region Properties
-        public float Angle
+        public float Rotation
         {
             get => unmanaged->geom_direction.Angle;
             set
@@ -86,10 +78,8 @@ namespace GLTech2
 
         public Material Material
         {
-            get => refMaterial;
             set
             {
-                refMaterial = value;
                 unmanaged->material = value;
             }
         }
@@ -98,12 +88,6 @@ namespace GLTech2
         {
             get => unmanaged->geom_start;
             set => unmanaged->geom_start = value;
-        }
-
-        public Vector Direction
-        {
-            get => unmanaged->geom_direction;
-            set => unmanaged->geom_direction = value;
         }
 
         public Vector End

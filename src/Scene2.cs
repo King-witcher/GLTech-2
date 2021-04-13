@@ -7,7 +7,7 @@ namespace GLTech2
     public unsafe class Scene2
     {
         internal unsafe SceneData* mapptr;
-        internal unsafe Camera_* cameraptr;
+        internal unsafe RenderStruct* cameraptr;
         private Camera refCamera;
         private Scene refMap;
 

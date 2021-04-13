@@ -47,23 +47,6 @@ namespace GLTech2
         public Texture32(Bitmap bitmap) =>
             unmanaged = Texture32_.Alloc(bitmap);
 
-        [Obsolete]
-        public int this[int x, int y]
-        {
-            get
-            {
-                if (x < 0 || y < 0 || x > unmanaged->width || y > unmanaged->height)
-                    throw new IndexOutOfRangeException();
-                return unmanaged->buffer[unmanaged->width * y + x];
-            }
-            set
-            {
-                if (x < 0 || y < 0 || x > unmanaged->width || y > unmanaged->height)
-                    throw new IndexOutOfRangeException();
-                unmanaged->buffer[unmanaged->width * y + x] = value;
-            }
-        }
-
         public void Dispose()
         {
             unmanaged->Dispose();

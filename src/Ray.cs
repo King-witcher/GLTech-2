@@ -10,8 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct Ray
+    internal unsafe struct Ray
     {
         private readonly Vector direction;
         private readonly Vector start;
@@ -31,7 +30,8 @@ namespace GLTech2
         public Vector Direction => direction;
         public Vector Start => start;
 
-        internal void GetCollisionData(Wall_* wall, out float distance, out float split)
+        //Optimizable
+        internal void GetCollisionData(WallData* wall, out float distance, out float split)
         {
             float det = Direction.X * wall->geom_direction.Y - Direction.Y * wall->geom_direction.X;
             if (det == 0)
@@ -53,13 +53,14 @@ namespace GLTech2
             distance = dsttmp;
         }
 
-        internal Wall_* NearestWall(SceneData* map, out float nearest_dist, out float nearest_ratio)
+        //Optimizable
+        internal WallData* NearestWall(SceneData* map, out float nearest_dist, out float nearest_ratio)
         {
             nearest_dist = float.PositiveInfinity;
             nearest_ratio = float.PositiveInfinity;
             int wallcount = map->wall_count;
-            Wall_** cur = map->walls;
-            Wall_* nearest = null;
+            WallData** cur = map->walls;
+            WallData* nearest = null;
 
             for (int i = 0; i < wallcount; i++)
             {

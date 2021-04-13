@@ -15,7 +15,7 @@ Ray::Ray(Vector start, float angle) : Start(start)
     Direction = direction;
 }
 
-void Ray::GetCollisionData(Wall_* wall, float& distance, float& split)
+void Ray::GetCollisionData(WallData* wall, float& distance, float& split)
 {
     float det = this->Direction.X * wall->geom_direction.Y - Direction.Y * wall->geom_direction.X;
     if (det == 0)
@@ -37,13 +37,13 @@ void Ray::GetCollisionData(Wall_* wall, float& distance, float& split)
     distance = dsttmp;
 }
 
-Wall_* Ray::NearestWall(SceneData* map, float& nearest_dist, float& nearest_ratio)
+WallData* Ray::NearestWall(SceneData* map, float& nearest_dist, float& nearest_ratio)
 {
     nearest_dist = FLT_MAX;
     nearest_ratio = FLT_MAX;
     int wallcount = map->wall_count;
-    Wall_** cur = map->walls;
-    Wall_* nearest = NULL;
+    WallData** cur = map->walls;
+    WallData* nearest = NULL;
 
     for (int i = 0; i < wallcount; i++)
     {

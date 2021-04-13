@@ -20,7 +20,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-pixel SkyboxBackground_Legacy(Camera_& camera, int ray_id, int line)
+pixel SkyboxBackground_Legacy(RenderStruct& camera, int ray_id, int line)
 {
     float angle_deg = camera.camera_angle + camera.cache_angles[ray_id];
     angle_deg = fmod(angle_deg, 360);
@@ -43,7 +43,7 @@ pixel GetBackground(Material_ background, float ray_angle, float ray_cos, int li
     return background.MapPixel(hratio, vratio);
 }
 
-void NativeRender(Camera_& camera)
+void NativeRender(RenderStruct& camera)
 {
     int display_height = camera.bitmap_height;
     int display_width = camera.bitmap_width;
@@ -59,7 +59,7 @@ void NativeRender(Camera_& camera)
 
         //Cast the ray towards every wall.
         float nearest_dist, nearest_ratio;
-        Wall_* nearest = ray.NearestWall(camera.scene, nearest_dist, nearest_ratio);
+        WallData* nearest = ray.NearestWall(camera.scene, nearest_dist, nearest_ratio);
         if (nearest_dist != FLT_MAX)
         {
             float columnHeight = (camera.cache_colHeight1 / (ray_cos * nearest_dist));
