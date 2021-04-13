@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct Map_ : IDisposable
+    internal unsafe struct SceneData : IDisposable
     {
         internal Sprite_** sprities;
         internal int sprite_count;
@@ -19,17 +19,19 @@ namespace GLTech2
         internal Wall_** walls;
         internal int wall_count;
         internal int wall_max;
+        internal Material_ background;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Map_* Alloc(int maxWalls, int masSprities)
+        internal static SceneData* Alloc(int maxWalls, int masSprities, Material_ background)
         {
-            Map_* result = (Map_*)Marshal.AllocHGlobal(sizeof(Map_));
+            SceneData* result = (SceneData*)Marshal.AllocHGlobal(sizeof(SceneData));
             result->sprities = (Sprite_**)Marshal.AllocHGlobal(masSprities * sizeof(Sprite_*)); // Not implemented yet
             result->walls = (Wall_**)Marshal.AllocHGlobal(maxWalls * sizeof(Wall_*));
             result->sprite_count = 0;
             result->sprite_max = masSprities;
             result->wall_count = 0;
             result->wall_max = maxWalls;
+            result->background = background;
             return result;
         }
 
@@ -49,9 +51,14 @@ namespace GLTech2
 
     public unsafe sealed class Scene : IDisposable
     {
-        internal Map_* unmanaged;
+        internal SceneData* unmanaged;
+        //internal Material refBackground;
 
-        public Scene(int maxWalls = 512, int maxSprities = 512) => unmanaged = Map_.Alloc(maxWalls, maxSprities);
+        public Scene(Material background, int maxWalls = 512, int maxSprities = 512)
+        {
+            //refBackground = background;
+            unmanaged = SceneData.Alloc(maxWalls, maxSprities, *background.unmanaged);
+        }
 
         public int MaxWalls => unmanaged->wall_max;
         public int WallCount => unmanaged->wall_count;

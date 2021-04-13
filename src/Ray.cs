@@ -53,7 +53,7 @@ namespace GLTech2
             distance = dsttmp;
         }
 
-        internal Wall_* NearestWall(Map_* map, out float nearest_dist, out float nearest_ratio)
+        internal Wall_* NearestWall(SceneData* map, out float nearest_dist, out float nearest_ratio)
         {
             nearest_dist = float.PositiveInfinity;
             nearest_ratio = float.PositiveInfinity;

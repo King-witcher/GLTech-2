@@ -6,7 +6,7 @@ namespace GLTech2
 {
     public unsafe class Scene2
     {
-        internal unsafe Map_* mapptr;
+        internal unsafe SceneData* mapptr;
         internal unsafe Camera_* cameraptr;
         private Camera refCamera;
         private Scene refMap;
@@ -24,11 +24,11 @@ namespace GLTech2
             get => refMap;
         }
 
-        public Material Background
-        {
-            get => refCamera.Background;
-            set => refCamera.Background = value;
-        }
+        //public Material Background
+        //{
+            //get => refCamera.Background;
+            //set => refCamera.Background = value;
+        //}
         public Vector CameraPosition
         {
             get => cameraptr->camera_position;

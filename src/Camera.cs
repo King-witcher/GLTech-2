@@ -31,11 +31,10 @@ namespace GLTech2
         internal float camera_angle; //MUST be 0 <= x < 360
         internal float camera_HFOV;
         internal Vector camera_position;
-        internal Map_* map;
-        internal Material_* background;
+        internal SceneData* scene;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Camera_* Alloc(int width, int height, Map_* map)
+        internal static Camera_* Alloc(int width, int height, SceneData* map)
         {
             Camera_* result = (Camera_*)Marshal.AllocHGlobal(sizeof(Camera_));
             result->bitmap_height = height;
@@ -44,8 +43,7 @@ namespace GLTech2
             result->averageFrametime = 0f;
             result->camera_angle = 0f;
             result->camera_HFOV = 90f;
-            result->map = map;
-            result->background = null;
+            result->scene = map;
             result->camera_position = Vector.Origin;
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.
@@ -86,19 +84,16 @@ namespace GLTech2
     }
 
     [Obsolete]
-    public delegate void FrameCallBack(Camera sender, double secs);
-
     public delegate void FrameUpdateCallback(double renderTime, double elapsedTime);
 
     public unsafe class Camera : IDisposable
     {
-        public Camera(Scene map, Material background, PictureBox output, FrameUpdateCallback updateCallback, int width = 640, int height = 360)
+        public Camera(Scene map, PictureBox output, Action<double, double> updateCallback, int width = 640, int height = 360)
         {
             const int pixelsize = 4;
 
             refMap = map;
             unmanaged = Camera_.Alloc(width, height, map.unmanaged);
-            Background = background;
             SetOutput(output);
 
             RenderCallback = updateCallback;
@@ -117,20 +112,6 @@ namespace GLTech2
 
         private Scene refMap;
         public Scene Map => refMap;
-
-        private Material refBackground;
-        public Material Background
-        {
-            get
-            {
-                return refBackground;
-            }
-            set
-            {
-                refBackground = value ?? throw new ArgumentNullException();
-                unmanaged->background = value.unmanaged;
-            }
-        }
 
         [Obsolete]
         public Bitmap BufferBitmap => bufferBitmap;
@@ -187,12 +168,8 @@ namespace GLTech2
         public int FrameCount { get => frame_count; private set => frame_count = value; }
 
         private readonly object locker = new object();
-        [Obsolete]
         public object Locker { get => locker; }
         public Vector Camera_Position { get => unmanaged->camera_position; set => unmanaged->camera_position = value; }
-
-        [Obsolete]
-        public event FrameCallBack OnRender;
 
         public void Dispose()
         {
@@ -234,7 +211,7 @@ namespace GLTech2
             Output.Paint += RePaint;
         }
 
-        private FrameUpdateCallback RenderCallback;
+        private Action<double, double> RenderCallback;
 
         private bool rendering = false;
         [Obsolete]
@@ -280,7 +257,6 @@ namespace GLTech2
             keepRendering = false;
 
         //Don't know how to pinvoke fromm current directory =/
-        [Obsolete("Don't change the directory of the files yet!")]
         [DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeRender(Camera_* camera);
 
@@ -297,7 +273,7 @@ namespace GLTech2
                 //Caching frequently used values.
                 int display_width = unmanaged->bitmap_width;
                 int display_height = unmanaged->bitmap_height;
-                Material_ background = *unmanaged->background;
+                Material_ background = unmanaged->scene->background;
 #if PARALLEL
                 ParallelLoopResult plr = Parallel.For(0, unmanaged->bitmap_width, (ray_id) =>
                 {
@@ -320,7 +296,7 @@ namespace GLTech2
                     }
 
                     //Cast the ray towards every wall.
-                    Wall_* nearest = ray.NearestWall(unmanaged->map, out float nearest_dist, out float nearest_ratio);
+                    Wall_* nearest = ray.NearestWall(unmanaged->scene, out float nearest_dist, out float nearest_ratio);
                     if (nearest_dist != float.PositiveInfinity)
                     {
                         float columnHeight = (unmanaged->cache_colHeight1 / (ray_cos * nearest_dist));

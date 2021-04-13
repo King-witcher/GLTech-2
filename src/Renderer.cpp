@@ -30,7 +30,7 @@ pixel SkyboxBackground_Legacy(Camera_& camera, int ray_id, int line)
     float cos = camera.cache_cosines[ray_id];
     float vratio = (1 - cos) / 2 + cos * screenVratio;
 
-    return camera.background->MapPixel(hratio, vratio);
+    return camera.scene->background.MapPixel(hratio, vratio);
 }
 
 pixel GetBackground(Material_ background, float ray_angle, float ray_cos, int line, int display_height)
@@ -47,7 +47,7 @@ void NativeRender(Camera_& camera)
 {
     int display_height = camera.bitmap_height;
     int display_width = camera.bitmap_width;
-    Material_ background = *camera.background;
+    Material_ background = camera.scene->background;
     pixel* buffer = camera.bitmap_buffer;
 
     for (int ray_id = 0; ray_id < camera.bitmap_width; ray_id++)
@@ -59,7 +59,7 @@ void NativeRender(Camera_& camera)
 
         //Cast the ray towards every wall.
         float nearest_dist, nearest_ratio;
-        Wall_* nearest = ray.NearestWall(camera.map, nearest_dist, nearest_ratio);
+        Wall_* nearest = ray.NearestWall(camera.scene, nearest_dist, nearest_ratio);
         if (nearest_dist != FLT_MAX)
         {
             float columnHeight = (camera.cache_colHeight1 / (ray_cos * nearest_dist));

@@ -37,7 +37,7 @@ void Ray::GetCollisionData(Wall_* wall, float& distance, float& split)
     distance = dsttmp;
 }
 
-Wall_* Ray::NearestWall(Map_* map, float& nearest_dist, float& nearest_ratio)
+Wall_* Ray::NearestWall(SceneData* map, float& nearest_dist, float& nearest_ratio)
 {
     nearest_dist = FLT_MAX;
     nearest_ratio = FLT_MAX;

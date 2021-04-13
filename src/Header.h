@@ -43,7 +43,7 @@ struct Sprite_
 	Material_ material;
 };
 
-struct Map_
+struct SceneData
 {
 	Sprite_** sprities;
 	int sprite_count;
@@ -51,6 +51,7 @@ struct Map_
 	Wall_** walls;
 	int wall_count;
 	int wall_max;
+	Material_ background;
 };
 
 struct Ray
@@ -61,7 +62,7 @@ struct Ray
 	Ray(Vector, float);
 
 	void GetCollisionData(Wall_*, float&, float&);
-	Wall_* NearestWall(Map_*, float&, float&);
+	Wall_* NearestWall(SceneData*, float&, float&);
 };
 
 struct Camera_
@@ -76,8 +77,7 @@ struct Camera_
 	float camera_angle;
 	float camera_HFOV;
 	Vector camera_position;
-	Map_* map;
-	Material_* background;
+	SceneData* scene;
 };
 
 extern "C"

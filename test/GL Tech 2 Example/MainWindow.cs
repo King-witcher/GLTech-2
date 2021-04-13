@@ -22,8 +22,6 @@ namespace Example
 
 
 
-            //Allocate space in memory to the map and create a camera.
-            myMap = new Scene(maxWalls: 512, maxSprities: 512);
 
             //Texture32 is only alocated once for every object that refers to it.
             Texture32 wallTexture = new Texture32(Resources.Wall);
@@ -48,13 +46,15 @@ namespace Example
 
             Wall[] myWalls = Wall.CreatePolygon(wallMaterial, verts);
 
+            //Allocate space in memory to the map and create a camera.
+            myMap = new Scene(cosmosMaterial, maxWalls: 512, maxSprities: 512);
+
             myMap.AddWalls(myWalls);
             myMap.AddWall(mover);
 
             //Create your camera.
             myCamera = new Camera(
                 map: myMap,
-                background: cosmosMaterial,
                 updateCallback: Update,
                 output: display,
                 width: 1600,

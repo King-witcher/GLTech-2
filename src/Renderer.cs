@@ -28,7 +28,7 @@ namespace GLTech2
             display = new Display(control);
             display.SetSize(DisplayWidth, DisplayHeight);
 
-            cameraAdaptee = new Camera(scene.Geometry, scene.Background, display.pictureBox, Update, DisplayWidth, DisplayHeight);
+            cameraAdaptee = new Camera(scene.Geometry, display.pictureBox, Update, DisplayWidth, DisplayHeight);
             cameraAdaptee.StartRendering();
             display.ShowDialog();
             display.Dispose();
