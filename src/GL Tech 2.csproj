@@ -45,12 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behavior.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="Debugging.cs" />
+    <Compile Include="Internal\Camera.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Group.cs" />
-    <Compile Include="Renderer_modes.cs" />
+    <Compile Include="Internal\Debugging.cs" />
+    <Compile Include="Internal\Renderer_modes.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,13 +59,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Ray.cs" />
-    <Compile Include="Display.cs">
+    <Compile Include="Internal\Ray.cs" />
+    <Compile Include="Internal\Display.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Renderer.cs" />
-    <Compile Include="SpriteData.cs" />
-    <Compile Include="WallData.cs" />
+    <Compile Include="Internal\SpriteData.cs" />
+    <Compile Include="Internal\WallData.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Texture32.cs" />
     <Compile Include="Vector.cs" />
@@ -76,7 +76,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Display.resx">
+    <EmbeddedResource Include="Internal\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
