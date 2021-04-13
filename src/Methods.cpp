@@ -20,7 +20,8 @@ void Ray::GetCollisionData(WallData* wall, float& distance, float& split)
     float det = this->Direction.X * wall->geom_direction.Y - Direction.Y * wall->geom_direction.X;
     if (det == 0)
     {
-        split = distance = FLT_MAX;
+        distance = FLT_MAX;
+        split = 0;
         return;
     }
 
@@ -28,9 +29,10 @@ void Ray::GetCollisionData(WallData* wall, float& distance, float& split)
     float dstdet = wall->geom_direction.X * (Start.Y - wall->geom_start.Y) - wall->geom_direction.Y * (Start.X - wall->geom_start.X);
     float spltmp = spldet / det;
     float dsttmp = dstdet / det;
-    if (spltmp < 0 || spltmp >= 1 || dsttmp < 0)
+    if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0)
     {
-        split = distance = FLT_MAX;
+        distance = FLT_MAX;
+        split = 0;
         return;
     }
     split = spltmp;
@@ -47,7 +49,7 @@ WallData* Ray::NearestWall(SceneData* map, float& nearest_dist, float& nearest_r
 
     for (int i = 0; i < wallcount; i++)
     {
-        if (cur == NULL) break;
+        //Walls in this interval cant be null
         float cur_dist, cur_ratio;
         GetCollisionData(*cur, cur_dist, cur_ratio);
         if (cur_dist < nearest_dist)

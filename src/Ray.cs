@@ -1,11 +1,13 @@
 ﻿//See Vector.cs before
 //See Wall.cs before
-    //See Vector.cs before
-    //See Material.cs before
-        //See Texture32.cs before
+//See Vector.cs before
+//See Material.cs before
+//See Texture32.cs before
 
 #define DEVELOPMENT
 
+using System;
+using System.Threading;
 using System.Runtime.InteropServices;
 
 namespace GLTech2
@@ -27,35 +29,63 @@ namespace GLTech2
             direction = new Vector(angle);
         }
 
-        public Vector Direction => direction;
-        public Vector Start => start;
-
-        //Optimizable
+        // 0 < distance <= infinity
+        // 0 <= split < 1
         internal void GetCollisionData(WallData* wall, out float distance, out float split)
         {
-            float det = Direction.X * wall->geom_direction.Y - Direction.Y * wall->geom_direction.X;
-            if (det == 0)
+            // Medium performance impact.
+            float
+                drx = wall->geom_direction.x,
+                dry = wall->geom_direction.y;
+
+            float det = direction.x * dry - direction.y * drx; // Caching can only be used here
+            if (det == 0) // Parallel
             {
-                split = distance = float.PositiveInfinity;
+                distance = float.PositiveInfinity;
+                split = 0f;
                 return;
             }
 
-            float spldet = Direction.X * (Start.Y - wall->geom_start.Y) - Direction.Y * (Start.X - wall->geom_start.X);
-            float dstdet = wall->geom_direction.X * (Start.Y - wall->geom_start.Y) - wall->geom_direction.Y * (Start.X - wall->geom_start.X);
+            float spldet = direction.x * (start.y - wall->geom_start.y) - direction.y * (start.x - wall->geom_start.x);
+            float dstdet = wall->geom_direction.x * (start.y - wall->geom_start.y) - wall->geom_direction.y * (start.x - wall->geom_start.x);
             float spltmp = spldet / det;
             float dsttmp = dstdet / det;
-            if (spltmp < 0 || spltmp >= 1 || dsttmp < 0)
+            if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
             {
-                split = distance = float.PositiveInfinity;
+                split = 0;
+                distance = float.PositiveInfinity;
                 return;
             }
             split = spltmp;
             distance = dsttmp;
         }
 
-        //Optimizable
+        private WallData* NearestWallTest(SceneData* map, out float nearest_dist, out float nearest_hratio)
+        {
+            nearest_dist = float.PositiveInfinity;
+            nearest_hratio = float.PositiveInfinity;
+            WallData* nearest = null;
+            WallData** pptr = map->walls;
+            WallData* ptr;
+
+            while(*pptr != null)
+            {
+                //Medium performance impact.
+                GetCollisionData(*pptr, out float cur_dist, out float cur_ratio);
+                if (cur_dist < nearest_dist)
+                {
+                    nearest_hratio = cur_ratio;
+                    nearest_dist = cur_dist;
+                    nearest = *pptr;
+                }
+                pptr++;
+            }
+            return nearest;
+        }
+
         internal WallData* NearestWall(SceneData* map, out float nearest_dist, out float nearest_ratio)
         {
+
             nearest_dist = float.PositiveInfinity;
             nearest_ratio = float.PositiveInfinity;
             int wallcount = map->wall_count;
@@ -64,7 +94,7 @@ namespace GLTech2
 
             for (int i = 0; i < wallcount; i++)
             {
-                if (cur == null) break;
+                //walls cannot be null.
                 GetCollisionData(*cur, out float cur_dist, out float cur_ratio);
                 if (cur_dist < nearest_dist)
                 {

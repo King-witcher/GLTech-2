@@ -13,7 +13,7 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SceneData : IDisposable
     {
-        internal Sprite_** sprities;
+        internal Sprite_** sprities; //obsolete
         internal int sprite_count;
         internal int sprite_max;
         internal WallData** walls;
@@ -22,13 +22,16 @@ namespace GLTech2
         internal Material background;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SceneData* Alloc(int maxWalls, int masSprities, Material background)
+        internal static SceneData* Alloc(int maxWalls, int maxSprities, Material background)
         {
+            int total_positions = maxWalls + maxSprities + 1;
             SceneData* result = (SceneData*)Marshal.AllocHGlobal(sizeof(SceneData));
-            result->sprities = (Sprite_**)Marshal.AllocHGlobal(masSprities * sizeof(Sprite_*)); // Not implemented yet
-            result->walls = (WallData**)Marshal.AllocHGlobal(maxWalls * sizeof(WallData*));
+            result->sprities = null;
+            //result->sprities = (Sprite_**)Marshal.AllocHGlobal(maxSprities * sizeof(Sprite_*)); // Not implemented yet
+            result->walls = (WallData**)Marshal.AllocHGlobal(total_positions * sizeof(void*));
+            *result->walls = null;
             result->sprite_count = 0;
-            result->sprite_max = masSprities;
+            result->sprite_max = maxSprities;
             result->wall_count = 0;
             result->wall_max = maxWalls;
             result->background = background;
@@ -43,7 +46,11 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Add(WallData* wall) => walls[wall_count++] = wall;
+        internal void Add(WallData* wall)
+        {
+            walls[wall_count++] = wall;
+            walls[wall_count] = null;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void Add(void* sprite) => throw new NotImplementedException();

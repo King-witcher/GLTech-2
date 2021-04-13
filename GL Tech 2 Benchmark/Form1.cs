@@ -70,7 +70,7 @@ namespace GL_Tech_2_Benchmark
             }
 
             camera.Turn(2 * (float)(frametime * Math.Sin(total_time)));
-            camera.Step(0.02f * (float)(frametime * Math.Sin(total_time)));
+            camera.Step(0.01f * (float)(frametime * Math.Sin(total_time)));
         }
     }
 }

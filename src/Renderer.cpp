@@ -20,19 +20,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-pixel SkyboxBackground_Legacy(RenderStruct& camera, int ray_id, int line)
-{
-    float angle_deg = camera.camera_angle + camera.cache_angles[ray_id];
-    angle_deg = fmod(angle_deg, 360);
-    float hratio = angle_deg / 360 + 1;
-
-    float screenVratio = line / (float)camera.bitmap_height;
-    float cos = camera.cache_cosines[ray_id];
-    float vratio = (1 - cos) / 2 + cos * screenVratio;
-
-    return camera.scene->background.MapPixel(hratio, vratio);
-}
-
 pixel GetBackground(Material background, float ray_angle, float ray_cos, int line, int display_height)
 {
     float hratio = ray_angle / 360 + 1;

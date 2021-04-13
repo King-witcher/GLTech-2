@@ -11,8 +11,8 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Vector
     {
-        private float x;
-        private float y;
+        internal float x;
+        internal float y;
 
         public Vector(float x, float y)
         {
