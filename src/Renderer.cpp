@@ -67,7 +67,8 @@ void NativeRender(RenderStruct& camera)
             float topIndex = -(fullColumnRatio - 1.0f) / 2.0f;
             for (int line = 0; line < display_height; line++)
             {
-                float vratio = topIndex + fullColumnRatio * line / display_height;
+                //Critical performance impact.
+                float vratio = line * fullColumnRatio / display_height + topIndex;
                 if (vratio < 0.0f || vratio >= 1.0f)
                 {
                     buffer[display_width * line + ray_id] = GetBackground(background, ray_angle, ray_cos, line, display_height);
@@ -83,6 +84,7 @@ void NativeRender(RenderStruct& camera)
         {
             for (int line = 0; line < display_height; line++)
             {
+                //Critical performance impact.
                 buffer[display_width * line + ray_id] = GetBackground(background, ray_angle, ray_cos, line, display_height);
             }
         }

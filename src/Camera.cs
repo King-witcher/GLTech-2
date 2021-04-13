@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#undef CPP
-#undef PARALLEL
+#define CPP
+#define PARALLEL
 
 using GLTech2.Properties;
 using System;
