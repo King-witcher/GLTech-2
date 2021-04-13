@@ -14,7 +14,7 @@ namespace GL_Tech_2_Benchmark
 
 
         Stopwatch global = new Stopwatch();
-        Camera camera;
+        Scene scene;
         Wall[] closewall;
         Wall[] farwall;
 
@@ -30,13 +30,11 @@ namespace GL_Tech_2_Benchmark
 
             closewall = Wall.CreatePolygon(bricks, close);
             farwall = Wall.CreatePolygon(bricks, far);
-            Scene map = new Scene(universe);
+            scene = new Scene(universe);
 
-            camera = new Camera(map, display, Update, 1600, 900);
-
-            camera.StartRendering();
-            session_stopwatch.Start();
             global.Start();
+            session_stopwatch.Start();
+            Renderer.Run(scene, null, Update);
         }
 
         int current_session = 0;
@@ -64,13 +62,13 @@ namespace GL_Tech_2_Benchmark
                 current_session++;
 
                 if (current_session == 2)
-                    camera.Map.AddWalls(farwall);
+                    scene.AddWalls(farwall);
                 if (current_session == 4)
-                    camera.Map.AddWalls(closewall);
+                    scene.AddWalls(closewall);
             }
 
-            camera.Turn(2 * (float)(frametime * Math.Sin(total_time)));
-            camera.Step(0.01f * (float)(frametime * Math.Sin(total_time)));
+            //camera.Turn(2 * (float)(frametime * Math.Sin(total_time)));
+            //camera.Step(0.01f * (float)(frametime * Math.Sin(total_time)));
         }
     }
 }

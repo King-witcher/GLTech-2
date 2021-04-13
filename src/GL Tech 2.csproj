@@ -64,7 +64,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Renderer.cs" />
-    <Compile Include="Scene2.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Texture32.cs" />
     <Compile Include="Vector.cs" />

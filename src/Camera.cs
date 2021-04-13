@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#define CPP
-#define PARALLEL
+#undef CPP
+#undef PARALLEL
 
 using GLTech2.Properties;
 using System;
@@ -81,10 +81,7 @@ namespace GLTech2
         }
     }
 
-    [Obsolete]
-    public delegate void FrameUpdateCallback(double renderTime, double elapsedTime);
-
-    public unsafe class Camera : IDisposable
+    internal unsafe class Camera : IDisposable
     {
         public Camera(Scene map, PictureBox output, Action<double, double> updateCallback, int width = 640, int height = 360)
         {
@@ -241,7 +238,7 @@ namespace GLTech2
                     while (timer.ElapsedMilliseconds < 7) //Don't let the framerate go higher than 143 fps.
                         Thread.Yield();
                     //Mexer no frametime
-                    RenderCallback(render_time, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
+                    RenderCallback?.Invoke(render_time, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
                     //OnRender?.Invoke(this, timer.Elapsed.Ticks / (double)Stopwatch.Frequency);
                 }
             });

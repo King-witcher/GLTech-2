@@ -9,7 +9,6 @@ namespace Example
 {
     public partial class MainWindow : Form
     {
-        Camera myCamera;
         Scene myMap;
 
         public MainWindow() =>
@@ -52,25 +51,12 @@ namespace Example
             myMap.AddWalls(myWalls);
             myMap.AddWall(mover);
 
-            //Create your camera.
-            myCamera = new Camera(
-                map: myMap,
-                updateCallback: Update,
-                output: display,
-                width: 1600,
-                height: 900);
-
-            myCamera.Turn(60);
-
             //Subscribe to camera.OnRender event your custom Update method wich will be called whenever the camera renders a new frame.
 
+            Renderer.Run(myMap, null, Update);
+            Application.Exit();
             //Start a continuous rendering process.
-            myCamera.StartRendering();
-        }
-
-        private void RefreshPictureBox(object sender, PaintEventArgs e)
-        {
-            (sender as PictureBox).Image = myCamera.BitmapCopy;
+            //myCamera.StartRendering();
         }
 
         //Do whatever you want each time the engine generates a new frame.
@@ -87,9 +73,7 @@ namespace Example
                 registryCount = 0;
             }
 
-            myCamera.Step(1f * (float)deltaTime);
             mover.Start = mover.Start * 1.005f + new Vector(0f, 0.001f);
-            myCamera.CameraAngle += 2f * (float)deltaTime;
         }
 
         private double StdDeviation(IEnumerable<double> values)
