@@ -20,7 +20,6 @@ namespace GL_Tech_2_Benchmark
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Scene map = new Scene();
 
             Material bricks = new Texture32(Resources.Wall);
             bricks.HorizontalRepeat = 12.6f;
@@ -31,8 +30,9 @@ namespace GL_Tech_2_Benchmark
 
             closewall = Wall.CreatePolygon(bricks, close);
             farwall = Wall.CreatePolygon(bricks, far);
+            Scene map = new Scene(universe);
 
-            camera = new Camera(map, universe, display, Update, 1600, 900);
+            camera = new Camera(map, display, Update, 1600, 900);
 
             camera.StartRendering();
             session_stopwatch.Start();

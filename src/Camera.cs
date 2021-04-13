@@ -1,7 +1,7 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#undef CPP
-#define PARALLEL
+#define CPP
+#undef PARALLEL
 
 using GLTech2.Properties;
 using System;
@@ -301,7 +301,12 @@ namespace GLTech2
                             float vratio = topIndex + fullColumnRatio * line / display_height;
                             if (vratio < 0f || vratio >= 1f)
                             {
-                                unmanaged->bitmap_buffer[display_width * line + ray_id] = GetBackground(line);
+                                //PURPOSELY REPEATED CODE!
+                                float hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                                float screenVratio = (float)line / display_height;
+                                float pvratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                                int color = background.MapPixel(hratio, pvratio);
+                                unmanaged->bitmap_buffer[display_width * line + ray_id] = color;
                             }
                             else
                             {
@@ -313,7 +318,14 @@ namespace GLTech2
                     else
                     {
                         for (int line = 0; line < display_height; line++)
-                            unmanaged->bitmap_buffer[display_width * line + ray_id] = GetBackground(line);
+                        {
+                            //PURPOSELY REPEATED CODE!
+                            float hratio = ray_angle / 360 + 1;
+                            float screenVratio = (float)line / display_height;
+                            float pvratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                            int color =  background.MapPixel(hratio, pvratio);
+                            unmanaged->bitmap_buffer[display_width * line + ray_id] = color;
+                        }
                     }
 #if PARALLEL
                 });
