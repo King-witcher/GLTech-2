@@ -5,9 +5,9 @@ C++ Single thread mode:
 3: 67 fps
 
 C# Single thread mode:
-1: 69 fps
-2: 54 fps
-3: 59 fps
+1: 71 fps
+2: 58 fps
+3: 60 fps
 
 C# Parallel mode:
 1: 277 fps

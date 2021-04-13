@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE1006
 #define DEVELOPMENT
-#define CPP
+#undef CPP
 #undef PARALLEL
 
 using GLTech2.Properties;
@@ -280,32 +280,24 @@ namespace GLTech2
                     float ray_angle = unmanaged->cache_angles[ray_id] + unmanaged->camera_angle;
                     Ray ray = new Ray(unmanaged->camera_position, ray_angle);
 
-                    int GetBackground(int line)
-                    {
-                        float hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-
-                        float screenVratio = (float) line / display_height;
-                        float vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        return background.MapPixel(hratio, vratio);
-                    }
-
                     //Cast the ray towards every wall.
                     WallData* nearest = ray.NearestWall(unmanaged->scene, out float nearest_dist, out float nearest_ratio);
                     if (nearest_dist != float.PositiveInfinity)
                     {
-                        float columnHeight = (unmanaged->cache_colHeight1 / (ray_cos * nearest_dist));
+                        float columnHeight = (unmanaged->cache_colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
                         float fullColumnRatio = display_height / columnHeight;
                         float topIndex = -(fullColumnRatio - 1f) / 2f;
                         for (int line = 0; line < display_height; line++)
                         {
+                            //Critical performance impact.
                             float vratio = topIndex + fullColumnRatio * line / display_height;
                             if (vratio < 0f || vratio >= 1f)
                             {
                                 //PURPOSELY REPEATED CODE!
-                                float hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                                float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
                                 float screenVratio = (float)line / display_height;
-                                float pvratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                                int color = background.MapPixel(hratio, pvratio);
+                                float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                                int color = background.MapPixel(background_hratio, background_vratio);
                                 unmanaged->bitmap_buffer[display_width * line + ray_id] = color;
                             }
                             else
@@ -319,11 +311,12 @@ namespace GLTech2
                     {
                         for (int line = 0; line < display_height; line++)
                         {
+                            //Critical performance impact.
                             //PURPOSELY REPEATED CODE!
-                            float hratio = ray_angle / 360 + 1;
+                            float background_hratio = ray_angle / 360 + 1;
                             float screenVratio = (float)line / display_height;
-                            float pvratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                            int color =  background.MapPixel(hratio, pvratio);
+                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                            int color =  background.MapPixel(background_hratio, background_vratio);
                             unmanaged->bitmap_buffer[display_width * line + ray_id] = color;
                         }
                     }
