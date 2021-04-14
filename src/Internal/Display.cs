@@ -10,11 +10,11 @@ namespace GLTech2
     internal sealed class Display : Form
     {
         internal PictureBox pictureBox;
-        private Action control;
+        private Action start;
 
         internal Display(Action control)
         {
-            this.control = control;
+            this.start = control;
             InitializeComponent();
         }
 
@@ -30,7 +30,7 @@ namespace GLTech2
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(1600, 900);
+            this.pictureBox.Size = new System.Drawing.Size(640, 360);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
@@ -39,7 +39,7 @@ namespace GLTech2
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.WhiteSpace;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1600, 900);
+            this.ClientSize = new System.Drawing.Size(640, 360);
             this.Controls.Add(this.pictureBox);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -47,9 +47,9 @@ namespace GLTech2
             this.MaximizeBox = false;
             this.Name = "Display";
             this.Text = "GL Tech 2 Renderer";
-            this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         public void SetSize(int width, int height)
@@ -60,7 +60,7 @@ namespace GLTech2
 
         private void OnLoad(object sender, EventArgs e)
         {
-            control();
+
         }
     }
 }

@@ -58,7 +58,7 @@ namespace GLTech2
         internal void Add(void* sprite) => throw new NotImplementedException();
     }
 
-    public unsafe sealed class Scene : IDisposable
+    public unsafe sealed partial class Scene : IDisposable
     {
         internal SceneData* unmanaged;
 
@@ -98,6 +98,21 @@ namespace GLTech2
             unmanaged->Dispose();
             Marshal.FreeHGlobal((IntPtr)unmanaged);
             Elements.Clear();
+        }
+
+        internal void InvokeStart()
+        {
+            //foreach (var element in Elements)
+                //element.Start();
+        }
+
+        internal void InvokeUpdate(double frametime, double rendertime)
+        {
+            foreach (var element in Elements)
+            {
+                if (element == null)
+                element.Update(frametime, rendertime);
+            }
         }
     }
 }

@@ -14,7 +14,6 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static GLTech2.Debugging;
 
 namespace GLTech2
 {

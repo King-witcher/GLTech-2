@@ -13,7 +13,7 @@ namespace GLTech2
         public abstract float Rotation { get; set; }
 
 
-        private List<Behavior> behaviors = new List<Behavior>();
+        private List<Behaviour> behaviors = new List<Behaviour>();
         private List<Element> childs = new List<Element>();
 
 
@@ -21,9 +21,11 @@ namespace GLTech2
         {
         }
 
-        public void AddBehavior(Behavior behavior)
+        public void AddBehavior<T>() where T : Behaviour, new()
         {
-            behaviors.Add(behavior);
+            Behaviour behaviour = new T();
+            behaviour.element = this;
+            behaviors.Add(behaviour);
         }
 
 
@@ -47,13 +49,12 @@ namespace GLTech2
 
         internal void Start()
         {
-            foreach(Behavior behavior in behaviors)
+            foreach(Behaviour behavior in behaviors)
                 behavior.Start();
         }
-
         internal void Update(double deltatime, double frametime)
         {
-            foreach (Behavior behavior in behaviors)
+            foreach (Behaviour behavior in behaviors)
                 behavior.Update(deltatime, frametime);
         }
     }

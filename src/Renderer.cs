@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,22 +15,71 @@ namespace GLTech2
     {
         public static bool  CppRendering { get; set; } = false;
         public static bool  ParallelRendering { get; set; } = true;
-        [Obsolete]
-        public static bool  AdapterMode { get; set; } = false;
-        public static int   DisplayWidth { get; set; } = 1600;
-        public static int   DisplayHeight { get; set; } = 900;
+
+        private static float minframetime = 7;
+        private static int MaxFps
+        {
+            get
+            {
+                return (int)(1000f / minframetime);
+            }
+            set
+            {
+                float temp = 1000f / value;
+                if (temp < 1f)
+                    temp = 1f;
+                minframetime = temp;
+            }
+        }
+
+        private static int displayWidth = 640;
+        public static int DisplayWidth
+        {
+            get => displayWidth;
+            set
+            {
+                if (IsRunning)
+                    throw new AccessViolationException("Render.DisplayWidth cannot be modified while running.");
+                displayWidth = value;
+            }
+        }
+        private static int displayHeight = 360;
+        public static int DisplayHeight
+        {
+            get => displayHeight;
+            set
+            {
+                if (IsRunning)
+                    throw new AccessViolationException("Render.DisplayHeight cannot be modified while running.");
+                displayHeight = value;
+            }
+        }
         public static bool  IsRunning { get; private set; } = false;
+        public static Texture32 Screenshot
+        {
+            get
+            {
+                return new Texture32(bufferBitmap.Clone() as Bitmap);
+            }
+        }
 
 
-        private static Camera                   camera;
+        internal static Bitmap                  bufferBitmap;
+        private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Action<double, double>   updateMethod;
         private unsafe static RenderStruct*     rendererData;
-        private static object                   locker = new object();
+        private static Scene scene = null;
 
 
-        static Renderer()
+        unsafe static Renderer()
         {
+            rendererData = RenderStruct.Alloc(DisplayWidth, DisplayHeight, null);
+
+            bufferBitmap = new Bitmap(DisplayWidth, DisplayHeight, DisplayWidth * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)rendererData->bitmap_buffer);
+            var temp = bufferBitmap.LockBits(new Rectangle(0, 0, DisplayWidth, DisplayHeight), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            temp.Scan0 = (IntPtr)rendererData->bitmap_buffer;
+            bufferBitmap.UnlockBits(temp);
         }
 
 
@@ -38,26 +89,28 @@ namespace GLTech2
                 return;
             IsRunning = true;
 
-            display = new Display(() => { });
+            Renderer.scene = scene;
+
+            display = new Display(start);
             display.SetSize(DisplayWidth, DisplayHeight);
 
-            camera = new Camera(scene, display.pictureBox, update, DisplayWidth, DisplayHeight);
-            rendererData = camera.unmanaged;
+            rendererData = RenderStruct.Alloc(DisplayWidth, DisplayHeight, scene.unmanaged);
+            //var camera = new Camera(scene, display.pictureBox, update, DisplayWidth, DisplayHeight);
+            //rendererData = camera.unmanaged;
+
+            bufferBitmap = new Bitmap(DisplayWidth, DisplayHeight, DisplayWidth * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)rendererData->bitmap_buffer);
+            var temp = bufferBitmap.LockBits(new Rectangle(0, 0, DisplayWidth, DisplayHeight), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            temp.Scan0 = (IntPtr)rendererData->bitmap_buffer;
+            bufferBitmap.UnlockBits(temp);
 
             updateMethod = update;
 
 
-            if (AdapterMode)
-            {
-                camera.StartRendering();
-                display.ShowDialog();
-            }
-            else
-            {
-                keepRendering = true;
-                Task.Run(LoopRender);
-                display.ShowDialog();
-            }
+            keepRendering = true;
+            Task.Run(LoopRender);
+            display.pictureBox.Paint += (a, aa) => { display.pictureBox.Image = bufferBitmap; };
+            display.pictureBox.Image = new Bitmap(1, 1);
+            display.ShowDialog();
 
             display.Dispose();
             IsRunning = false;
@@ -68,6 +121,7 @@ namespace GLTech2
         private unsafe static void LoopRender()
         {
             Stopwatch sw = new Stopwatch();
+            scene.InvokeStart();
             while (keepRendering)
             {
                 sw.Restart();
@@ -78,10 +132,11 @@ namespace GLTech2
                     CLRRender();
 
                 double render = sw.Elapsed.Ticks / (double)Stopwatch.Frequency;
-                while (sw.ElapsedMilliseconds < 7) //Don't let the framerate go higher than 143 fps.
+                while (sw.ElapsedMilliseconds < minframetime)
                     Thread.Yield();
-                double total = sw.Elapsed.Ticks / (double)Stopwatch.Frequency;
-                updateMethod?.Invoke(render, total);
+                double frame = sw.Elapsed.Ticks / (double)Stopwatch.Frequency;
+                updateMethod?.Invoke(frame, render);
+                //scene.InvokeUpdate(frame, render);
             }
         }
 

@@ -17,12 +17,6 @@ namespace GLTech2
         private readonly Vector direction;
         private readonly Vector start;
 
-        public Ray(Vector start, Vector direction)
-        {
-            this.start = start;
-            this.direction = direction;
-        }
-
         public Ray(Vector start, float angle)
         {
             this.start = start;
