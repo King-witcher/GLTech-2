@@ -79,7 +79,7 @@ namespace GLTech2
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
             unmanaged->Add(w.walldata);
-            Elements.Add(null);
+            Elements.Add(w);
         }
 
         public void AddWalls(params Wall[] walls)
@@ -106,12 +106,11 @@ namespace GLTech2
                 //element.Start();
         }
 
-        internal void InvokeUpdate(double frametime, double rendertime)
+        internal void InvokeUpdate()
         {
             foreach (var element in Elements)
             {
-                if (element == null)
-                element.Update(frametime, rendertime);
+                element.Update();
             }
         }
     }

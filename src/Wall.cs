@@ -45,13 +45,13 @@ namespace GLTech2
             }
         }
 
-        public override Vector Position
+        private protected override Vector IsolatedPosition
         {
             get => StartPoint;
             set => StartPoint = value;
         }
 
-        public override float Rotation
+        private protected override float IsolatedRotation
         {
             get => walldata->geom_direction.Angle;
             set

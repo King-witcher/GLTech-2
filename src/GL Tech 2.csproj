@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour.cs" />
+    <Compile Include="Behaviours\MoveForward.cs" />
     <Compile Include="Internal\Camera.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Game.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Texture32.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>

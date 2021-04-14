@@ -17,7 +17,7 @@ namespace GLTech2
         public static bool  ParallelRendering { get; set; } = true;
 
         private static float minframetime = 7;
-        private static int MaxFps
+        public static int MaxFps
         {
             get
             {
@@ -25,9 +25,12 @@ namespace GLTech2
             }
             set
             {
+                if (value == 0)
+                    value = int.MaxValue;
+
                 float temp = 1000f / value;
-                if (temp < 1f)
-                    temp = 1f;
+                if (temp < 3f)
+                    temp = 3f;
                 minframetime = temp;
             }
         }
@@ -67,9 +70,9 @@ namespace GLTech2
         internal static Bitmap                  bufferBitmap;
         private static readonly int             pixelsize = 4;
         private static Display                  display;
-        private static Action<double, double>   updateMethod;
+        private static Action                   updateMethod;
         private unsafe static RenderStruct*     rendererData;
-        private static Scene scene = null;
+        private static Scene                    scene = null;
 
 
         unsafe static Renderer()
@@ -83,7 +86,7 @@ namespace GLTech2
         }
 
 
-        public unsafe static void Run(Scene scene, Action start = null, Action<double, double> update = null)
+        public unsafe static void Run(Scene scene, Action start = null, Action update = null)
         {
             if (IsRunning)
                 return;
@@ -118,31 +121,39 @@ namespace GLTech2
 
 
         private static bool keepRendering = false;
+
+        //Initialize Time, render and reset Time.
         private unsafe static void LoopRender()
         {
-            Stopwatch sw = new Stopwatch();
+            Time.Start();
             scene.InvokeStart();
+
+            Stopwatch swtest = new Stopwatch();
             while (keepRendering)
             {
-                sw.Restart();
-
+                swtest.Restart();
                 if (CppRendering)
                     NativeRender(rendererData);
                 else
                     CLRRender();
 
-                double render = sw.Elapsed.Ticks / (double)Stopwatch.Frequency;
-                while (sw.ElapsedMilliseconds < minframetime)
+                Time.renderTime = (double) swtest.ElapsedTicks / Stopwatch.Frequency;
+
+                while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
-                double frame = sw.Elapsed.Ticks / (double)Stopwatch.Frequency;
-                updateMethod?.Invoke(frame, render);
-                //scene.InvokeUpdate(frame, render);
+
+                updateMethod?.Invoke();
+                scene.InvokeUpdate();
+                Time.NewFrame();
             }
+
+            Time.Reset();
         }
 
 
-        public static void Stop()
+        public static void Exit()
         {
+            Time.Reset();
             keepRendering = false;
             Application.Exit(); // Not tested
         }
