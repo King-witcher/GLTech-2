@@ -48,7 +48,7 @@
     <Compile Include="Internal\Camera.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Group.cs" />
+    <Compile Include="Empty.cs" />
     <Compile Include="Internal\Renderer_modes.cs" />
     <Compile Include="NullElement.cs" />
     <Compile Include="Internal\RendererStruct.cs" />

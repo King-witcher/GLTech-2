@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
-    public sealed class Group : Element
+    public sealed class Empty : Element
     {
-        public Group (Vector pos)
+        public Empty (Vector pos)
         {
             IsolatedPosition = pos;
         }

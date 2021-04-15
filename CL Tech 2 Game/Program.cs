@@ -23,7 +23,7 @@ namespace Game
             Wall[] walls = Wall.CreatePolygon(wallmaterial, cylinder);
             scene.AddWalls(walls);
 
-            Group g = new Group(Vector.Origin);
+            Empty g = new Empty(Vector.Origin);
             g.AddBehaviour<Movement>();
             g.AddChilds(walls);
             scene.AddGroup(g);

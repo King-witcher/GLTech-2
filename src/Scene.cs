@@ -87,7 +87,7 @@ namespace GLTech2
             }
         }
 
-        public void AddGroup(Group g)
+        public void AddGroup(Empty g)
         {
             elements.Add(g);
             g.scene = this;

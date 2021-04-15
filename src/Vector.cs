@@ -12,23 +12,36 @@ namespace GLTech2
     public unsafe struct Vector
     {
         const float TORAD = (float)Math.PI / 180f;
-        const float TODEGREE = 180f / (float) Math.PI;
+        const float TODEGREE = 180f / (float)Math.PI;
 
         internal float x;
         internal float y;
+
+        public float X { get => x; set => x = value; }
+        public float Y { get => y; set => y = value; }
+
 
         public Vector(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
-        public Vector(float angle)
+
+        public Vector(float angle) // Not optimized by fast sin and fast cos
         {
             x = (float)Math.Sin(angle * Math.PI / 180);
             y = (float)Math.Cos(angle * Math.PI / 180);
         }
 
-        public float Angle      // FAILS
+        public static Vector FromAngle(float angle, float module)
+        {
+            float x = (float)Math.Sin(angle * Math.PI / 180);
+            float y = (float)Math.Cos(angle * Math.PI / 180);
+            return new Vector(module * x, module * y);
+        }
+
+
+        public float Angle      // Not optimized
         {
             get
             {
@@ -50,7 +63,7 @@ namespace GLTech2
 
         public float Module
         {
-            get => (float)Math.Sqrt(X * X + Y * Y);
+            get => (float)Math.Sqrt(x * x + y * y);
             set
             {
                 float delta = value / Module;
@@ -58,8 +71,6 @@ namespace GLTech2
             }
         }
 
-        public float X { get => x; set => x = value; }
-        public float Y { get => y; set => y = value; }
         public Vector Position
         {
             get => this;
@@ -70,23 +81,41 @@ namespace GLTech2
             get => Angle;
             set => Angle = value;
         }
+
         public static Vector Origin { get => new Vector(0, 0); }
-        public static Vector FromAngle(float angle) => new Vector(angle);
-        public static Vector FromAngle(float angle, float module)
+
+        public static Vector[] GetPolygon(Vector center, float radius, int edges)
         {
-            float x = (float)Math.Sin(angle * Math.PI / 180);
-            float y = (float)Math.Cos(angle * Math.PI / 180);
-            return new Vector(module * x, module * y);
+            if (edges == 0)
+                throw new ArgumentException("\"edges\" cannot be 0.", "edges");
+
+            Vector[] result = new Vector[edges];
+            for (int i = 0; i < edges; i++)
+                result[i] = center + radius * new Vector(i * 360 / edges);
+            return result;
         }
+
         public float GetDistance(Vector vector)
         {
-            float dx = vector.X - X;
-            float dy = vector.Y - Y;
+            float dx = vector.x - x;
+            float dy = vector.y - y;
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
+
+        public Vector Projection(Vector module, Vector center)
+        {
+            return (this - center) / module;
+        }
+
+        public Vector IfWasProjectionOf(Vector module, Vector center)
+        {
+            return this * module + center;
+        }
+
+
         public override string ToString()
         {
-            return $"<{this.X}, {this.Y}>";
+            return $"<{x}, {y}> = {y} + {x}i";
         }
         public override bool Equals(object obj)
         {
@@ -102,39 +131,42 @@ namespace GLTech2
                 return false;
         }
 
-        public static Vector[] GetPolygon (Vector center, float radius, int edges)
-        {
-            if (edges == 0)
-                throw new ArgumentException("\"edges\" cannot be 0.", "edges");
-
-            Vector[] result = new Vector[edges];
-            for (int i = 0; i < edges; i++)
-                result[i] = center + radius * new Vector(i * 360 / edges);
-            return result;
-        }
 
         public static Vector operator +(Vector left, Vector right) =>
             new Vector(
-                left.X + right.X,
-                left.Y + right.Y);
+                left.x + right.x,
+                left.y + right.y);
         public static Vector operator -(Vector left, Vector right) =>
             new Vector(
-                left.X - right.X,
-                left.Y - right.Y);
-        public static Vector operator *(Vector left, Vector right) =>  // Fail
+                left.x - right.x,
+                left.y - right.y);
+
+        public static Vector operator *(Vector left, Vector right) =>
             new Vector(
-                left.Y * right.X + left.X * right.Y,
-                left.Y * right.Y - left.X * right.X);
+                left.y * right.x + left.x * right.y,
+                left.y * right.y - left.x * right.x);
+
+        public static Vector operator /(Vector dividend, Vector divider)
+        {
+            float delta = dividend.x * divider.x + dividend.y * divider.y;
+            if (delta == 0)
+                throw new DivideByZeroException("Divider vector cannot be <0, 0>.");
+
+            float x = (dividend.y * divider.y + dividend.x * divider.x) / delta;
+            float y = (dividend.x * divider.y - dividend.y * divider.x) / delta;
+            return new Vector(x, y);
+        }
+
         public static Vector operator *(float scalar, Vector vector) =>
             new Vector(
-                vector.X * scalar,
-                vector.Y * scalar);
+                vector.x * scalar,
+                vector.y * scalar);
         public static Vector operator *(Vector vector, float scalar) =>
             scalar * vector;
         public static Vector operator /(Vector vector, float scalar) =>
             new Vector(
-                vector.X / scalar,
-                vector.Y / scalar);
+                vector.x / scalar,
+                vector.y / scalar);
 
         /*public static bool operator ==(Vector left, Vector right)
         {

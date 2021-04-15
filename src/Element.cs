@@ -40,6 +40,9 @@ namespace GLTech2
             }
         }
 
+        // Position and rotation relative to parent.
+        private Vector relative_position;
+        private float relative_rotation;
         private Element parent = null;
         public Element Parent
         {
@@ -48,12 +51,26 @@ namespace GLTech2
             {
                 if (this.parent != null)
                 {
+                    parent.OnMove -= UpdateRealOnes;
                 }
+
+                if (value != null)
+                {
+                    value.OnMove += UpdateRealOnes;
+                }
+
                 this.parent = value;
             }
         }
 
-        internal void UpdateAxis()
+        private void UpdateRelativeOnes()   // A bit suboptimal
+        {
+            relative_rotation = IsolatedRotation - parent.IsolatedRotation;
+
+
+        }
+
+        private void UpdateRealOnes()   // Not optimized, a bit redundant.
         {
 
         }
