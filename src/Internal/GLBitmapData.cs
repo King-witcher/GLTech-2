@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct Texture32_ : IDisposable
+    internal unsafe struct GLBitmapData : IDisposable
     {
         internal Int32* buffer;
         internal int height;
         internal int width;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Texture32_* Alloc(Bitmap bitmap)
+        internal static GLBitmapData* Alloc(Bitmap bitmap) // Possibly optimizable
         {
-            Texture32_* result = (Texture32_*)Marshal.AllocHGlobal(sizeof(Texture32_));
+            GLBitmapData* result = (GLBitmapData*)Marshal.AllocHGlobal(sizeof(GLBitmapData));
 
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             using (var clone = bitmap.Clone(rect, PixelFormat.Format32bppArgb) ??
@@ -36,25 +36,7 @@ namespace GLTech2
         public void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)buffer);
 
-        public static implicit operator Texture32_ (Texture32 tex) =>
+        public static implicit operator GLBitmapData(GLBitmap tex) =>
             *tex.unmanaged;
-    }
-
-    public unsafe class Texture32 : IDisposable
-    {
-        internal Texture32_* unmanaged;
-
-        public Texture32(Bitmap bitmap) =>
-            unmanaged = Texture32_.Alloc(bitmap);
-        public void Dispose()
-        {
-            unmanaged->Dispose();
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
-        }
-
-        ~Texture32()
-        {
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
-        }
     }
 }

@@ -14,11 +14,11 @@ namespace Game
         static void Main(string[] args)
         {
 
-            var bg = new Material(new Texture32(Resources.Universe));
+            var bg = new Material(new GLBitmap(Resources.Universe));
             Scene scene = new Scene(bg);
 
             Vector[] cylinder = Vector.GetPolygon(Vector.Origin, 6f, 9);
-            var wallmaterial = new Material(new Texture32(Resources.Wall), 0, 2f);
+            var wallmaterial = new Material(new GLBitmap(Resources.Wall), 0, 2f);
 
             //Wall[] walls = Wall.CreatePolygon(wallmaterial, cylinder);
             //scene.AddWalls(walls);
@@ -32,12 +32,11 @@ namespace Game
             bigwall.AddBehaviour<Movement>();
             bigwall2.AddBehaviour<Movement>();        //Fails if added
             bigwall2.Parent = bigwall;
-            scene.AddWall(bigwall);
-            scene.AddWall(bigwall2);
+            scene.AddElement(bigwall);
 
             var cil = GetCylinder(new Vector(0, 0), 4f, wallmaterial);
             cil.AddBehaviour<Movement>();
-            scene.AddEmpty(cil);
+            scene.AddElement(cil);
 
             Renderer.ParallelRendering = false;
             Renderer.CppRendering = true;

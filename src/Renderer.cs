@@ -58,11 +58,11 @@ namespace GLTech2
             }
         }
         public static bool  IsRunning { get; private set; } = false;
-        public static Texture32 Screenshot
+        public static GLBitmap Screenshot
         {
             get
             {
-                return new Texture32(bufferBitmap.Clone() as Bitmap);
+                return new GLBitmap(bufferBitmap.Clone() as Bitmap);
             }
         }
 

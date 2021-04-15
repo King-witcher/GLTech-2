@@ -12,7 +12,7 @@ namespace GLTech2
     {
         internal float hoffset;
         internal float hrepeat;
-        internal Texture32_ texture; //Propositalmente salvo por valor
+        internal GLBitmapData texture; //Propositalmente salvo por valor
         internal float voffset; //Ainda não implementado
         internal float vrepeat; //Ainda não implmenetado
 
@@ -28,7 +28,7 @@ namespace GLTech2
             set => hrepeat = value;
         }
 
-        public Material(Texture32 texture, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
+        public Material(GLBitmap texture, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
             this.hoffset = hoffset;
             this.hrepeat = hrepeat;
@@ -51,7 +51,7 @@ namespace GLTech2
         //e replicações desnecessárias, pois Texture32 possui recursos não gerenciados e o usuário precisará de sua referência para
         //liberá-los.
 
-        public static implicit operator Material(Texture32 texture) =>
+        public static implicit operator Material(GLBitmap texture) =>
             new Material(texture);
     }
 }

@@ -21,9 +21,9 @@ namespace GL_Tech_2_Benchmark
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            Material bricks = new Texture32(Resources.Wall);
+            Material bricks = new GLBitmap(Resources.Wall);
             bricks.HorizontalRepeat = 12.6f;
-            Material universe = new Texture32(Resources.Universe);
+            Material universe = new GLBitmap(Resources.Universe);
 
             Vector[] close = Vector.GetPolygon(Vector.Origin, 1f, 200);
             Vector[] far = Vector.GetPolygon(Vector.Origin, 2f, 200);

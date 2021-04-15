@@ -99,11 +99,11 @@ namespace GLTech2
                     if (ignoreArgb.Contains(srcArgb)) continue;
                     else
                     {
-                        Texture32 blockTexture;
+                        GLBitmap blockTexture;
                         using (Bitmap blockBitmap = new Bitmap(1, 1))
                         {
                             blockBitmap.SetPixel(0, 0, source.GetPixel(line, column));
-                            blockTexture = new Texture32(blockBitmap);
+                            blockTexture = new GLBitmap(blockBitmap);
                         }
                         Vector vert1 = new Vector(line, -column);
                         Vector vert2 = new Vector(line, -column - 1);
@@ -195,6 +195,11 @@ namespace GLTech2
         public override void Dispose()
         {
             Marshal.FreeHGlobal((IntPtr) walldata);
+        }
+
+        public override string ToString()
+        {
+            return $"|{ StartPoint } -- { EndPoint }| ";
         }
     }
 }

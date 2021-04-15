@@ -171,18 +171,14 @@ namespace GLTech2
 
         }
 
-        internal void Start()
+        internal void CallStart()
         {
             foreach (Behaviour behavior in behaviours)
             {
-                if (behavior is null)
-                {
-                    throw new CannotUnloadAppDomainException();
-                }
                 behavior.Start();
             }
         }
-        internal void Update()
+        internal void CallUpdate()
         {
             foreach (Behaviour behavior in behaviours)
             {

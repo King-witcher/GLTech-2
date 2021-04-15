@@ -117,7 +117,7 @@ namespace GLTech2
 
         public override string ToString()
         {
-            return $"<{x}, {y}> -> {Angle}";
+            return $"<{x}, {y}>";
         }
         public override bool Equals(object obj)
         {

@@ -45,12 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour.cs" />
+    <Compile Include="GlobalSettings.cs" />
     <Compile Include="Internal\ElementEnumerator.cs" />
     <Compile Include="Internal\Camera.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Empty.cs" />
     <Compile Include="Internal\Renderer_modes.cs" />
     <Compile Include="Internal\RendererStruct.cs" />
+    <Compile Include="Internal\SceneData.cs" />
+    <Compile Include="Internal\GLBitmapData.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,7 +70,7 @@
     <Compile Include="Internal\SpriteData.cs" />
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Sprite.cs" />
-    <Compile Include="Texture32.cs" />
+    <Compile Include="GLBitmap.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Wall.cs" />
