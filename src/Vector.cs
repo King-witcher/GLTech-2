@@ -11,6 +11,9 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Vector
     {
+        const float TORAD = (float)Math.PI / 180f;
+        const float TODEGREE = 180f / (float) Math.PI;
+
         internal float x;
         internal float y;
 
@@ -25,13 +28,18 @@ namespace GLTech2
             y = (float)Math.Cos(angle * Math.PI / 180);
         }
 
-        public float Angle
+        public float Angle      // FAILS
         {
             get
             {
                 if (Module == 0)
                     return 0;
-                return 180 * (float)Math.Asin(X / Module) / (float)Math.PI;
+
+                float temp = 180f * (float)Math.Asin(x / Module) / (float)Math.PI;
+                if (y > 0)
+                    return temp;
+                else
+                    return 180 - temp;
             }
             set
             {
@@ -60,7 +68,7 @@ namespace GLTech2
         public float Rotation
         {
             get => Angle;
-            set => Angle = this.Angle;
+            set => Angle = value;
         }
         public static Vector Origin { get => new Vector(0, 0); }
         public static Vector FromAngle(float angle) => new Vector(angle);
@@ -113,10 +121,10 @@ namespace GLTech2
             new Vector(
                 left.X - right.X,
                 left.Y - right.Y);
-        public static Vector operator *(Vector left, Vector right) =>
+        public static Vector operator *(Vector left, Vector right) =>  // Fail
             new Vector(
-                left.X * right.X - left.Y * right.Y,
-                left.X * right.Y + left.Y + right.X);
+                left.Y * right.X + left.X * right.Y,
+                left.Y * right.Y - left.X * right.X);
         public static Vector operator *(float scalar, Vector vector) =>
             new Vector(
                 vector.X * scalar,

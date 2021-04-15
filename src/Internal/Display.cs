@@ -47,6 +47,7 @@ namespace GLTech2
             this.MaximizeBox = false;
             this.Name = "Display";
             this.Text = "GL Tech 2 Renderer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseForm);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -61,6 +62,11 @@ namespace GLTech2
         private void OnLoad(object sender, EventArgs e)
         {
 
+        }
+
+        private void CloseForm(object sender, FormClosedEventArgs e)
+        {
+            Renderer.Exit(); // Needs to be better implemented.
         }
     }
 }

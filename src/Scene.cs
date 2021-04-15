@@ -72,14 +72,35 @@ namespace GLTech2
 
 
 
-        private List<Element> Elements = new List<Element>();
+        private List<Element> elements = new List<Element>();
+
+        private void AddElement(Element item)
+        {
+            if (item.scene is null) //Possible nullobject test
+            {
+                elements.Add(item);
+                item.scene = this;
+            }
+            else
+            {
+                throw new InvalidOperationException($"\"{item}\" is already in a scene.");
+            }
+        }
+
+        public void AddGroup(Group g)
+        {
+            elements.Add(g);
+            g.scene = this;
+        }
+
         internal void AddSprite(Sprite s) => throw new NotImplementedException();
         public void AddWall(Wall w)
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
             unmanaged->Add(w.walldata);
-            Elements.Add(w);
+            elements.Add(w);
+            w.scene = this;
         }
 
         public void AddWalls(params Wall[] walls)
@@ -97,7 +118,7 @@ namespace GLTech2
         {
             unmanaged->Dispose();
             Marshal.FreeHGlobal((IntPtr)unmanaged);
-            Elements.Clear();
+            elements.Clear();
         }
 
         internal void InvokeStart()
@@ -108,7 +129,7 @@ namespace GLTech2
 
         internal void InvokeUpdate()
         {
-            foreach (var element in Elements)
+            foreach (var element in elements)
             {
                 element.Update();
             }

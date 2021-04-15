@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
-    internal sealed class Group : Element
+    public sealed class Group : Element
     {
-        private protected override Vector IsolatedPosition { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        private protected override float IsolatedRotation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Group (Vector pos)
+        {
+            IsolatedPosition = pos;
+        }
+
+        private protected override Vector IsolatedPosition { get; set; }
+        private protected override float IsolatedRotation { get; set; } = 0f;
     }
 }

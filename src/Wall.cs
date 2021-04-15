@@ -51,12 +51,12 @@ namespace GLTech2
             set => StartPoint = value;
         }
 
-        private protected override float IsolatedRotation
+        private protected override float IsolatedRotation       // Not tested.
         {
             get => walldata->geom_direction.Angle;
             set
             {
-                walldata->geom_direction = walldata->geom_direction.Module * new Vector(value);
+                walldata->geom_direction = Vector.FromAngle(value, walldata->geom_direction.Module);
             }
         }
 

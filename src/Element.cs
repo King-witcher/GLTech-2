@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GLTech2
 {
     public abstract class Element : IDisposable
     {
         private protected Element() { }
-
 
         private protected abstract Vector IsolatedPosition { get; set; }
         private protected abstract float IsolatedRotation { get; set; }
@@ -25,52 +20,127 @@ namespace GLTech2
                     child.Position += delta;
             }
         }
-        public float Rotation
+        public float Rotation           // SUBOPTIMAL AND NOT TESTED.
         {
             get => IsolatedRotation;
             set
             {
-                float delta = value - IsolatedRotation;
+                float deltar = value - IsolatedRotation;
+
                 IsolatedRotation = value;
-                foreach (Element child in childs)
-                    child.Rotation += delta;
+                foreach (Element child in childs)       //Ferra tudo se a rotação for lenta
+                {
+                    Vector childpos = child.Position;
+                    Vector distance = childpos - this.Position;
+                    distance *= new Vector(deltar);
+                    childpos += distance;
+                    child.Position = childpos;
+                    child.Rotation += deltar;
+                }
             }
         }
 
-
-        private List<Behaviour> behaviors = new List<Behaviour>();
-        private List<Element> childs = new List<Element>();
-
-
-        public void AddBehavior<T>() where T : Behaviour, new()
+        private Element parent = null;
+        public Element Parent
         {
-            Behaviour behaviour = new T();
-            behaviour.element = this;
-            behaviors.Add(behaviour);
+            get => parent;
+            set
+            {
+                if (this.parent != null)
+                {
+                }
+                this.parent = value;
+            }
         }
 
+        internal void UpdateAxis()
+        {
+
+        }
+
+        internal event Action OnMove;
+
+        public int ChildCount => childs.Count;
+
+        private List<Behaviour> behaviours = new List<Behaviour>(); // Rever desempenho disso
+        private List<Element> childs = new List<Element>(); // Rever desempenho disso
+        internal Scene scene;
+
+        public void AddBehaviour<T>() where T : Behaviour, new()
+        {
+            if (ContainsBehaviour<T>())
+                throw new InvalidOperationException("Cannot add same behaviour twice.");
+
+            Behaviour behaviour = new T();
+            behaviour.element = this;
+            behaviours.Add(behaviour);
+        }
+
+        public bool ContainsBehaviour<T>() where T : Behaviour
+        {
+            foreach (var item in behaviours)
+                if (item is T)
+                    return true;
+            return false;
+        }
+
+        public void RemoveBehaviour<T>() where T : Behaviour
+        {
+            foreach (var item in behaviours)
+            {
+                if (item is T)
+                {
+                    behaviours.Remove(item);
+                    return;
+                }
+            }
+        }
+
+        public void AddChild(Element child)
+        {
+            if (child.parent != null)
+                child.parent.RemoveChild(child);
+
+            this.childs.Add(child);
+            child.parent = this;
+        }
+        public void AddChilds(params Element[] childs)
+        {
+            foreach (var item in childs)
+            {
+                AddChild(item);
+            }
+        }
+
+        public Element GetChild(int index)
+        {
+            return childs[index];
+        }
+
+        public void RemoveChild(Element child)
+        {
+            childs.Remove(child);
+            child.parent = null;
+        }
 
         public void Push(Vector direction)
         {
             throw new NotImplementedException();
         }
 
-
         public void Rotate(float roation)
         {
             throw new NotImplementedException();
         }
-
 
         public virtual void Dispose()
         {
 
         }
 
-
         internal void Start()
         {
-            foreach (Behaviour behavior in behaviors)
+            foreach (Behaviour behavior in behaviours)
             {
                 if (behavior is null)
                 {
@@ -81,7 +151,7 @@ namespace GLTech2
         }
         internal void Update()
         {
-            foreach (Behaviour behavior in behaviors)
+            foreach (Behaviour behavior in behaviours)
             {
                 behavior.Update();
             }

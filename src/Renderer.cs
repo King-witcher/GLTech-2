@@ -68,10 +68,10 @@ namespace GLTech2
 
 
         internal static Bitmap                  bufferBitmap;
+        internal unsafe static RenderStruct*    rendererData;
         private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Action                   updateMethod;
-        private unsafe static RenderStruct*     rendererData;
         private static Scene                    scene = null;
 
 

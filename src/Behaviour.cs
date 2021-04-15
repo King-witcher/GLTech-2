@@ -11,7 +11,7 @@ namespace GLTech2
         internal Element element;
 
         protected internal Behaviour() { } // Makes possible the creation of derived classes
-        protected internal Element Element { get => element; } // Needed to make possible 
+        protected internal Element Element { get => element; }
         protected internal virtual void Update() { }
         protected internal virtual void Start() { }
         protected internal virtual void Activate() { }
