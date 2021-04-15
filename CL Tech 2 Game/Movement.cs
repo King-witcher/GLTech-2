@@ -9,10 +9,11 @@ namespace Game
 {
     public class Movement : Behaviour
     {
-        static Vector direction = new Vector(1f, -1f);
+        static Vector direction = new Vector(0f, 1f);
         protected sealed override void Update()
         {
-            Element.Rotation += Time.DeltaTime * 0.05f;
+            Element.Position += Time.DeltaTime * direction;
+            Element.Rotation += Time.DeltaTime * 30f;
         }
     }
 }

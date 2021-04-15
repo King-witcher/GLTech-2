@@ -102,20 +102,22 @@ namespace GLTech2
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
 
-        public Vector Projection(Vector module, Vector center)
+        // The values of the projection inside the new axis system.
+        public Vector Projection(Vector position, Vector normal)
         {
-            return (this - center) / module;
+            return (this - position) / normal;
         }
 
-        public Vector IfWasProjectionOf(Vector module, Vector center)
+        // The absolute values of a vector assuming that its a projection from an axis system.
+        public Vector AsProjectionOf(Vector position, Vector normal)
         {
-            return this * module + center;
+            return this * normal + position;
         }
 
 
         public override string ToString()
         {
-            return $"<{x}, {y}> = {y} + {x}i";
+            return $"<{x}, {y}> -> {Angle}";
         }
         public override bool Equals(object obj)
         {
@@ -148,7 +150,7 @@ namespace GLTech2
 
         public static Vector operator /(Vector dividend, Vector divider)
         {
-            float delta = dividend.x * divider.x + dividend.y * divider.y;
+            float delta = divider.x * divider.x + divider.y * divider.y;
             if (delta == 0)
                 throw new DivideByZeroException("Divider vector cannot be <0, 0>.");
 

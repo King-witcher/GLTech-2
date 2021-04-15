@@ -8,16 +8,19 @@ namespace GLTech2
     {
         internal SpriteData* unmanaged;
 
-        private protected override Vector IsolatedPosition
+        private protected override Vector AbsolutePosition
         {
             get => unmanaged->position;
             set => unmanaged->position = value;
         }
 
-        private protected override float IsolatedRotation { get; set; }
+        private protected override Vector AbsoluteNormal { get; set; }
 
-        public Sprite(Vector position, Material material) =>
+        public Sprite(Vector position, Material material)
+        {
             unmanaged = SpriteData.Alloc(position, material);
+            UpdateRelative();
+        }
 
         public override void Dispose() =>
             Marshal.FreeHGlobal((IntPtr)unmanaged);

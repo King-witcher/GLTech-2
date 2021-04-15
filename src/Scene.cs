@@ -74,27 +74,47 @@ namespace GLTech2
 
         private List<Element> elements = new List<Element>();
 
-        private void AddElement(Element item)
+        private void AddElement(Element element)    // Must be refactored
         {
-            if (item.scene is null) //Possible nullobject test
+#pragma warning disable CS0612
+            if (element is Wall)
             {
-                elements.Add(item);
-                item.scene = this;
+                AddWall(element as Wall);
+                return;
+            }
+            else if (element is Empty)
+            {
+                AddEmpty(element as Empty);
+                return;
+            }
+
+#pragma warning restore CS0612
+            if (element.scene is null)
+            {
+                elements.Add(element);
+                element.scene = this;
+
+                foreach (var item in element.childs)
+                    AddElement(item);                   // May cause infinite recursion.
             }
             else
             {
-                throw new InvalidOperationException($"\"{item}\" is already in a scene.");
+                throw new InvalidOperationException($"\"{element}\" is already in a scene.");
             }
         }
 
-        public void AddGroup(Empty g)
+        public void AddEmpty(Empty empty)   // Must be refactored
         {
-            elements.Add(g);
-            g.scene = this;
+            elements.Add(empty);
+            empty.scene = this;
+
+            foreach (var item in empty.childs)
+                AddElement(item);
         }
 
         internal void AddSprite(Sprite s) => throw new NotImplementedException();
-        public void AddWall(Wall w)
+        [Obsolete]
+        public void AddWall(Wall w)     // Must be refactored
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
@@ -102,8 +122,8 @@ namespace GLTech2
             elements.Add(w);
             w.scene = this;
         }
-
-        public void AddWalls(params Wall[] walls)
+        [Obsolete]
+        public void AddWalls(params Wall[] walls)   // Must be refactored
         {
             foreach (Wall wall in walls)
             {
@@ -121,7 +141,7 @@ namespace GLTech2
             elements.Clear();
         }
 
-        internal void InvokeStart()
+        internal void InvokeStart() // not implemented yet
         {
             //foreach (var element in Elements)
                 //element.Start();

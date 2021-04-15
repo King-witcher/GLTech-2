@@ -10,7 +10,7 @@ namespace GLTech2
     {
         public Camera()
         {
-
+            UpdateRelative();
         }
 
         internal RenderStruct* unmanaged;
@@ -18,23 +18,18 @@ namespace GLTech2
 
         //Public value
         private float rotation = 0f;
-        private protected override Vector IsolatedPosition
+        private protected override Vector AbsolutePosition
         {
             get => unmanaged->camera_position;
             set => unmanaged->camera_position = value;
         }
 
-        private protected override float IsolatedRotation
+        private protected override Vector AbsoluteNormal
         {
-            get => rotation; // Public value
+            get => throw new NotImplementedException(); // Public value
             set
             {
-                rotation = value;
-                //Ensures the angle restriction
-                if (value >= 0)
-                    unmanaged->camera_angle = value % 360;
-                else
-                    unmanaged->camera_angle = value % 360 + 1;
+                throw new NotImplementedException();
             }
         }
 

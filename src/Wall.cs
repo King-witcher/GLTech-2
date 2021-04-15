@@ -45,18 +45,18 @@ namespace GLTech2
             }
         }
 
-        private protected override Vector IsolatedPosition
+        private protected override Vector AbsolutePosition
         {
             get => StartPoint;
             set => StartPoint = value;
         }
 
-        private protected override float IsolatedRotation       // Not tested.
+        private protected override Vector AbsoluteNormal
         {
-            get => walldata->geom_direction.Angle;
+            get => walldata->geom_direction;
             set
             {
-                walldata->geom_direction = Vector.FromAngle(value, walldata->geom_direction.Module);
+                walldata->geom_direction = value;
             }
         }
 
@@ -65,13 +65,14 @@ namespace GLTech2
         public Wall(Vector start, Vector end, Material material)
         {
             walldata = WallData.Alloc(start, end, material);
+            UpdateRelative();
         }
         
         public Wall(Vector start, float angle_deg, float length, Material material)
         {
             walldata = WallData.Alloc(start, angle_deg, length, material);
+            UpdateRelative();
         }
-
 
 
 

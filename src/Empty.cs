@@ -9,12 +9,16 @@ namespace GLTech2
 {
     public sealed class Empty : Element
     {
-        public Empty (Vector pos)
+        public Empty(Vector pos)
         {
-            IsolatedPosition = pos;
+            AbsolutePosition = pos;
+            UpdateRelative();
+        }
+        public Empty(float x, float y) : this(new Vector(x, y))
+        {
         }
 
-        private protected override Vector IsolatedPosition { get; set; }
-        private protected override float IsolatedRotation { get; set; } = 0f;
+        private protected override Vector AbsolutePosition { get; set; }
+        private protected override Vector AbsoluteNormal { get; set; } = new Vector(0, 1);
     }
 }

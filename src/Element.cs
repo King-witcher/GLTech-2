@@ -7,86 +7,124 @@ namespace GLTech2
     {
         private protected Element() { }
 
-        private protected abstract Vector IsolatedPosition { get; set; }
-        private protected abstract float IsolatedRotation { get; set; }
+        private Vector relativePosition;
+        private Vector relativeNormal;
+
+        // 
+        private protected abstract Vector AbsolutePosition { get; set; }
+        private protected abstract Vector AbsoluteNormal { get; set; } //Rotation and scale of the object.
+
+
+
+        internal event Action OnChange;
+
+        // Gets and sets RELATIVE position.
         public Vector Position
         {
-            get => IsolatedPosition;
+            get => relativePosition;
             set
             {
-                Vector delta = value - IsolatedPosition;
-                IsolatedPosition = value;
-                foreach (Element child in childs)
-                    child.Position += delta;
+                relativePosition = value;
+                UpdateAbsolute();
             }
         }
-        public float Rotation           // SUBOPTIMAL AND NOT TESTED.
+
+        // Gets and sets RELATIVE scale.
+        public Vector Normal
         {
-            get => IsolatedRotation;
+            get => relativeNormal;
             set
             {
-                float deltar = value - IsolatedRotation;
-
-                IsolatedRotation = value;
-                foreach (Element child in childs)       //Ferra tudo se a rotação for lenta
-                {
-                    Vector childpos = child.Position;
-                    Vector distance = childpos - this.Position;
-                    distance *= new Vector(deltar);
-                    childpos += distance;
-                    child.Position = childpos;
-                    child.Rotation += deltar;
-                }
+                relativeNormal = value;
+                UpdateAbsolute();
             }
         }
 
-        // Position and rotation relative to parent.
-        private Vector relative_position;
-        private float relative_rotation;
-        private Element parent = null;
+        // Gets and sets RELATIVE rotation through relative normal.
+        public float Rotation
+        {
+            get
+            {
+                return relativeNormal.Angle;
+            }
+            set
+            {
+                relativeNormal.Angle = value;
+                UpdateAbsolute();
+            }
+        }
+
+        private Element parent = null; //Axis provider.
         public Element Parent
         {
             get => parent;
             set
             {
+                if (value != null && scene != value.scene)      // Suboptimal
+                {
+                    throw new InvalidOperationException("Cannot parent elements in different scenes.");
+                }
+
                 if (this.parent != null)
                 {
-                    parent.OnMove -= UpdateRealOnes;
+                    parent.OnChange -= UpdateAbsolute;
+                    parent.childs.Remove(this);
                 }
 
                 if (value != null)
                 {
-                    value.OnMove += UpdateRealOnes;
+                    value.OnChange += UpdateAbsolute;
+                    value.childs.Add(this);
                 }
-
                 this.parent = value;
+                UpdateRelative();
             }
         }
 
-        private void UpdateRelativeOnes()   // A bit suboptimal
+        // Update relative transform through parent and absolute transform.
+        // Called when attaches 
+        // Must be called after construction of every subclass.
+        private protected void UpdateRelative()
         {
-            relative_rotation = IsolatedRotation - parent.IsolatedRotation;
-
-
+            if (parent is null)
+            {
+                relativePosition = AbsolutePosition;
+                relativeNormal = AbsoluteNormal;
+            }
+            else
+            {
+                relativePosition = AbsolutePosition.Projection(parent.AbsolutePosition, parent.AbsoluteNormal);
+                relativeNormal = AbsoluteNormal / parent.AbsoluteNormal;
+            }
         }
 
-        private void UpdateRealOnes()   // Not optimized, a bit redundant.
+        // Update absolute position through relative position and parent.
+        // Called either when the parent or this element changes its position.
+        private protected void UpdateAbsolute()
         {
-
+            if (parent is null)
+            {
+                AbsolutePosition = relativePosition;
+                AbsoluteNormal = relativeNormal;
+            }
+            else
+            {
+                AbsolutePosition = relativePosition.AsProjectionOf(parent.AbsolutePosition, parent.AbsoluteNormal);
+                AbsoluteNormal = relativeNormal * parent.AbsoluteNormal;
+            }
+            OnChange?.Invoke();
         }
-
-        internal event Action OnMove;
 
         public int ChildCount => childs.Count;
 
         private List<Behaviour> behaviours = new List<Behaviour>(); // Rever desempenho disso
-        private List<Element> childs = new List<Element>(); // Rever desempenho disso
+        internal List<Element> childs = new List<Element>(); // Rever desempenho disso
         internal Scene scene;
 
         public void AddBehaviour<T>() where T : Behaviour, new()
         {
             if (ContainsBehaviour<T>())
-                throw new InvalidOperationException("Cannot add same behaviour twice.");
+                throw new InvalidOperationException("Cannot add same behaviour twice."); // Questionable
 
             Behaviour behaviour = new T();
             behaviour.element = this;
@@ -113,39 +151,17 @@ namespace GLTech2
             }
         }
 
-        public void AddChild(Element child)
-        {
-            if (child.parent != null)
-                child.parent.RemoveChild(child);
-
-            this.childs.Add(child);
-            child.parent = this;
-        }
-        public void AddChilds(params Element[] childs)
-        {
-            foreach (var item in childs)
-            {
-                AddChild(item);
-            }
-        }
-
         public Element GetChild(int index)
         {
             return childs[index];
         }
 
-        public void RemoveChild(Element child)
-        {
-            childs.Remove(child);
-            child.parent = null;
-        }
-
-        public void Push(Vector direction)
+        private void Push(Vector direction)
         {
             throw new NotImplementedException();
         }
 
-        public void Rotate(float roation)
+        private void Rotate(float roation)
         {
             throw new NotImplementedException();
         }
