@@ -8,7 +8,7 @@ namespace GLTech2
 {
     public unsafe class Camera : Element    // Parei aqui
     {
-        internal RenderStruct* unmanaged;
+        internal RendererData* unmanaged;
 
         public Camera()
         {

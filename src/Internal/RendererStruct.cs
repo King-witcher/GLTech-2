@@ -4,23 +4,29 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct RenderStruct
+    internal unsafe struct RendererData
     {
+        // Resposabillity of the Renderer
         internal volatile Int32* bitmap_buffer;
         internal int bitmap_height;
         internal int bitmap_width;
 
+        // Caches
         internal float* cache_angles;
         internal float cache_colHeight1;
         internal float* cache_cosines;
+
+        // Responsabillity of the Camera
         internal float camera_angle; //MUST be 0 <= x < 360
         internal float camera_HFOV;
         internal Vector camera_position;
+
+        // Responsabillity of the Renderer (current_scene)
         internal SceneData* scene;
 
-        internal static RenderStruct* Alloc(int width, int height, SceneData* map)
+        internal static RendererData* Alloc(int width, int height, SceneData* map)
         {
-            RenderStruct* result = (RenderStruct*)Marshal.AllocHGlobal(sizeof(RenderStruct));
+            RendererData* result = (RendererData*)Marshal.AllocHGlobal(sizeof(RendererData));
             result->bitmap_height = height;
             result->bitmap_width = width;
             result->bitmap_buffer = (Int32*)Marshal.AllocHGlobal(sizeof(Int32) * width * height);

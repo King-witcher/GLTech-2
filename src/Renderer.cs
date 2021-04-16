@@ -68,7 +68,7 @@ namespace GLTech2
 
 
         internal static Bitmap                  bufferBitmap;
-        internal unsafe static RenderStruct*    rendererData;
+        internal unsafe static RendererData*    rendererData;
         private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Action                   updateMethod;
@@ -77,7 +77,7 @@ namespace GLTech2
 
         unsafe static Renderer()
         {
-            rendererData = RenderStruct.Alloc(DisplayWidth, DisplayHeight, null);
+            rendererData = RendererData.Alloc(DisplayWidth, DisplayHeight, null);
 
             bufferBitmap = new Bitmap(DisplayWidth, DisplayHeight, DisplayWidth * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)rendererData->bitmap_buffer);
             var temp = bufferBitmap.LockBits(new Rectangle(0, 0, DisplayWidth, DisplayHeight), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
@@ -97,7 +97,7 @@ namespace GLTech2
             display = new Display();
             display.SetSize(DisplayWidth, DisplayHeight);
 
-            rendererData = RenderStruct.Alloc(DisplayWidth, DisplayHeight, scene.unmanaged); // Must be released.
+            rendererData = RendererData.Alloc(DisplayWidth, DisplayHeight, scene.unmanaged); // Must be released.
 
             bufferBitmap = new Bitmap(DisplayWidth, DisplayHeight, DisplayWidth * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)rendererData->bitmap_buffer);
             var temp = bufferBitmap.LockBits(new Rectangle(0, 0, DisplayWidth, DisplayHeight), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);

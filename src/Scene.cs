@@ -55,7 +55,7 @@ namespace GLTech2
                 return;
             }
 
-            if (element.Parent.scene != this)       // Must be tested
+            if (element.Parent != null && element.Parent.scene != this)       // Must be tested
             {
                 element.Parent = null;
             }

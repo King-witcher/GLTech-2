@@ -12,8 +12,9 @@ namespace Game
         static Vector direction = new Vector(0f, 1f);
         protected sealed override void Update()
         {
-            Element.Position += Time.DeltaTime * direction;
-            Element.Rotation += Time.DeltaTime * 30f;
+            //Element.Position += Time.DeltaTime * direction;
+            //Element.Rotation += Time.DeltaTime * 30f;
+            Console.WriteLine(Time.RenderTime);
         }
     }
 }
