@@ -13,21 +13,22 @@ namespace GLTech2
     public unsafe sealed partial class Scene : IDisposable
     {
         internal SceneData* unmanaged;
-        private Camera current_camera;
+        private Observer activeObserver = new Observer(Vector.Unit, 0);    //Provisional
         private List<Element> elements = new List<Element>();
 
         public Scene(Material background, int maxWalls = 512, int maxSprities = 512) =>
             unmanaged = SceneData.Alloc(maxWalls, maxSprities, background);
 
 
-        public Camera CurrentCamera
+        public Observer ActiveObserver  // Spaguetti
         {
-            get => current_camera;
+            get => activeObserver;
             set
             {
-                if (value.scene == this)
+                if (value is null || value.scene == null)   // null pointer
                 {
-                    current_camera = value;
+                    activeObserver = value;
+                    unmanaged->point_of_view = value.unmanaged;
 
                     //Provisional
                     OnChangeCamera?.Invoke();
@@ -38,6 +39,7 @@ namespace GLTech2
         }
 
         //Provisional
+        [Obsolete]
         internal event Action OnChangeCamera;
 
         public int MaxWalls => unmanaged->wall_max;
@@ -62,9 +64,11 @@ namespace GLTech2
 
 
             if (element is Wall)
-                AddWall(element as Wall);
+                UnmanagedAddWall(element as Wall);
             else if (element is Sprite)
-                AddSprite(element as Sprite);
+                UnmanagedAddSprite(element as Sprite);
+            else if (element is Observer)
+                UnmanagedAddPOV(element as Observer);
 
             elements.Add(element);
             element.scene = this;
@@ -84,17 +88,17 @@ namespace GLTech2
             }
         }
 
-        private void AddWall(Wall w)
+        private void UnmanagedAddWall(Wall w)
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
             unmanaged->Add(w.walldata);
         }
-        private void AddSprite(Sprite s) => throw new NotImplementedException();
+        private void UnmanagedAddSprite(Sprite s) => throw new NotImplementedException();
 
-        public void SetCamera(Camera cam)
+        private void UnmanagedAddPOV(Observer p)
         {
-            CurrentCamera = cam;
+            ActiveObserver = p;
         }
 
         public void Dispose()   // must change

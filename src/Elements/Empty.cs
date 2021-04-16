@@ -12,6 +12,8 @@ namespace GLTech2
         public Empty(Vector pos)
         {
             AbsolutePosition = pos;
+            AbsoluteNormal = Vector.Unit;
+
             UpdateRelative();
         }
         public Empty(float x, float y) : this(new Vector(x, y))
@@ -19,6 +21,6 @@ namespace GLTech2
         }
 
         private protected override Vector AbsolutePosition { get; set; }
-        private protected override Vector AbsoluteNormal { get; set; } = new Vector(0, 1);
+        private protected override Vector AbsoluteNormal { get; set; }
     }
 }

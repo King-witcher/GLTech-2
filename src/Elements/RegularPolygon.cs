@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace GLTech2.StandardObjects
 {
-    internal sealed class RegularPolygon : Element
+    public sealed class RegularPolygon : Element
     {
         public RegularPolygon(Vector position, int edges, float radius, Material material)
         {
+
             Vector[] verts = Vector.GetPolygon(position, radius, 64);
             Wall[] walls = Wall.CreatePolygon(material, verts);
             foreach (Wall wall in walls)
                 wall.Parent = this;
 
+            AbsolutePosition = position;
+            AbsoluteNormal = Vector.Unit;
             UpdateRelative();
         }
 

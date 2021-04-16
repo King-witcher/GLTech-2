@@ -18,6 +18,9 @@ namespace GLTech2
             e.AddBehaviour<CountFPS>();
             scene.AddElement(e);
 
+            Observer pov = new Observer(Vector.Origin, 0);
+            scene.AddElement(pov);
+
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
 

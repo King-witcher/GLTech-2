@@ -16,16 +16,16 @@ namespace GLTech2
         internal float cache_colHeight1;
         internal float* cache_cosines;
 
-        // Responsabillity of the Camera
-        internal float camera_angle; //MUST be 0 <= x < 360
+
         internal float camera_HFOV;
         internal Vector camera_position;
+        internal float camera_angle; //MUST be 0 <= x < 360
         internal Vector camera_normal;      // Not used yet
 
         // Responsabillity of the Renderer (current_scene)
         internal SceneData* scene;
 
-        internal static RendererData* Alloc(int width, int height, SceneData* map)
+        internal static RendererData* Create(int width, int height, SceneData* scene)
         {
             RendererData* result = (RendererData*)Marshal.AllocHGlobal(sizeof(RendererData));
             result->bitmap_height = height;
@@ -33,7 +33,7 @@ namespace GLTech2
             result->bitmap_buffer = (Int32*)Marshal.AllocHGlobal(sizeof(Int32) * width * height);
             result->camera_angle = 0f;
             result->camera_HFOV = 90f;
-            result->scene = map;
+            result->scene = scene;
             result->camera_position = Vector.Origin;
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.

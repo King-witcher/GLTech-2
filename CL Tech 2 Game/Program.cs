@@ -35,9 +35,9 @@ namespace Game
             //Console.ReadKey();
         }
 
-        static Empty GetCylinder(Vector position, float radius, Material material)
+        static Perspective GetCylinder(Vector position, float radius, Material material)
         {
-            Empty empty = new Empty(position);
+            Perspective empty = new Perspective(position);
             Vector[] verts = Vector.GetPolygon(position, radius, 64);
             Wall[] walls = Wall.CreatePolygon(material, verts);
             foreach (Wall wall in walls)
