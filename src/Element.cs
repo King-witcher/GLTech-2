@@ -223,5 +223,9 @@ namespace GLTech2
                 behavior.Update();
             }
         }
+
+        //Beta
+        event Action StartEvent;
+        event Action UpdateEvent;
     }
 }
