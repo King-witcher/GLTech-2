@@ -1,6 +1,7 @@
 ﻿//See Texture32.cs before
 
 using System;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -53,5 +54,8 @@ namespace GLTech2
 
         public static implicit operator Material(GLBitmap texture) =>
             new Material(texture);
+
+        public static implicit operator Material(Bitmap texture) =>
+            new Material(new GLBitmap(texture));
     }
 }

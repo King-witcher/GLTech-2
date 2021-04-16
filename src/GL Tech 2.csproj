@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GLTech2</RootNamespace>
     <AssemblyName>glt2_net</AssemblyName>
@@ -57,6 +57,7 @@
     <Compile Include="Internal\RendererStruct.cs" />
     <Compile Include="Internal\SceneData.cs" />
     <Compile Include="Internal\GLBitmapData.cs" />
+    <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Material.cs" />
@@ -97,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="StandardBehaviours\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wall.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

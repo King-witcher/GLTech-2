@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GLTech2.StandardObjects
 {
-    public sealed class RegularPolygon : Element
+    internal sealed class RegularPolygon : Element
     {
         public RegularPolygon(Vector position, int edges, float radius, Material material)
         {

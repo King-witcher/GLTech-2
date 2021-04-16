@@ -18,9 +18,9 @@ namespace GLTech2
 
         // Responsabillity of the Camera
         internal float camera_angle; //MUST be 0 <= x < 360
-        internal Vector camera_normal;
         internal float camera_HFOV;
         internal Vector camera_position;
+        internal Vector camera_normal;      // Not used yet
 
         // Responsabillity of the Renderer (current_scene)
         internal SceneData* scene;

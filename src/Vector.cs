@@ -83,6 +83,7 @@ namespace GLTech2
         }
 
         public static Vector Origin { get => new Vector(0, 0); }
+        public static Vector Unit { get => new Vector(0, 1); }
 
         public static Vector[] GetPolygon(Vector center, float radius, int edges)
         {
