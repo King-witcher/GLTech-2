@@ -28,6 +28,7 @@ namespace GLTech2
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
+            Renderer.FullScreen = true;
 
             Renderer.CppRendering = false;
             Renderer.ParallelRendering = true;

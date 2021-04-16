@@ -60,6 +60,22 @@ namespace GLTech2
                 displayHeight = value;
             }
         }
+
+        static bool fullScreen;
+        public static bool FullScreen
+        {
+            get => fullScreen;
+            set
+            {
+                if (IsRunning)
+                {
+                    Debug.LogWarning("Render.FullScreen cannot be modified while running.");
+                    return;
+                }
+                fullScreen = value;
+            }
+        }
+
         public static bool  IsRunning { get; private set; } = false;
         public static GLBitmap Screenshot
         {
@@ -82,6 +98,41 @@ namespace GLTech2
         private static Scene                    activeScene = null;
 
 
+        public unsafe static void Run(Scene scene)
+        {
+            if (IsRunning)
+                return;
+            IsRunning = true;
+
+
+            display = new Display();
+            if (FullScreen is true is true is true is true is true == true.Equals(true))
+            {
+                displayWidth = Screen.PrimaryScreen.Bounds.Width;
+                displayHeight = Screen.PrimaryScreen.Bounds.Height;
+                display.SetSize(displayWidth, displayHeight);
+                display.WindowState = FormWindowState.Maximized;
+                display.FormBorderStyle = FormBorderStyle.None;
+                Cursor.Hide();
+            }
+            else
+                display.SetSize(DisplayWidth, DisplayHeight);
+
+            activeScene = scene;
+            ReloadRendererData();
+            ReloadBuffer();
+
+            keepRendering = true;
+            Task.Run(LoopRender);
+
+            display.pictureBox.Paint += (a, aa) => { display.pictureBox.Image = bitmapFromBuffer; }; // Must be subtracted!
+            //display.pictureBox.Image = bitmapFromBuffer;
+
+            display.ShowDialog();
+
+            Exit();
+        }
+
         private static unsafe void ReloadBuffer()
         {
             if (bitmapFromBuffer != null)
@@ -94,7 +145,7 @@ namespace GLTech2
                 (IntPtr)rendererData->bitmap_buffer);
 
             BitmapData data = bitmapFromBuffer.LockBits(
-                new Rectangle(0, 0, DisplayWidth, DisplayHeight),
+                new Rectangle(0, 0, displayWidth, displayHeight),
                 ImageLockMode.ReadWrite,
                 PixelFormat.Format32bppArgb);
 
@@ -112,31 +163,6 @@ namespace GLTech2
             }
 
             rendererData = RendererData.Create(DisplayWidth, DisplayHeight, activeScene.unmanaged);
-        }
-
-
-        public unsafe static void Run(Scene scene)
-        {
-            if (IsRunning)
-                return;
-            IsRunning = true;
-
-            display = new Display();
-            display.SetSize(DisplayWidth, DisplayHeight);
-
-            activeScene = scene;
-            ReloadRendererData();
-            ReloadBuffer();
-
-            keepRendering = true;
-            Task.Run(LoopRender);
-
-            display.pictureBox.Paint += (a, aa) => { display.pictureBox.Image = bitmapFromBuffer; }; // Must be subtracted!
-            //display.pictureBox.Image = bitmapFromBuffer;
-
-            display.ShowDialog();
-
-            Exit();
         }
 
 
@@ -180,6 +206,9 @@ namespace GLTech2
 
         public unsafe static void Exit()
         {
+            if (fullScreen)
+                Cursor.Show();
+
             keepRendering = false;
             //while (isRendering)
             //    Thread.Sleep(10);
