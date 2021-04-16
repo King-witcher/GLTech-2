@@ -20,7 +20,7 @@ namespace GLTech2
         internal float camera_HFOV;
 
         // Responsabillity of the Renderer (current_scene)
-        internal SceneData* scene;
+        internal SceneData* activeScene;
 
         internal static RendererData* Create(int width, int height, SceneData* scene)
         {
@@ -29,7 +29,7 @@ namespace GLTech2
             result->bitmap_width = width;
             result->bitmap_buffer = (Int32*)Marshal.AllocHGlobal(sizeof(Int32) * width * height);
             result->camera_HFOV = 90f;
-            result->scene = scene;
+            result->activeScene = scene;
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.
 

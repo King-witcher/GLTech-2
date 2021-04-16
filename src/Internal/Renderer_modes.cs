@@ -18,7 +18,7 @@ namespace GLTech2
             //Caching frequently used values.
             int display_width = rendererData->bitmap_width;
             int display_height = rendererData->bitmap_height;
-            Material background = rendererData->scene->background;
+            Material background = rendererData->activeScene->background;
 
             if (ParallelRendering)
                 Parallel.For(0, display_width, Loop);
@@ -31,11 +31,11 @@ namespace GLTech2
             {
                 //Caching
                 float ray_cos = rendererData->cache_cosines[ray_id];
-                float ray_angle = rendererData->cache_angles[ray_id] + rendererData->scene->activePOV->rotation;
-                Ray ray = new Ray(rendererData->scene->activePOV->position, ray_angle);
+                float ray_angle = rendererData->cache_angles[ray_id] + rendererData->activeScene->activeObserver->rotation;
+                Ray ray = new Ray(rendererData->activeScene->activeObserver->position, ray_angle);
 
                 //Cast the ray towards every wall.
-                WallData* nearest = ray.NearestWall(rendererData->scene, out float nearest_dist, out float nearest_ratio);
+                WallData* nearest = ray.NearestWall(rendererData->activeScene, out float nearest_dist, out float nearest_ratio);
                 if (nearest_dist != float.PositiveInfinity)
                 {
                     float columnHeight = (rendererData->cache_colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels

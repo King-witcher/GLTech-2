@@ -15,7 +15,7 @@ namespace GLTech2
 
         protected internal override void Update()
         {
-            Element.Rotate(Time.DeltaTime);
+            Element.Rotate(Time.DeltaTime * 15);
 
             frames++;
             rendertime += Time.RenderTime;

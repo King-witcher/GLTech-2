@@ -35,8 +35,17 @@ namespace GLTech2
             UpdateRelative();
         }
 
-        private protected override Vector AbsolutePosition { get; set; } // Not implemented
-        private protected override Vector AbsoluteNormal { get; set; } // Not implemented
+        private protected override Vector AbsolutePosition
+        {
+            get => unmanaged->position;
+            set => unmanaged->position = value;
+        }
+
+        private protected override Vector AbsoluteNormal
+        {
+            get => new Vector(unmanaged->rotation);
+            set => unmanaged->rotation = value.Angle;
+        }
 
         public override void Dispose()
         {

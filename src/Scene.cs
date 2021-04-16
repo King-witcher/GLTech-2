@@ -20,7 +20,7 @@ namespace GLTech2
             unmanaged = SceneData.Alloc(maxWalls, maxSprities, background);
 
 
-        public Observer ActiveObserver  // Spaguetti
+        public Observer ActiveObserver
         {
             get => activeObserver;
             set
@@ -28,19 +28,13 @@ namespace GLTech2
                 if (value is null || value.scene == null)   // null pointer
                 {
                     activeObserver = value;
-                    unmanaged->activePOV = value.unmanaged;
-
-                    //Provisional
-                    OnChangeCamera?.Invoke();
+                    unmanaged->activeObserver = value.unmanaged;
                 }
                 else if (GlobalSettings.DebugWarnings)
                     Console.WriteLine("Can\'t set a camera that is not in this scene.");
             }
         }
 
-        //Provisional
-        [Obsolete]
-        internal event Action OnChangeCamera;
 
         public int MaxWalls => unmanaged->wall_max;
         public int WallCount => unmanaged->wall_count;
@@ -68,7 +62,7 @@ namespace GLTech2
             else if (element is Sprite)
                 UnmanagedAddSprite(element as Sprite);
             else if (element is Observer)
-                UnmanagedAddPOV(element as Observer);
+                UnmanagedAddObserver(element as Observer);
 
             elements.Add(element);
             element.scene = this;
@@ -96,7 +90,7 @@ namespace GLTech2
         }
         private void UnmanagedAddSprite(Sprite s) => throw new NotImplementedException();
 
-        private void UnmanagedAddPOV(Observer p)
+        private void UnmanagedAddObserver(Observer p)
         {
             ActiveObserver = p;
         }

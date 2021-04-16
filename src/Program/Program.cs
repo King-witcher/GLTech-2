@@ -15,17 +15,22 @@ namespace GLTech2
             var bg = new Material(new GLBitmap(new System.Drawing.Bitmap(1, 1)));
             Scene scene = new Scene(bg);
             Element e = GetCylinder(Vector.Unit * 2, 1.5f, Resources.Wall);
-            e.AddBehaviour<CountFPS>();
+            //e.AddBehaviour<CountFPS>();
             scene.AddElement(e);
 
             Observer pov = new Observer(Vector.Origin, 0);
             scene.AddElement(pov);
 
+            Observer o = new Observer(Vector.Origin, 0);
+            o.AddBehaviour<CountFPS>();
+            scene.AddElement(o);
+            scene.ActiveObserver = o;
+
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
 
             Renderer.CppRendering = false;
-            Renderer.ParallelRendering = false;
+            Renderer.ParallelRendering = true;
             Renderer.Run(scene);
         }
 
