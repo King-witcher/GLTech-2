@@ -28,7 +28,7 @@ namespace GLTech2
                 if (value is null || value.scene == null)   // null pointer
                 {
                     activeObserver = value;
-                    unmanaged->point_of_view = value.unmanaged;
+                    unmanaged->activePOV = value.unmanaged;
 
                     //Provisional
                     OnChangeCamera?.Invoke();

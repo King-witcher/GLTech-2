@@ -102,7 +102,7 @@ namespace GLTech2
         {
             if (rendererData != null)
             {
-                rendererData->Free();
+                rendererData->Free();   //May cause bugs
                 Marshal.FreeHGlobal((IntPtr)rendererData);
             }
 
@@ -131,7 +131,6 @@ namespace GLTech2
 
             display.ShowDialog();
 
-            //rendererData->Free();
             Exit();
         }
 

@@ -31,8 +31,8 @@ namespace GLTech2
             {
                 //Caching
                 float ray_cos = rendererData->cache_cosines[ray_id];
-                float ray_angle = rendererData->cache_angles[ray_id] + rendererData->scene->point_of_view->rotation;
-                Ray ray = new Ray(rendererData->camera_position, ray_angle);
+                float ray_angle = rendererData->cache_angles[ray_id] + rendererData->scene->activePOV->rotation;
+                Ray ray = new Ray(rendererData->scene->activePOV->position, ray_angle);
 
                 //Cast the ray towards every wall.
                 WallData* nearest = ray.NearestWall(rendererData->scene, out float nearest_dist, out float nearest_ratio);
