@@ -10,11 +10,9 @@ namespace GLTech2
     internal sealed class Display : Form
     {
         internal PictureBox pictureBox;
-        private Action start;
 
-        internal Display(Action control)
+        internal Display()
         {
-            this.start = control;
             InitializeComponent();
         }
 

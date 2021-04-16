@@ -5,18 +5,26 @@ namespace GLTech2
 {
     public abstract class Element : IDisposable
     {
+        // Every element MUST call UpdateRelative() after construction. I have to fix it yet.
         private protected Element() { }
 
+        private Element parent = null;
+        private List<Behaviour> behaviours = new List<Behaviour>();
         private Vector relativePosition;
         private Vector relativeNormal;
+        internal Scene scene;
+        internal List<Element> childs = new List<Element>();
 
-        // 
+        public Scene Scene => scene; // Maybe not necessary.
+        public int ChildCount => childs.Count;
+
+
         private protected abstract Vector AbsolutePosition { get; set; }
-        private protected abstract Vector AbsoluteNormal { get; set; } //Rotation and scale of the object.
-
+        private protected abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
 
 
         internal event Action OnChange;
+
 
         // Gets and sets RELATIVE position.
         public Vector Position
@@ -54,18 +62,21 @@ namespace GLTech2
             }
         }
 
-        private Element parent = null; //Axis provider.
         public Element Parent
         {
             get => parent;
             set
             {
-                if (value != null && scene != value.scene)      // Suboptimal
+                if (value != null && scene != value.scene)
                 {
-                    throw new InvalidOperationException("Cannot parent elements in different scenes.");
+                    if (GlobalSettings.DebugWarnings)
+                    {
+                        Console.WriteLine($"Cannot parent {this} to an element that is in other scene. Operation aborted.");
+                        return;
+                    }
                 }
 
-                if (this.parent != null)
+                if (parent != null)
                 {
                     parent.OnChange -= UpdateAbsolute;
                     parent.childs.Remove(this);
@@ -115,11 +126,25 @@ namespace GLTech2
             OnChange?.Invoke();
         }
 
-        public int ChildCount => childs.Count;
 
-        private List<Behaviour> behaviours = new List<Behaviour>(); // Rever desempenho disso
-        internal List<Element> childs = new List<Element>(); // Rever desempenho disso
-        internal Scene scene;
+
+
+        public void AttachChilds (IEnumerable<Element> elements)
+        {
+            foreach (Element el in elements)
+                el.parent = this;
+        }
+
+
+        public void DetachChilds ()
+        {
+            foreach (Element child in childs)
+            {
+                child.Parent = null;
+                childs.Remove(child);
+            }
+        }
+
 
         public void AddBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour, new()
         {
@@ -130,8 +155,6 @@ namespace GLTech2
             behaviour.element = this;
             behaviours.Add(behaviour);
         }
-
-        private void AddBehaviour<T>
 
         public bool ContainsBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
         {
@@ -169,29 +192,31 @@ namespace GLTech2
             return childs[index];
         }
 
-        private void Translate(Vector direction)
+        public void Translate(Vector direction)
         {
-            throw new NotImplementedException();
+            Position += direction;
         }
 
-        private void Rotate(float roation)
+        public void Rotate(float rotation)
         {
-            throw new NotImplementedException();
+            Rotation += rotation;
         }
 
-        public virtual void Dispose()
+        // To be implemented by subclasses
+        public virtual void Dispose() 
         {
 
         }
 
-        internal void CallStart()
+        internal void InvokeStart()
         {
             foreach (Behaviour behavior in behaviours)
             {
                 behavior.Start();
             }
         }
-        internal void CallUpdate()
+
+        internal void InvokeUpdate()
         {
             foreach (Behaviour behavior in behaviours)
             {

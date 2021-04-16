@@ -6,18 +6,15 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    internal unsafe class Camera : Element
+    public unsafe class Camera : Element    // Parei aqui
     {
+        internal RenderStruct* unmanaged;
+
         public Camera()
         {
             UpdateRelative();
         }
 
-        internal RenderStruct* unmanaged;
-        private readonly Random random = new Random();
-
-        //Public value
-        private float rotation = 0f;
         private protected override Vector AbsolutePosition
         {
             get => unmanaged->camera_position;

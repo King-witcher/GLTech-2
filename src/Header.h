@@ -6,7 +6,7 @@ constexpr auto TORAD = 0.01745329251f;
 typedef int pixel;
 
 
-struct Texture32_
+struct GLBitmapData
 {
 	pixel* buffer;
 	int height;
@@ -17,7 +17,7 @@ struct Material
 {
 	float hoffset;
 	float hrepeat;
-	Texture32_ texture;
+	GLBitmapData texture;
 	float voffset;
 	float vrepeat;
 

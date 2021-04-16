@@ -86,7 +86,7 @@ namespace GLTech2
         }
 
 
-        public unsafe static void Run(Scene scene, Action start = null, Action update = null)
+        public unsafe static void Run(Scene scene)
         {
             if (IsRunning)
                 return;
@@ -94,19 +94,15 @@ namespace GLTech2
 
             Renderer.scene = scene;
 
-            display = new Display(start);
+            display = new Display();
             display.SetSize(DisplayWidth, DisplayHeight);
 
-            rendererData = RenderStruct.Alloc(DisplayWidth, DisplayHeight, scene.unmanaged);
-            //var camera = new Camera(scene, display.pictureBox, update, DisplayWidth, DisplayHeight);
-            //rendererData = camera.unmanaged;
+            rendererData = RenderStruct.Alloc(DisplayWidth, DisplayHeight, scene.unmanaged); // Must be released.
 
             bufferBitmap = new Bitmap(DisplayWidth, DisplayHeight, DisplayWidth * pixelsize, PixelFormat.Format32bppArgb, (IntPtr)rendererData->bitmap_buffer);
             var temp = bufferBitmap.LockBits(new Rectangle(0, 0, DisplayWidth, DisplayHeight), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             temp.Scan0 = (IntPtr)rendererData->bitmap_buffer;
             bufferBitmap.UnlockBits(temp);
-
-            updateMethod = update;
 
 
             keepRendering = true;
@@ -142,12 +138,16 @@ namespace GLTech2
                 while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
 
-                updateMethod?.Invoke();
                 scene.InvokeUpdate();
                 Time.NewFrame();
             }
 
             Time.Reset();
+        }
+
+        private static void LoadScene(Scene scene)
+        {
+
         }
 
 

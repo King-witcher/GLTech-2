@@ -71,6 +71,7 @@
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="GLBitmap.cs" />
+    <Compile Include="StandardObjects\RegularPolygon.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Wall.cs" />
@@ -92,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="StandardBehaviours\" />
-    <Folder Include="StandardObjects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
