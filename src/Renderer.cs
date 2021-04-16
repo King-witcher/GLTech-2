@@ -45,7 +45,7 @@ namespace GLTech2
             set
             {
                 if (IsRunning)
-                    throw new AccessViolationException("Render.DisplayWidth cannot be modified while running.");
+                    Debug.LogWarning("Render.DisplayWidth cannot be modified while running.");
                 displayWidth = value;
             }
         }
@@ -56,7 +56,7 @@ namespace GLTech2
             set
             {
                 if (IsRunning)
-                    throw new AccessViolationException("Render.DisplayHeight cannot be modified while running.");
+                    Debug.LogWarning("Render.DisplayHeight cannot be modified while running.");
                 displayHeight = value;
             }
         }
@@ -65,6 +65,11 @@ namespace GLTech2
         {
             get
             {
+                if (IsRunning is false)
+                {
+                    Debug.LogWarning("Render must be running to take a screenshot.");
+                    return null;
+                }
                 return new GLBitmap(bitmapFromBuffer.Clone() as Bitmap);
             }
         }

@@ -69,7 +69,7 @@ namespace GLTech2
             {
                 if (value != null && scene != value.scene)
                 {
-                    if (GlobalSettings.DebugWarnings)
+                    if (Debug.DebugWarnings)
                     {
                         Console.WriteLine($"Cannot parent {this} to an element that is in other scene. Operation aborted.");
                         return;
@@ -148,7 +148,7 @@ namespace GLTech2
 
         public void AddBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour, new()
         {
-            if (ContainsBehaviour<Behaviour>() && GlobalSettings.DebugWarnings)
+            if (ContainsBehaviour<Behaviour>() && Debug.DebugWarnings)
                 Console.WriteLine($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
 
             GLTech2.Behaviour behaviour = new Behaviour();

@@ -30,7 +30,7 @@ namespace GLTech2
                     activeObserver = value;
                     unmanaged->activeObserver = value.unmanaged;
                 }
-                else if (GlobalSettings.DebugWarnings)
+                else if (Debug.DebugWarnings)
                     Console.WriteLine("Can\'t set a camera that is not in this scene.");
             }
         }
@@ -45,7 +45,7 @@ namespace GLTech2
             if (element is null)
                 throw new ArgumentNullException("Cannot add null elements.");
 
-            if (element.scene != null && GlobalSettings.DebugWarnings)
+            if (element.scene != null && Debug.DebugWarnings)
             {
                 Console.WriteLine($"\"{element}\" is already bound to scene {element.scene}. Adding operation will be aborted.");
                 return;

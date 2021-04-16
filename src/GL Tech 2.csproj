@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Behaviour.cs" />
     <Compile Include="Elements\Observer.cs" />
-    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="Internal\ElementEnumerator.cs" />
     <Compile Include="Internal\Camera.cs" />
     <Compile Include="Element.cs" />
