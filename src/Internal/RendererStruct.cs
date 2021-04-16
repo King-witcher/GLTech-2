@@ -11,7 +11,7 @@ namespace GLTech2
         internal int bitmap_height;
         internal int bitmap_width;
 
-        // Caches
+        // RenderingCache
         internal float* cache_angles;
         internal float cache_colHeight1;
         internal float* cache_cosines;

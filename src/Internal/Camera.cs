@@ -6,13 +6,40 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    public unsafe class Camera : Element    // Parei aqui
-    {
-        internal RendererData* unmanaged;
+    // Testar camera usando normal ao inv[es de angulo
+    // Testar colocar camera como struct
 
-        public Camera()
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe struct CameraData
+    {
+        internal float camera_angle; //MUST be 0 <= x < 360
+        internal float camera_HFOV;
+        internal Vector camera_position;
+
+        static internal CameraData* Create(Vector position, float rotation, float fov)
         {
-            UpdateRelative();
+            CameraData* result = (CameraData*) Marshal.AllocHGlobal(sizeof(CameraData));
+            result->camera_position = position;
+            result->camera_angle = rotation;
+            result->camera_HFOV = fov;
+            return result;
+        }
+
+        static internal void Delete(CameraData* item)
+        {
+            Marshal.FreeHGlobal((IntPtr)item);
+        }
+    }
+
+    public unsafe class Camera : Element
+    {
+        internal CameraData* unmanaged;
+
+        public Camera(Vector position, float rotation = 0f, float fov = 90f)
+        {
+            unmanaged = CameraData.Create(position, rotation, fov);
+
+            UpdateRelative();   // O cumulo ter que fazer isso
         }
 
         private protected override Vector AbsolutePosition
@@ -23,17 +50,19 @@ namespace GLTech2
 
         private protected override Vector AbsoluteNormal
         {
-            get => throw new NotImplementedException(); // Public value
+            get
+            {
+                return new Vector(unmanaged->camera_angle);
+            }
             set
             {
-                throw new NotImplementedException();
+                unmanaged->camera_angle = value.Angle;
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            unmanaged->Free();
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
+            CameraData.Delete(unmanaged);
         }
     }
 }
