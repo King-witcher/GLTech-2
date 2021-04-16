@@ -48,7 +48,7 @@ namespace GLTech2
             set => unmanaged->camera_position = value;
         }
 
-        private protected override Vector AbsoluteNormal
+        private protected override Vector AbsoluteNormal //Provisional
         {
             get
             {

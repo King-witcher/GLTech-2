@@ -74,6 +74,7 @@ struct RenderStruct
 	float cache_colHeight1;
 	float* cache_cosines;
 	float camera_angle;
+	Vector camera_normal;
 	float camera_HFOV;
 	Vector camera_position;
 	SceneData* scene;
