@@ -12,19 +12,20 @@ namespace GLTech2
     {
         static void Main()
         {
-            var bg = new Material(new GLBitmap(new System.Drawing.Bitmap(1, 1)));
-            Scene scene = new Scene(bg);
-            Element e = GetCylinder(Vector.Unit * 2, 1.5f, Resources.Wall);
-            //e.AddBehaviour<CountFPS>();
-            scene.AddElement(e);
+            Scene scene = new Scene(new Material((GLBitmap) Resources.Universe, 0, 3));
+
+            Material mat = Resources.Wall;
+
+            Element cylinder = GetCylinder(Vector.Unit * 2, 0.5f, mat);
+            scene.AddElement(cylinder);
 
             Observer pov = new Observer(Vector.Origin, 0);
             scene.AddElement(pov);
 
-            Observer o = new Observer(Vector.Origin, 0);
-            o.AddBehaviour<CountFPS>();
-            scene.AddElement(o);
-            scene.ActiveObserver = o;
+            //Element tri = new RegularPolygon(Vector.Unit * 3, 3, 2, mat);
+            //scene.AddElement(tri);
+
+            pov.AddBehaviour<CountFPS>();
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
