@@ -76,6 +76,7 @@ namespace GLTech2
                 }
             }
         }
+        /*
         private unsafe static void CLRRenderBackup()
         {
             //Caching frequently used values.
@@ -138,6 +139,6 @@ namespace GLTech2
                     }
                 }
             }
-        }
+        }*/
     }
 }
