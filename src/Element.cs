@@ -121,29 +121,31 @@ namespace GLTech2
         internal List<Element> childs = new List<Element>(); // Rever desempenho disso
         internal Scene scene;
 
-        public void AddBehaviour<T>() where T : Behaviour, new()
+        public void AddBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour, new()
         {
-            if (ContainsBehaviour<T>())
-                throw new InvalidOperationException("Cannot add same behaviour twice."); // Questionable
+            if (ContainsBehaviour<Behaviour>() && GlobalSettings.DebugWarnings)
+                Console.WriteLine($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
 
-            Behaviour behaviour = new T();
+            GLTech2.Behaviour behaviour = new Behaviour();
             behaviour.element = this;
             behaviours.Add(behaviour);
         }
 
-        public bool ContainsBehaviour<T>() where T : Behaviour
+        private void AddBehaviour<T>
+
+        public bool ContainsBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
         {
             foreach (var item in behaviours)
-                if (item is T)
+                if (item is Behaviour)
                     return true;
             return false;
         }
 
-        public void RemoveBehaviour<T>() where T : Behaviour
+        public void RemoveBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
         {
             foreach (var item in behaviours)
             {
-                if (item is T)
+                if (item is Behaviour)
                 {
                     behaviours.Remove(item);
                     return;
@@ -151,12 +153,23 @@ namespace GLTech2
             }
         }
 
+        public void RemoveAllBehaviours()
+        {
+            behaviours.Clear();
+        }
+
+        public void DetachChildren(Element element) // Not tested
+        {
+            foreach (Element child in childs)
+                child.Parent = null;
+        }
+
         public Element GetChild(int index)
         {
             return childs[index];
         }
 
-        private void Push(Vector direction)
+        private void Translate(Vector direction)
         {
             throw new NotImplementedException();
         }

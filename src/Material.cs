@@ -38,7 +38,7 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal unsafe Int32 MapPixel(float hratio, float vratio)
+        internal unsafe Int32 MapPixel(float hratio, float vratio)      //Possibly optimizable
         {
             int x = (int)(texture.width * (hrepeat * hratio + hoffset)) % texture.width;
             int y = (int)(texture.height * vratio) % texture.height;

@@ -90,5 +90,9 @@
   <ItemGroup>
     <None Include="Resources\GL Icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StandardBehaviours\" />
+    <Folder Include="StandardObjects\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

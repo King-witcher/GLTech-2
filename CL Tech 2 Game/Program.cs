@@ -39,7 +39,7 @@ namespace Game
             scene.AddElement(cil);
 
             Renderer.ParallelRendering = false;
-            Renderer.CppRendering = true;
+            Renderer.CppRendering = false;
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
             Renderer.MaxFps = 1000;
