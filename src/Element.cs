@@ -11,8 +11,6 @@ namespace GLTech2
 
         private Element parent = null;
         private List<Behaviour> behaviours = new List<Behaviour>();
-        private List<MethodInfo> startMethods = new List<MethodInfo>();
-        private List<MethodInfo> updateMethods = new List<MethodInfo>();
         private Vector relativePosition;
         private Vector relativeNormal;
         internal Scene scene;
@@ -202,7 +200,7 @@ namespace GLTech2
 
         public void RemoveBehaviour<BehaviourType>() where BehaviourType : Behaviour
         {
-           foreach (var behaviour in behaviours)
+           foreach (var behaviour in behaviours.ToArray()) // Provisional solution
                 if (behaviour is BehaviourType)
                     RemoveBehaviour(behaviour);
         }
@@ -226,12 +224,6 @@ namespace GLTech2
             return childs[index];
         }
 
-        // To be implemented by subclasses
-        public virtual void Dispose() 
-        {
-
-        }
-
         internal void InvokeStart()
         {
             StartEvent?.Invoke();
@@ -242,6 +234,11 @@ namespace GLTech2
             UpdateEvent?.Invoke();
         }
 
+        // To be implemented by subclasses
+        public virtual void Dispose()
+        {
+
+        }
 
         //Subscribe and unsubscribe a behaviour
         private void Subscribe(Behaviour b)

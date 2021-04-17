@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GLTech2.Properties;
 using GLTech2.StandardObjects;
@@ -25,7 +26,9 @@ namespace GLTech2
             //Element tri = new RegularPolygon(Vector.Unit * 3, 3, 2, mat);
             //scene.AddElement(tri);
 
-            pov.AddBehaviour(new CountFPS());
+            var b = new CountFPS();
+            pov.AddBehaviour(b);
+            pov.RemoveBehaviour(b);
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
