@@ -131,15 +131,17 @@ namespace GLTech2
 
 
 
-
-        public void AttachChilds (IEnumerable<Element> elements)
+        public void Translate(Vector direction)
         {
-            foreach (Element el in elements)
-                el.parent = this;
+            Position += direction;
         }
 
+        public void Rotate(float rotation)
+        {
+            Rotation += rotation;
+        }
 
-        public void DetachChilds ()
+        public void DetachChilds()
         {
             foreach (Element child in childs)
             {
@@ -148,69 +150,70 @@ namespace GLTech2
             }
         }
 
-
-        public void AddBehaviour(Behaviour b)       // Parei aqui
+        public void AddBehaviour(Behaviour b)
         {
             if (b is null)
-                throw new ArgumentNullException("Behaviour cannot be null.");
-            if (ContainsBehaviour<Behaviour>())
+                return;
+
+            if (ContainsBehaviour(b))
             {
                 Debug.LogWarning($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
                 return;
             }
+
             if (b.element is null is false)
             {
                 Debug.LogWarning($"Cannot add same behaviour instance to two different elements. Element without behaviour: {this}.");
                 return;
             }
 
-            behaviours.Add(b);
+            behaviours.Add(b); // Isso pode estar obsoleto, visto que agora os métodos a serem chamados são salvos em eventos.
             b.element = this;
 
-            // Reflection
-            MethodInfo startInfo = b.GetType().GetMethod("Start",
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                null,
-                new Type[0],
-                null);
-
-            MethodInfo updateInfo = b.GetType().GetMethod("Update",
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                null,
-                new Type[0],
-                null);
-
-            if (startInfo is null is false)
-                StartEvent += () => startInfo.Invoke(b, null);
-
-            if (updateInfo is null is false)
-                UpdateEvent += () => updateInfo.Invoke(b, null);
+            Subscribe(b);
         }
 
-        public bool ContainsBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
+        public void AddBehaviour<BehaviourType>() where BehaviourType : Behaviour, new()
         {
-            foreach (var item in behaviours)
-                if (item is Behaviour)
+            AddBehaviour(new BehaviourType());
+        }
+
+        public bool ContainsBehaviour<BehaviourType>() where BehaviourType : Behaviour
+        {
+            foreach (var behaviour in behaviours)
+                if (behaviour is BehaviourType)
                     return true;
             return false;
         }
 
-        /*public void RemoveBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
+        public bool ContainsBehaviour(Behaviour b)
         {
-           foreach (var item in behaviours)
-            {
-                if (item is Behaviour)
-                {
-                    behaviours.Remove(item);
-                    return;
-                }
-            }
+            foreach (var item in behaviours)
+                if (item == b)
+                    return true;
+            return false;
+        }
+
+        public void RemoveBehaviour(Behaviour b)
+        {
+            behaviours.Remove(b);
+            Unsubscribe(b);
+        }
+
+        public void RemoveBehaviour<BehaviourType>() where BehaviourType : Behaviour
+        {
+           foreach (var behaviour in behaviours)
+                if (behaviour is BehaviourType)
+                    RemoveBehaviour(behaviour);
         }
 
         public void RemoveAllBehaviours()
         {
-            behaviours.Clear();
-        }*/
+            foreach(Behaviour b in behaviours)
+            {
+                RemoveBehaviour(b);
+            }
+        }
 
         public void DetachChildren(Element element) // Not tested
         {
@@ -221,16 +224,6 @@ namespace GLTech2
         public Element GetChild(int index)
         {
             return childs[index];
-        }
-
-        public void Translate(Vector direction)
-        {
-            Position += direction;
-        }
-
-        public void Rotate(float rotation)
-        {
-            Rotation += rotation;
         }
 
         // To be implemented by subclasses
@@ -249,7 +242,19 @@ namespace GLTech2
             UpdateEvent?.Invoke();
         }
 
-        //Beta
+
+        //Subscribe and unsubscribe a behaviour
+        private void Subscribe(Behaviour b)
+        {
+            StartEvent += b.StartMethod;
+            UpdateEvent += b.UpdateMethod;
+        }
+        private void Unsubscribe(Behaviour b)
+        {
+            StartEvent -= b.StartMethod;
+            UpdateEvent -= b.UpdateMethod;
+        }
+
         event Action StartEvent;
         event Action UpdateEvent;
     }

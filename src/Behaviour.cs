@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace GLTech2
 {
@@ -14,11 +15,51 @@ namespace GLTech2
         protected internal Element Element { get => element; }
         protected internal Scene Scene { get => element.scene; }
 
-        // void Start();
-        // void Update();
+        private Action startMethod = null;
+        internal Action StartMethod
+        {
+            get
+            {
+                if (startMethod is null)
+                {
+                    MethodInfo startInfo = GetType().GetMethod("Start",
+                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                        null,
+                        new Type[0],
+                        null);
 
-        protected internal virtual void Activate() { }
-        protected internal virtual void BeginCollide(Element colisor) { }
-        protected internal virtual void EndCollide(Element colisor) { }
+                    startMethod = () => startInfo?.Invoke(this, null);
+                }
+
+                return startMethod;
+            }
+        }
+
+        private Action updateMethod = null;
+        internal Action UpdateMethod
+        {
+            get
+            {
+                if (updateMethod is null)
+                {
+                    MethodInfo startInfo = GetType().GetMethod("Update",
+                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                        null,
+                        new Type[0],
+                        null);
+
+                    updateMethod = () => startInfo?.Invoke(this, null);
+                }
+
+                return updateMethod;
+            }
+        }
+
+        // Métodos são captados via reflection.
+        // Start()
+        // Update()
+        // Activate()
+        // BeginCollide(Element collisor)
+        // EndCollide(Element collisor)
     }
 }
