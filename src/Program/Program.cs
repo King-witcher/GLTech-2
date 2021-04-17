@@ -25,14 +25,14 @@ namespace GLTech2
             //Element tri = new RegularPolygon(Vector.Unit * 3, 3, 2, mat);
             //scene.AddElement(tri);
 
-            pov.AddBehaviour<CountFPS>();
+            pov.AddBehaviour(new CountFPS());
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
             Renderer.FullScreen = true;
 
             Renderer.CppRendering = false;
-            Renderer.ParallelRendering = true;
+            Renderer.ParallelRendering = false;
             Renderer.Run(scene);
         }
 

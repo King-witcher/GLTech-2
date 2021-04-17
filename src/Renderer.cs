@@ -125,7 +125,12 @@ namespace GLTech2
             keepRendering = true;
             Task.Run(LoopRender);
 
-            display.pictureBox.Paint += (a, aa) => { display.pictureBox.Image = bitmapFromBuffer; }; // Must be subtracted!
+            void rePaint(object sender, EventArgs e)
+            {
+                display.pictureBox.Image = bitmapFromBuffer;
+            }
+
+            display.pictureBox.Paint += rePaint; // Must be subtracted!
             //display.pictureBox.Image = bitmapFromBuffer;
 
             display.ShowDialog();
@@ -180,9 +185,9 @@ namespace GLTech2
             {
                 swtest.Restart();
                 isRendering = true;
-                if (CppRendering)
-                    NativeRender(rendererData);
-                else
+                //if (CppRendering)
+                //    NativeRender(rendererData);
+                //else
                     CLRRender();
                 isRendering = false;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GLTech2
 {
@@ -10,6 +11,8 @@ namespace GLTech2
 
         private Element parent = null;
         private List<Behaviour> behaviours = new List<Behaviour>();
+        private List<MethodInfo> startMethods = new List<MethodInfo>();
+        private List<MethodInfo> updateMethods = new List<MethodInfo>();
         private Vector relativePosition;
         private Vector relativeNormal;
         internal Scene scene;
@@ -146,14 +149,44 @@ namespace GLTech2
         }
 
 
-        public void AddBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour, new()
+        public void AddBehaviour(Behaviour b)       // Parei aqui
         {
-            if (ContainsBehaviour<Behaviour>() && Debug.DebugWarnings)
-                Console.WriteLine($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
+            if (ContainsBehaviour<Behaviour>())
+            {
+                Debug.LogWarning($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
+                return;
+            }
+            if (b.element is null is false)
+            {
+                Debug.LogWarning($"Cannot add same behaviour instance to two different elements. Element without behaviour: {this}.");
+                return;
+            }
 
-            GLTech2.Behaviour behaviour = new Behaviour();
-            behaviour.element = this;
-            behaviours.Add(behaviour);
+            behaviours.Add(b);
+            b.element = this;
+
+            // Reflection
+            MethodInfo startInfo = typeof(Behaviour).GetMethod("Start",
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new Type[0],
+                null);
+
+            MethodInfo updateInfo = typeof(Behaviour).GetMethod("Update",
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new Type[0],
+                null);
+
+            if (startInfo is null is false)
+            {
+                startMethods.Add(startInfo);
+            }
+
+            if (updateInfo is null is false)
+            {
+                updateMethods.Add(updateInfo);
+            }
         }
 
         public bool ContainsBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
@@ -218,9 +251,9 @@ namespace GLTech2
 
         internal void InvokeUpdate()
         {
-            foreach (Behaviour behavior in behaviours)
+            foreach (MethodInfo info in updateMethods)
             {
-                behavior.Update();
+                info.Invoke(behaviours[0], null);       // Fails!
             }
         }
 
