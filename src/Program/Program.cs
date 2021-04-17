@@ -26,9 +26,7 @@ namespace GLTech2
             //Element tri = new RegularPolygon(Vector.Unit * 3, 3, 2, mat);
             //scene.AddElement(tri);
 
-            var b = new CountFPS();
-            pov.AddBehaviour(b);
-            pov.RemoveBehaviour(b);
+            pov.AddBehaviour<CountFPS>();
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;

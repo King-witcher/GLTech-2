@@ -78,6 +78,8 @@
     <Compile Include="Elements\Sprite.cs" />
     <Compile Include="GLBitmap.cs" />
     <Compile Include="Elements\RegularPolygon.cs" />
+    <Compile Include="StandardBehaviours\Move.cs" />
+    <Compile Include="StandardBehaviours\Rotate.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Elements\Wall.cs" />
@@ -97,9 +99,7 @@
   <ItemGroup>
     <None Include="Resources\GL Icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="StandardBehaviours\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\wall.jpg" />
   </ItemGroup>
