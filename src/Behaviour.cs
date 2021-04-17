@@ -13,8 +13,10 @@ namespace GLTech2
         protected internal Behaviour() { } // Makes possible the creation of derived classes
         protected internal Element Element { get => element; }
         protected internal Scene Scene { get => element.scene; }
-        protected internal virtual void Update() { }
-        protected internal virtual void Start() { }
+
+        // void Start();
+        // void Update();
+
         protected internal virtual void Activate() { }
         protected internal virtual void BeginCollide(Element colisor) { }
         protected internal virtual void EndCollide(Element colisor) { }

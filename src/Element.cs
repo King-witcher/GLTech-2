@@ -151,6 +151,8 @@ namespace GLTech2
 
         public void AddBehaviour(Behaviour b)       // Parei aqui
         {
+            if (b is null)
+                throw new ArgumentNullException("Behaviour cannot be null.");
             if (ContainsBehaviour<Behaviour>())
             {
                 Debug.LogWarning($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
@@ -166,27 +168,23 @@ namespace GLTech2
             b.element = this;
 
             // Reflection
-            MethodInfo startInfo = typeof(Behaviour).GetMethod("Start",
+            MethodInfo startInfo = b.GetType().GetMethod("Start",
                 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                 null,
                 new Type[0],
                 null);
 
-            MethodInfo updateInfo = typeof(Behaviour).GetMethod("Update",
+            MethodInfo updateInfo = b.GetType().GetMethod("Update",
                 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                 null,
                 new Type[0],
                 null);
 
             if (startInfo is null is false)
-            {
-                startMethods.Add(startInfo);
-            }
+                StartEvent += () => startInfo.Invoke(b, null);
 
             if (updateInfo is null is false)
-            {
-                updateMethods.Add(updateInfo);
-            }
+                UpdateEvent += () => updateInfo.Invoke(b, null);
         }
 
         public bool ContainsBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
@@ -197,9 +195,9 @@ namespace GLTech2
             return false;
         }
 
-        public void RemoveBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
+        /*public void RemoveBehaviour<Behaviour>() where Behaviour : GLTech2.Behaviour
         {
-            foreach (var item in behaviours)
+           foreach (var item in behaviours)
             {
                 if (item is Behaviour)
                 {
@@ -212,7 +210,7 @@ namespace GLTech2
         public void RemoveAllBehaviours()
         {
             behaviours.Clear();
-        }
+        }*/
 
         public void DetachChildren(Element element) // Not tested
         {
@@ -243,18 +241,12 @@ namespace GLTech2
 
         internal void InvokeStart()
         {
-            foreach (Behaviour behavior in behaviours)
-            {
-                behavior.Start();
-            }
+            StartEvent?.Invoke();
         }
 
         internal void InvokeUpdate()
         {
-            foreach (MethodInfo info in updateMethods)
-            {
-                info.Invoke(behaviours[0], null);       // Fails!
-            }
+            UpdateEvent?.Invoke();
         }
 
         //Beta
