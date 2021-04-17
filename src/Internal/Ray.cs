@@ -25,7 +25,8 @@ namespace GLTech2
 
         // 0 < distance <= infinity
         // 0 <= split < 1
-        internal void GetCollisionData(WallData* wall, out float distance, out float split)
+        // split = 2f means no collision
+        internal void GetCollisionData(WallData* wall, out float cur_dist, out float cur_split)
         {
             // Medium performance impact.
             float
@@ -35,8 +36,8 @@ namespace GLTech2
             float det = direction.x * dry - direction.y * drx; // Caching can only be used here
             if (det == 0) // Parallel
             {
-                distance = float.PositiveInfinity;
-                split = 0f;
+                cur_dist = float.PositiveInfinity;
+                cur_split = 2f;
                 return;
             }
 
@@ -46,18 +47,18 @@ namespace GLTech2
             float dsttmp = dstdet / det;
             if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
             {
-                split = 0;
-                distance = float.PositiveInfinity;
+                cur_dist = float.PositiveInfinity;
+                cur_split = 2f;
                 return;
             }
-            split = spltmp;
-            distance = dsttmp;
+            cur_split = spltmp;
+            cur_dist = dsttmp;
         }
 
         private WallData* NearestWallTest(SceneData* map, out float nearest_dist, out float nearest_hratio)
         {
             nearest_dist = float.PositiveInfinity;
-            nearest_hratio = float.PositiveInfinity;
+            nearest_hratio = 2f;
             WallData* nearest = null;
             WallData** pptr = map->walls;
             WallData* ptr;
@@ -65,10 +66,10 @@ namespace GLTech2
             while(*pptr != null)
             {
                 //Medium performance impact.
-                GetCollisionData(*pptr, out float cur_dist, out float cur_ratio);
+                GetCollisionData(*pptr, out float cur_dist, out float cur_split);
                 if (cur_dist < nearest_dist)
                 {
-                    nearest_hratio = cur_ratio;
+                    nearest_hratio = cur_split;
                     nearest_dist = cur_dist;
                     nearest = *pptr;
                 }
@@ -81,7 +82,7 @@ namespace GLTech2
         {
 
             nearest_dist = float.PositiveInfinity;
-            nearest_ratio = float.PositiveInfinity;
+            nearest_ratio = 2f;
             int wallcount = map->wall_count;
             WallData** cur = map->walls;
             WallData* nearest = null;

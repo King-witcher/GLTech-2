@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL Tech 2 Benchmark", "GL Tech 2 Benchmark\GL Tech 2 Benchmark.csproj", "{FCD8B346-0B94-4395-B873-7DF6B8B5E69C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL Tech 2 Game", "CL Tech 2 Game\GL Tech 2 Game.csproj", "{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,18 +57,6 @@ Global
 		{FCD8B346-0B94-4395-B873-7DF6B8B5E69C}.Release|x64.Build.0 = Release|Any CPU
 		{FCD8B346-0B94-4395-B873-7DF6B8B5E69C}.Release|x86.ActiveCfg = Release|Any CPU
 		{FCD8B346-0B94-4395-B873-7DF6B8B5E69C}.Release|x86.Build.0 = Release|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Debug|x64.Build.0 = Debug|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Debug|x86.Build.0 = Debug|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Release|x64.ActiveCfg = Release|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Release|x64.Build.0 = Release|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Release|x86.ActiveCfg = Release|Any CPU
-		{A4BF4C58-C84D-4183-B6D7-D80F1B9C5454}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

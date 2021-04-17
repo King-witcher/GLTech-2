@@ -39,7 +39,7 @@ namespace GLTech2
 
                 //Cast the ray towards every wall.
                 WallData* nearest = ray.NearestWall(rendererData->activeScene, out float nearest_dist, out float nearest_ratio);
-                if (nearest_dist != float.PositiveInfinity)
+                if (nearest_ratio != 2f)
                 {
                     float columnHeight = (rendererData->cache_colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
                     float fullColumnRatio = display_height / columnHeight;
