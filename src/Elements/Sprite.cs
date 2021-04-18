@@ -18,11 +18,14 @@ namespace GLTech2
 
         public Sprite(Vector position, Material material)
         {
-            unmanaged = SpriteData.Alloc(position, material);
+            unmanaged = SpriteData.Create(position, material);
             UpdateRelative();
         }
 
-        public override void Dispose() =>
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
+        public override void Dispose()
+        {
+            SpriteData.Delete(unmanaged);
+            unmanaged = null;
+        }
     }
 }

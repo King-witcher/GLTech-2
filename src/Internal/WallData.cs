@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GLTech2
@@ -10,8 +11,7 @@ namespace GLTech2
         internal Vector geom_start;
         internal Material material; // Yes, by value.
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static WallData* Alloc(Vector start, Vector end, Material material)
+        internal static WallData* Create(Vector start, Vector end, Material material)
         {
             WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             result->material = material;
@@ -19,8 +19,8 @@ namespace GLTech2
             result->geom_start = start;
             return result;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static WallData* Alloc(Vector start, float angle, float length, Material material)
+
+        internal static WallData* Create(Vector start, float angle, float length, Material material)
         {
             WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             Vector dir = new Vector(angle) * length;
@@ -28,6 +28,11 @@ namespace GLTech2
             result->geom_direction = dir;
             result->geom_start = start;
             return result;
+        }
+
+        internal static void Delete(WallData* item)
+        {
+            Marshal.FreeHGlobal((IntPtr)item);
         }
     }
 }

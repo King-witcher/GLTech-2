@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
 namespace GLTech2
@@ -10,7 +11,7 @@ namespace GLTech2
         internal Material material;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SpriteData* Alloc(Vector position, Material material)
+        internal static SpriteData* Create(Vector position, Material material)
         {
             SpriteData* result = (SpriteData*)Marshal.AllocHGlobal(sizeof(SpriteData));
             result->position = position;
@@ -20,5 +21,10 @@ namespace GLTech2
 
         public static implicit operator SpriteData(Sprite sprite) =>
             *sprite.unmanaged;
+
+        public static void Delete(SpriteData* item)
+        {
+            Marshal.FreeHGlobal((IntPtr)item);
+        }
     }
 }

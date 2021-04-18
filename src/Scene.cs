@@ -17,7 +17,7 @@ namespace GLTech2
         private List<Element> elements = new List<Element>();
 
         public Scene(Material background, int maxWalls = 512, int maxSprities = 512) =>
-            unmanaged = SceneData.Alloc(maxWalls, maxSprities, background);
+            unmanaged = SceneData.Create(maxWalls, maxSprities, background);
 
 
         public Observer ActiveObserver
@@ -86,7 +86,7 @@ namespace GLTech2
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
-            unmanaged->Add(w.walldata);
+            unmanaged->Add(w.unmanaged);
         }
         private void UnmanagedAddSprite(Sprite s) => throw new NotImplementedException();
 
@@ -95,10 +95,14 @@ namespace GLTech2
             ActiveObserver = p;
         }
 
-        public void Dispose()   // must change
+        public void Dispose()
         {
-            unmanaged->Dispose();
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
+            foreach(Element item in elements)
+                item.Dispose();
+
+            SceneData.Delete(unmanaged);
+            unmanaged = null;
+
             elements.Clear();
         }
 

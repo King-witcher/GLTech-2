@@ -17,11 +17,10 @@ namespace GLTech2
         public PixelFormat PixelFormat => PixelFormat.Format32bppRgb;
 
         public GLBitmap(Bitmap bitmap) =>
-            unmanaged = GLBitmapData.Alloc(bitmap);
+            unmanaged = GLBitmapData.Create(bitmap);
         public void Dispose()
         {
-            unmanaged->Dispose();
-            Marshal.FreeHGlobal((IntPtr)unmanaged);
+            GLBitmapData.Delete(unmanaged);
         }
 
         public static explicit operator GLBitmap(Bitmap bitmap)

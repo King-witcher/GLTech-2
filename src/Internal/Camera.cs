@@ -31,7 +31,7 @@ namespace GLTech2
         }
     }
 
-    public unsafe class Camera : Element
+    internal unsafe class Camera : Element
     {
         internal CameraData* unmanaged;
 

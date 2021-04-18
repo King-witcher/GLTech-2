@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SceneData : IDisposable
+    internal unsafe struct SceneData
     {
         internal SpriteData** sprities; //not implemented
         internal int sprite_count;
@@ -17,7 +17,7 @@ namespace GLTech2
         internal POVData* activeObserver;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SceneData* Alloc(int maxWalls, int maxSprities, Material background)
+        internal static SceneData* Create(int maxWalls, int maxSprities, Material background)
         {
             int total_positions = maxWalls + maxSprities + 1;
             SceneData* result = (SceneData*)Marshal.AllocHGlobal(sizeof(SceneData));
@@ -33,11 +33,11 @@ namespace GLTech2
             return result;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Dispose()
+        public static void Delete(SceneData* item)
         {
-            Marshal.FreeHGlobal((IntPtr)sprities);
-            Marshal.FreeHGlobal((IntPtr)walls);
+            Marshal.FreeHGlobal((IntPtr)item->sprities);
+            Marshal.FreeHGlobal((IntPtr)item->walls);
+            Marshal.FreeHGlobal((IntPtr)item);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

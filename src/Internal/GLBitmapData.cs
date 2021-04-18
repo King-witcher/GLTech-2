@@ -7,14 +7,14 @@ using System.Runtime.CompilerServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct GLBitmapData : IDisposable
+    internal unsafe struct GLBitmapData
     {
         internal Int32* buffer;
         internal int height;
         internal int width;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static GLBitmapData* Alloc(Bitmap bitmap) // Possibly optimizable
+        internal static GLBitmapData* Create(Bitmap bitmap) // Possibly optimizable
         {
             GLBitmapData* result = (GLBitmapData*)Marshal.AllocHGlobal(sizeof(GLBitmapData));
 
@@ -33,8 +33,11 @@ namespace GLTech2
             return result;
         }
 
-        public void Dispose() =>
-            Marshal.FreeHGlobal((IntPtr)buffer);
+        internal static void Delete(GLBitmapData* item)
+        {
+            Marshal.FreeHGlobal((IntPtr)item->buffer);
+            Marshal.FreeHGlobal((IntPtr)item);
+        }
 
         public static implicit operator GLBitmapData(GLBitmap tex) =>
             *tex.unmanaged;

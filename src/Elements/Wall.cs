@@ -16,32 +16,32 @@ namespace GLTech2
 {
     public unsafe class Wall : Element
     {
-        internal WallData* walldata;
+        internal WallData* unmanaged;
 
 
         public Vector StartPoint
         {
-            get => walldata->geom_start;
-            set => walldata->geom_start = value;
+            get => unmanaged->geom_start;
+            set => unmanaged->geom_start = value;
         }
 
         public Vector EndPoint
         {
-            get => walldata->geom_start + walldata->geom_direction;
-            set => walldata->geom_direction = value - walldata->geom_start;
+            get => unmanaged->geom_start + unmanaged->geom_direction;
+            set => unmanaged->geom_direction = value - unmanaged->geom_start;
         }
 
         public float Length
         {
-            get => walldata->geom_direction.Module;
-            set => walldata->geom_direction *= value / walldata->geom_direction.Module;
+            get => unmanaged->geom_direction.Module;
+            set => unmanaged->geom_direction *= value / unmanaged->geom_direction.Module;
         }
 
         public Material Material
         {
             set
             {
-                walldata->material = value;
+                unmanaged->material = value;
             }
         }
 
@@ -53,10 +53,10 @@ namespace GLTech2
 
         private protected override Vector AbsoluteNormal
         {
-            get => walldata->geom_direction;
+            get => unmanaged->geom_direction;
             set
             {
-                walldata->geom_direction = value;
+                unmanaged->geom_direction = value;
             }
         }
 
@@ -64,13 +64,13 @@ namespace GLTech2
 
         public Wall(Vector start, Vector end, Material material)
         {
-            walldata = WallData.Alloc(start, end, material);
+            unmanaged = WallData.Create(start, end, material);
             UpdateRelative();
         }
         
         public Wall(Vector start, float angle_deg, float length, Material material)
         {
-            walldata = WallData.Alloc(start, angle_deg, length, material);
+            unmanaged = WallData.Create(start, angle_deg, length, material);
             UpdateRelative();
         }
 
@@ -194,7 +194,8 @@ namespace GLTech2
 
         public override void Dispose()
         {
-            Marshal.FreeHGlobal((IntPtr) walldata);
+            WallData.Delete(unmanaged);
+            unmanaged = null;
         }
 
         public override string ToString()
