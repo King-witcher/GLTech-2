@@ -65,13 +65,11 @@ namespace GLTech2
         public Wall(Vector start, Vector end, Material material)
         {
             unmanaged = WallData.Create(start, end, material);
-            UpdateRelative();
         }
         
         public Wall(Vector start, float angle_deg, float length, Material material)
         {
             unmanaged = WallData.Create(start, angle_deg, length, material);
-            UpdateRelative();
         }
 
 

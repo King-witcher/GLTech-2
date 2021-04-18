@@ -19,7 +19,6 @@ namespace GLTech2
         public Sprite(Vector position, Material material)
         {
             unmanaged = SpriteData.Create(position, material);
-            UpdateRelative();
         }
 
         public override void Dispose()

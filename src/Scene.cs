@@ -13,7 +13,7 @@ namespace GLTech2
     public unsafe sealed partial class Scene : IDisposable
     {
         internal SceneData* unmanaged;
-        private Observer activeObserver = new Observer(Vector.Unit, 0);    //Provisional
+        private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
 
         public Scene(Material background, int maxWalls = 512, int maxSprities = 512) =>

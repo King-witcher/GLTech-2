@@ -30,14 +30,15 @@ namespace GLTech2
 
         public Observer(Vector position, float rotation)
         {
-            unmanaged = POVData.Create(Position, rotation);
-
-            UpdateRelative();
+            unmanaged = POVData.Create(position, rotation);
         }
 
         private protected override Vector AbsolutePosition
         {
-            get => unmanaged->position;
+            get
+            {
+                return unmanaged->position;
+            }
             set => unmanaged->position = value;
         }
 

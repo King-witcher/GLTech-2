@@ -18,7 +18,6 @@ namespace GLTech2.StandardObjects
 
             AbsolutePosition = position;
             AbsoluteNormal = Vector.Unit;
-            UpdateRelative();
         }
 
         private protected override Vector AbsolutePosition { get; set; }

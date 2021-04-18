@@ -30,22 +30,44 @@ namespace GLTech2
         // Gets and sets RELATIVE position.
         public Vector Position
         {
-            get => relativePosition;
+            get
+            {
+                if (parent is null)
+                    return AbsolutePosition;
+                else
+                    return relativePosition;
+            }
             set
             {
-                relativePosition = value;
-                UpdateAbsolute();
+                if (parent is null)
+                    AbsolutePosition = value;
+                else
+                {
+                    relativePosition = value;
+                    UpdateAbsolute();
+                }
             }
         }
 
         // Gets and sets RELATIVE scale.
         public Vector Normal
         {
-            get => relativeNormal;
+            get
+            {
+                if (parent is null)
+                    return AbsoluteNormal;
+                else
+                    return relativeNormal;
+            }
             set
             {
-                relativeNormal = value;
-                UpdateAbsolute();
+                if (parent is null)
+                    AbsoluteNormal = value;
+                else
+                {
+                    relativeNormal = value;
+                    UpdateAbsolute();
+                }
             }
         }
 
@@ -54,12 +76,24 @@ namespace GLTech2
         {
             get
             {
-                return relativeNormal.Angle;
+                if (parent is null)
+                    return AbsoluteNormal.Angle;
+                else
+                    return relativeNormal.Angle;
             }
             set
             {
-                relativeNormal.Angle = value;
-                UpdateAbsolute();
+                if (parent is null)
+                {
+                    Vector newNormal = AbsoluteNormal;
+                    newNormal.Angle = value;
+                    AbsoluteNormal = newNormal;
+                }
+                else
+                {
+                    relativeNormal.Angle = value;
+                    UpdateAbsolute();
+                }
             }
         }
 
