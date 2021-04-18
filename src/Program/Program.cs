@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GLTech2.Properties;
-using GLTech2.StandardObjects;
+using GLTech2.PrefabElements;
 
 namespace GLTech2
 {
@@ -23,8 +23,8 @@ namespace GLTech2
             Observer pov = new Observer(Vector.Origin, 0);
             scene.AddElement(pov);
 
-            //Element tri = new RegularPolygon(Vector.Unit * 3, 3, 2, mat);
-            //scene.AddElement(tri);
+            Element tri = new RegularPolygon(Vector.Unit * 3, 3, -2f, mat);
+            scene.AddElement(tri);
 
             pov.AddBehaviour<CountFPS>();
 
