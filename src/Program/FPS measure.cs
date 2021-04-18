@@ -15,8 +15,8 @@ namespace GLTech2
 
         void Update()
         {
-            Element.Rotate(Time.DeltaTime * 5);
-            Element.Translate(Time.DeltaTime * Vector.Unit * 0.2f);
+            Element.Rotate(Time.DeltaTime * 10);
+            Element.Translate(Time.DeltaTime * Vector.Unit * 0.4f);
 
             frames++;
             rendertime += Time.RenderTime;

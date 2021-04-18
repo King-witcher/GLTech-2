@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GLTech2</RootNamespace>
     <AssemblyName>glt2_net</AssemblyName>
@@ -38,6 +38,7 @@
     <StartupObject>GLTech2.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,11 +46,13 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour.cs" />
     <Compile Include="Elements\Observer.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Internal\ElementEnumerator.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Elements\Empty.cs" />
