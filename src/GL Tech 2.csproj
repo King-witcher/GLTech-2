@@ -59,7 +59,7 @@
     <Compile Include="Internal\Renderer_modes.cs" />
     <Compile Include="Internal\RendererData.cs" />
     <Compile Include="Internal\SceneData.cs" />
-    <Compile Include="Internal\GLBitmapData.cs" />
+    <Compile Include="Internal\TextureData.cs" />
     <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="Internal\SpriteData.cs" />
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Elements\Sprite.cs" />
-    <Compile Include="GLBitmap.cs" />
+    <Compile Include="Texture.cs" />
     <Compile Include="Elements\RegularPolygon.cs" />
     <Compile Include="StandardBehaviours\Move.cs" />
     <Compile Include="StandardBehaviours\Rotate.cs" />

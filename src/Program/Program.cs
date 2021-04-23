@@ -13,27 +13,26 @@ namespace GLTech2
     {
         static void Main()
         {
-            Scene scene = new Scene(new Material((GLBitmap) Resources.Universe, 0, 3));
+            Scene scene = new Scene(new Material((Texture) Resources.Universe, 0, 3));
 
-            Material mat = Resources.Wall;
+            Material mat = new Material((Texture) Resources.Wall, 0, 8);
 
-            Element cylinder = GetCylinder(Vector.Unit * 2, 0.5f, mat);
-            scene.AddElement(cylinder);
+            Element penta = new RegularPolygon(Vector.Origin, 5, 0.75f, mat);
+            scene.AddElement(penta);
 
             Observer pov = new Observer(Vector.Origin, 0);
             scene.AddElement(pov);
 
-            Element tri = new RegularPolygon(Vector.Unit * 3, 3, -2f, mat);
-            scene.AddElement(tri);
+            Element tri = new RegularPolygon(Vector.Origin * 3, 3, -2f, mat);
+            //scene.AddElement(tri);
 
             pov.AddBehaviour<CountFPS>();
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
             Renderer.FullScreen = true;
+            Renderer.ParallelRendering = true;
 
-            Renderer.CppRendering = false;
-            Renderer.ParallelRendering = false;
             Renderer.Run(scene);
         }
 

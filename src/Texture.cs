@@ -7,33 +7,33 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
 
-    public unsafe class GLBitmap : IDisposable
+    public unsafe class Texture : IDisposable
     {
-        internal GLBitmapData* unmanaged;
+        internal TextureData* unmanaged;
 
         public int Height => unmanaged->height;
         public int Width => unmanaged->width;
         public IntPtr Scan0 => (IntPtr) unmanaged->buffer;
         public PixelFormat PixelFormat => PixelFormat.Format32bppRgb;
 
-        public GLBitmap(Bitmap bitmap) =>
-            unmanaged = GLBitmapData.Create(bitmap);
+        public Texture(Bitmap texture) =>
+            unmanaged = TextureData.Create(texture);
         public void Dispose()
         {
-            GLBitmapData.Delete(unmanaged);
+            TextureData.Delete(unmanaged);
         }
 
-        public static explicit operator GLBitmap(Bitmap bitmap)
+        public static explicit operator Texture(Bitmap bitmap)
         {
-            return new GLBitmap(bitmap);
+            return new Texture(bitmap);
         }
 
-        public static implicit operator Bitmap(GLBitmap texture)
+        public static implicit operator Bitmap(Texture texture)
         {
             return new Bitmap(texture.Width, texture.Height, 4 * texture.Width, texture.PixelFormat, texture.Scan0);
         }
 
-        ~GLBitmap()
+        ~Texture()
         {
             Marshal.FreeHGlobal((IntPtr)unmanaged);
         }

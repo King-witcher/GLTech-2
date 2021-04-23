@@ -77,7 +77,7 @@ namespace GLTech2
         }
 
         public static bool  IsRunning { get; private set; } = false;
-        public static GLBitmap Screenshot
+        public static Texture Screenshot
         {
             get
             {
@@ -86,7 +86,7 @@ namespace GLTech2
                     Debug.LogWarning("Render must be running to take a screenshot.");
                     return null;
                 }
-                return new GLBitmap(bitmapFromBuffer.Clone() as Bitmap);
+                return new Texture(bitmapFromBuffer.Clone() as Bitmap);
             }
         }
 

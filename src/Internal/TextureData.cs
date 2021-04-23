@@ -7,16 +7,16 @@ using System.Runtime.CompilerServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct GLBitmapData
+    internal unsafe struct TextureData
     {
         internal UInt32* buffer;
         internal int height;
         internal int width;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static GLBitmapData* Create(Bitmap bitmap) // Possibly optimizable
+        internal static TextureData* Create(Bitmap bitmap) // Possibly optimizable
         {
-            GLBitmapData* result = (GLBitmapData*)Marshal.AllocHGlobal(sizeof(GLBitmapData));
+            TextureData* result = (TextureData*)Marshal.AllocHGlobal(sizeof(TextureData));
 
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             using (var clone = bitmap.Clone(rect, PixelFormat.Format32bppArgb) ??
@@ -33,13 +33,13 @@ namespace GLTech2
             return result;
         }
 
-        internal static void Delete(GLBitmapData* item)
+        internal static void Delete(TextureData* item)
         {
             Marshal.FreeHGlobal((IntPtr)item->buffer);
             Marshal.FreeHGlobal((IntPtr)item);
         }
 
-        public static implicit operator GLBitmapData(GLBitmap bmp) =>
+        public static implicit operator TextureData(Texture bmp) =>
             *bmp.unmanaged;
     }
 }
