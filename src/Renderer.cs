@@ -127,6 +127,8 @@ namespace GLTech2
 
             void rePaint(object sender, EventArgs e)
             {
+                while (isRendering)
+                    Thread.Yield();
                 display.pictureBox.Image = bitmapFromBuffer;
             }
 

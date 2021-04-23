@@ -83,31 +83,30 @@ namespace GLTech2
         private unsafe static void PostProcess()
         {
             Random rnd = new Random();
-            for (int i = 1; i < displayHeight - 1; i++)
+            Parallel.For(0, displayHeight, (i) =>
             {
-                for (int j = 1; j < DisplayWidth - 1; j++)
+                for (int j = 0; j < DisplayWidth; j++)
                 {
                     uint* pixel = rendererData->bitmap_buffer + (j + displayWidth * i);
                     *pixel = darker(*pixel);
                 }
-            }
+            });
 
             uint darker(uint color)
             {
-                uint result = 0;
-                result += (uint)(color % 256);
-                result <<= 8;
-                color >>= 8;
+                uint result = 0u;
+                uint newColor;
+                uint currentColor;
 
-                result += (uint)(color % 256);
-                result <<= 8;
-                color >>= 8;
+                for (int i = 0; i < 4; i++)
+                {
+                    currentColor = (color % 256u);
 
-                result += (uint)(color % 256);
-                result <<= 8;
-                color >>= 8;
+                    newColor = currentColor / 2;
 
-                result += (uint)(color % 256);
+                    result += newColor << 8 * i;
+                    color >>= 8;
+                }
 
                 return result;
             }

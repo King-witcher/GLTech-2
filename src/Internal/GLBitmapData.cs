@@ -39,7 +39,7 @@ namespace GLTech2
             Marshal.FreeHGlobal((IntPtr)item);
         }
 
-        public static implicit operator GLBitmapData(GLBitmap tex) =>
-            *tex.unmanaged;
+        public static implicit operator GLBitmapData(GLBitmap bmp) =>
+            *bmp.unmanaged;
     }
 }
