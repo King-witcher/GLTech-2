@@ -54,12 +54,12 @@ namespace GLTech2
                             float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
                             float screenVratio = (float)line / display_height;
                             float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                            int color = background.MapPixel(background_hratio, background_vratio);
+                            uint color = background.MapPixel(background_hratio, background_vratio);
                             rendererData->bitmap_buffer[display_width * line + ray_id] = color;
                         }
                         else
                         {
-                            int pixel = nearest->material.MapPixel(nearest_ratio, vratio);
+                            uint pixel = nearest->material.MapPixel(nearest_ratio, vratio);
                             rendererData->bitmap_buffer[display_width * line + ray_id] = pixel;
                         }
                     }
@@ -73,7 +73,7 @@ namespace GLTech2
                         float background_hratio = ray_angle / 360 + 1;
                         float screenVratio = (float)line / display_height;
                         float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        int color = background.MapPixel(background_hratio, background_vratio);
+                        uint color = background.MapPixel(background_hratio, background_vratio);
                         rendererData->bitmap_buffer[display_width * line + ray_id] = color;
                     }
                 }
@@ -87,12 +87,12 @@ namespace GLTech2
             {
                 for (int j = 1; j < DisplayWidth - 1; j++)
                 {
-                    int* pixel = rendererData->bitmap_buffer + (j + displayWidth * i);
+                    uint* pixel = rendererData->bitmap_buffer + (j + displayWidth * i);
                     *pixel = darker(*pixel);
                 }
             }
 
-            int darker(int color)
+            uint darker(uint color)
             {
                 uint result = 0;
                 result += (uint)(color % 256);
@@ -109,7 +109,7 @@ namespace GLTech2
 
                 result += (uint)(color % 256);
 
-                return *(int*)&result;
+                return result;
             }
         }
     }

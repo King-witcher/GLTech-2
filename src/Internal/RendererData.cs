@@ -7,7 +7,7 @@ namespace GLTech2
     internal unsafe struct RendererData
     {
         // Resposabillity of the Renderer
-        internal volatile Int32* bitmap_buffer;
+        internal volatile UInt32* bitmap_buffer;
         internal int bitmap_height;
         internal int bitmap_width;
 
@@ -27,7 +27,7 @@ namespace GLTech2
             RendererData* result = (RendererData*)Marshal.AllocHGlobal(sizeof(RendererData));
             result->bitmap_height = height;
             result->bitmap_width = width;
-            result->bitmap_buffer = (Int32*)Marshal.AllocHGlobal(sizeof(Int32) * width * height);
+            result->bitmap_buffer = (UInt32*)Marshal.AllocHGlobal(sizeof(UInt32) * width * height);
             result->camera_HFOV = 90f;
             result->activeScene = scene;
             result->cache_angles = null;

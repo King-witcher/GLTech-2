@@ -9,7 +9,7 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct GLBitmapData
     {
-        internal Int32* buffer;
+        internal UInt32* buffer;
         internal int height;
         internal int width;
 
@@ -24,7 +24,7 @@ namespace GLTech2
             {
                 var bmpdata = clone.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
                 int bmpsize = bmpdata.Stride * bmpdata.Height;
-                result->buffer = (Int32*)Marshal.AllocHGlobal(bmpsize);
+                result->buffer = (UInt32*)Marshal.AllocHGlobal(bmpsize);
                 Buffer.MemoryCopy((void*)bmpdata.Scan0, result->buffer, bmpsize, bmpsize);
                 clone.UnlockBits(bmpdata);
             }
