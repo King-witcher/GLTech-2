@@ -10,8 +10,11 @@ namespace GLTech2
 {
     public static class Input
     {
-        public static bool GetKeyDown(Keys key) =>
-            Keyboard.IsKeyDown((System.Windows.Input.Key) key);
+        public static bool GetKeyDown(Keys key)
+        {
+            ///
+            return false;
+        }
 
         public enum Keys
         {

@@ -60,6 +60,7 @@
     <Compile Include="Internal\RendererData.cs" />
     <Compile Include="Internal\SceneData.cs" />
     <Compile Include="Internal\GLBitmapData.cs" />
+    <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="Scene.cs" />

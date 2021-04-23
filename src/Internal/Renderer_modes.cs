@@ -82,13 +82,34 @@ namespace GLTech2
 
         private unsafe static void PostProcess()
         {
-            for (int i = 1; i < DisplayWidth - 1; i++)
+            Random rnd = new Random();
+            for (int i = 1; i < displayHeight - 1; i++)
             {
-                for (int j = 1; j < DisplayHeight - 1; j++)
+                for (int j = 1; j < DisplayWidth - 1; j++)
                 {
-                    float result = 0;
-                    rendererData->bitmap_buffer[i + displayHeight * j] -= 1234;
+                    int* pixel = rendererData->bitmap_buffer + (j + displayWidth * i);
+                    *pixel = darker(*pixel);
                 }
+            }
+
+            int darker(int color)
+            {
+                uint result = 0;
+                result += (uint)(color % 256);
+                result <<= 8;
+                color >>= 8;
+
+                result += (uint)(color % 256);
+                result <<= 8;
+                color >>= 8;
+
+                result += (uint)(color % 256);
+                result <<= 8;
+                color >>= 8;
+
+                result += (uint)(color % 256);
+
+                return *(int*)&result;
             }
         }
     }

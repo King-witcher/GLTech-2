@@ -133,7 +133,7 @@ namespace GLTech2
             display.pictureBox.Paint += rePaint; // Must be subtracted!
             //display.pictureBox.Image = bitmapFromBuffer;
 
-            display.ShowDialog();
+            Application.Run(display);
 
             Exit();
         }
@@ -189,6 +189,7 @@ namespace GLTech2
                 //    NativeRender(rendererData);
                 //else
                     CLRRender();
+                //PostProcess();
                 isRendering = false;
 
                 Time.renderTime = (double) swtest.ElapsedTicks / Stopwatch.Frequency;
