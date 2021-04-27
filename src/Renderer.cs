@@ -92,7 +92,8 @@ namespace GLTech2
 
 
         internal static Bitmap                  bitmapFromBuffer;
-        internal unsafe static RendererData*    rendererData;
+        internal unsafe static RendererData*    rendererData;   // Rever
+        internal unsafe static PixelBuffer      outputBuffer;
         private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Scene                    activeScene = null;
@@ -118,12 +119,18 @@ namespace GLTech2
             else
                 display.SetSize(DisplayWidth, DisplayHeight);
 
-            activeScene = scene;
+            activeScene = scene; // Rever isso
             ReloadRendererData();
-            ReloadBuffer();
+            ReloadBuffer(); // Rever isso
+
+            outputBuffer = new PixelBuffer(DisplayWidth, displayHeight);
+            Bitmap outputBitmap = new Bitmap(
+                DisplayWidth, DisplayHeight,
+                DisplayWidth * sizeof(uint), PixelFormat.Format32bppArgb,
+                (IntPtr)outputBuffer.buffer);
 
             keepRendering = true;
-            Task.Run(LoopRender);
+            Task.Run(() => ControlTrhead(outputBuffer));
 
             void rePaint(object sender, EventArgs e)
             {
@@ -137,6 +144,7 @@ namespace GLTech2
 
             Application.Run(display);
 
+            outputBuffer.Dispose();
             Exit();
         }
 
@@ -177,7 +185,7 @@ namespace GLTech2
         private static bool isRendering = false;
 
         //Initialize Time, render and reset Time.
-        private unsafe static void LoopRender()
+        private unsafe static void ControlTrhead(PixelBuffer outputBuffer)
         {
             Time.Start();
             activeScene.InvokeStart();

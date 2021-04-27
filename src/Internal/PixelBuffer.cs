@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GLTech2.Internal
+namespace GLTech2
 {
     unsafe struct PixelBuffer : IDisposable
     {
