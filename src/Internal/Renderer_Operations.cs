@@ -81,9 +81,61 @@ namespace GLTech2
             }
         }
 
-        private unsafe static void FXAA(byte threshold)
+        private unsafe static void FXAA(PixelBuffer target, int threshold)
         {
+            PixelBuffer temp = new PixelBuffer(target.width, target.height);
+            temp.Clone(target);
 
+            Parallel.For(1, target.height, (i) =>
+            {
+                for (int j = 1; j < target.width; j++)
+                {
+                    int cur = target.width * i + j;
+                    int up = target.width * (i - 1) + j;
+                    int left = target.width * i + j - 1;
+
+                    int differenceV = difference(
+                        target.buffer[cur],
+                        target.buffer[up]);
+
+                    int differenceH = difference(
+                        target.buffer[cur],
+                        target.buffer[left]);
+
+                    if (differenceV > 12)
+                        temp.buffer[target.width * i + j] = mix(target.buffer[up], target.buffer[cur]);
+                   else if (differenceH > 12)
+                        temp.buffer[target.width * i + j] = mix(target.buffer[left], target.buffer[cur]);
+
+                }
+            });
+
+            target.Clone(temp);
+            temp.Dispose();
+
+            int difference(uint pixel1, uint pixel2)
+            {
+                int B = (int)pixel1 % 256 - (int)pixel2 % 256;
+                pixel1 >>= 8;
+                pixel2 >>= 8;
+                int G = (int)pixel1 % 256 - (int)pixel2 % 256;
+                pixel1 >>= 8;
+                pixel2 >>= 8;
+                int R = (int)pixel1 % 256 - (int)pixel2 % 256;
+                return (int) (Math.Sqrt(B * B + G * G + R * R));
+            }
+
+            uint mix(uint pixel1, uint pixel2)
+            {
+                uint res = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    res += (pixel1 % 256 + pixel2 % 256) / 2 << (8 * i);
+                    pixel1 >>= 8;
+                    pixel2 >>= 8;
+                }
+                return res;
+            }
         }
 
         private unsafe static void PostProcess(PixelBuffer target)

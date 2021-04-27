@@ -182,7 +182,10 @@ namespace GLTech2
                 isRendering = true;
 
                 CLRRender(primaryBuffer, activeScene.unmanaged);
-                PostProcess(primaryBuffer);
+                FXAA(primaryBuffer, 0);
+                FXAA(primaryBuffer, 0);
+                FXAA(primaryBuffer, 0);
+                FXAA(primaryBuffer, 0);
                 outputBuffer.Clone(primaryBuffer);
 
                 isRendering = false;
