@@ -17,6 +17,8 @@ namespace GLTech2
         public static bool  CppRendering { get; set; } = false;
         public static bool  ParallelRendering { get; set; } = true;
 
+        public static bool DoubleBuffering { get; set; } = false;
+
         private static float minframetime = 4;
 
         public static Scene ActiveScene => activeScene;
@@ -134,9 +136,9 @@ namespace GLTech2
 
             void rePaint(object sender, EventArgs e)
             {
-                while (isRendering)
-                    Thread.Yield();
-                display.pictureBox.Image = bitmapFromBuffer;
+                //while (isRendering)
+                    //Thread.Yield();
+                display.pictureBox.Image = outputBitmap;
             }
 
             display.pictureBox.Paint += rePaint; // Must be subtracted!
@@ -190,19 +192,22 @@ namespace GLTech2
             Time.Start();
             activeScene.InvokeStart();
 
+            PixelBuffer primaryBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
+
             Stopwatch swtest = new Stopwatch();
             while (keepRendering)
             {
+
                 swtest.Restart();
                 isRendering = true;
-                //if (CppRendering)
-                //    NativeRender(rendererData);
-                //else
-                    CLRRender(rendererData->bitmap_buffer);
-                //PostProcess();
+
+                CLRRender(primaryBuffer);
+                PostProcess(primaryBuffer);
+                outputBuffer.Clone(primaryBuffer);
+
                 isRendering = false;
 
-                Time.renderTime = (double) swtest.ElapsedTicks / Stopwatch.Frequency;
+                Time.renderTime = (double)swtest.ElapsedTicks / Stopwatch.Frequency;
 
                 while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
