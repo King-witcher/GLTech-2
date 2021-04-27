@@ -11,8 +11,8 @@ namespace GLTech2
     partial class Renderer
     {
         //Don't know how to pinvoke fromm current directory =/
-        [DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
-        private unsafe static extern void NativeRender(RendererData* camera);
+        //[DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
+        //private unsafe static extern void NativeRender(RendererData* camera);
 
         private unsafe static void CLRRender()
         {

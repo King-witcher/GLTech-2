@@ -17,7 +17,7 @@ namespace GLTech2
 
             Material mat = new Material((Texture) Resources.Wall, 0, 8);
 
-            Element penta = new RegularPolygon(Vector.Origin, 5, 0.75f, mat);
+            Element penta = new RegularPolygon(Vector.Origin, 5, 2f, mat);
             scene.AddElement(penta);
 
             Observer pov = new Observer(Vector.Origin, 0);
@@ -30,7 +30,7 @@ namespace GLTech2
 
             Renderer.DisplayHeight = 900;
             Renderer.DisplayWidth = 1600;
-            Renderer.FullScreen = true;
+            Renderer.FullScreen = false;
             Renderer.ParallelRendering = true;
 
             Renderer.Run(scene);

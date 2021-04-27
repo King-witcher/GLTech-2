@@ -42,7 +42,7 @@ namespace GLTech2
         internal unsafe UInt32 MapPixel(float hratio, float vratio)      //Possibly optimizable
         {
             int x = (int)(texture.width * (hrepeat * hratio + hoffset)) % texture.width;
-            int y = (int)(texture.height * vratio) % texture.height;
+            int y = (int)(texture.height * vratio);//% texture.height;
             return texture.buffer[texture.width * y + x];
         }
 
