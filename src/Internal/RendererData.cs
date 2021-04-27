@@ -8,8 +8,6 @@ namespace GLTech2
     {
         // Resposabillity of the Renderer
         internal volatile UInt32* bitmap_buffer;
-        internal int bitmap_height;
-        internal int bitmap_width;
 
         // RenderingCache
         internal float* cache_angles;
@@ -20,20 +18,16 @@ namespace GLTech2
         internal float camera_HFOV;
 
         // Responsabillity of the Renderer (current_scene)
-        internal SceneData* activeScene;
 
-        internal static RendererData* Create(int width, int height, SceneData* scene)
+        internal static RendererData* Create(int width, int height)
         {
             RendererData* result = (RendererData*)Marshal.AllocHGlobal(sizeof(RendererData));
-            result->bitmap_height = height;
-            result->bitmap_width = width;
             result->bitmap_buffer = (UInt32*)Marshal.AllocHGlobal(sizeof(UInt32) * width * height);
             result->camera_HFOV = 90f;
-            result->activeScene = scene;
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.
 
-            result->RefreshCaches();
+            result->RefreshCaches(width, height);
             return result;
         }
 
@@ -43,7 +37,7 @@ namespace GLTech2
             Marshal.FreeHGlobal((IntPtr)bitmap_buffer);
         }
 
-        internal void RefreshCaches()
+        internal void RefreshCaches(int bitmap_width, int bitmap_height)
         {
             const double TORAD = Math.PI / 180.0f;
             double tan = Math.Tan(TORAD * camera_HFOV / 2);

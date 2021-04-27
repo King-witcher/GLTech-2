@@ -59,9 +59,9 @@
     <Compile Include="Elements\Empty.cs" />
     <Compile Include="Internal\Renderer_Operations.cs" />
     <Compile Include="Internal\RendererData.cs" />
-    <Compile Include="Internal\RenderingOperations.cs" />
     <Compile Include="Internal\SceneData.cs" />
     <Compile Include="Internal\TextureData.cs" />
+    <Compile Include="PostProcessing\PostProcessing.cs" />
     <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />

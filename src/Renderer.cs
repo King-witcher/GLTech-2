@@ -99,6 +99,7 @@ namespace GLTech2
         private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Scene                    activeScene = null;
+        private static List<PostProcessing>     postProcessing = new List<PostProcessing>();
 
 
         public unsafe static void Run(Scene scene)
@@ -123,7 +124,7 @@ namespace GLTech2
 
             activeScene = scene; // Rever isso
             ReloadRendererData();
-            ReloadBuffer(); // Rever isso
+            //ReloadBuffer(); // Rever isso
 
             outputBuffer = new PixelBuffer(DisplayWidth, displayHeight);
             Bitmap outputBitmap = new Bitmap(
@@ -179,7 +180,7 @@ namespace GLTech2
                 Marshal.FreeHGlobal((IntPtr)rendererData);
             }
 
-            rendererData = RendererData.Create(DisplayWidth, DisplayHeight, activeScene.unmanaged);
+            rendererData = RendererData.Create(DisplayWidth, DisplayHeight);
         }
 
 
@@ -201,7 +202,7 @@ namespace GLTech2
                 swtest.Restart();
                 isRendering = true;
 
-                CLRRender(primaryBuffer);
+                CLRRender(primaryBuffer, activeScene.unmanaged);
                 PostProcess(primaryBuffer);
                 outputBuffer.Clone(primaryBuffer);
 

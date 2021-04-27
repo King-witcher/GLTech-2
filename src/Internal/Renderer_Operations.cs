@@ -14,13 +14,13 @@ namespace GLTech2
         //[DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         //private unsafe static extern void NativeRender(RendererData* camera);
 
-        private unsafe static void CLRRender(PixelBuffer target)        // Must be changed
+        private unsafe static void CLRRender(PixelBuffer target, SceneData* scene)        // Must be changed
         {
             //Caching frequently used values.
             uint* buffer = target.buffer;
             int width = target.width;
             int height = target.height;
-            Material background = rendererData->activeScene->background;
+            Material background = scene->background;
 
             if (ParallelRendering)
             {
@@ -35,11 +35,11 @@ namespace GLTech2
             {
                 //Caching
                 float ray_cos = rendererData->cache_cosines[ray_id];
-                float ray_angle = rendererData->cache_angles[ray_id] + rendererData->activeScene->activeObserver->rotation;
-                Ray ray = new Ray(rendererData->activeScene->activeObserver->position, ray_angle);
+                float ray_angle = rendererData->cache_angles[ray_id] + scene->activeObserver->rotation;
+                Ray ray = new Ray(scene->activeObserver->position, ray_angle);
 
                 //Cast the ray towards every wall.
-                WallData* nearest = ray.NearestWall(rendererData->activeScene, out float nearest_dist, out float nearest_ratio);
+                WallData* nearest = ray.NearestWall(scene, out float nearest_dist, out float nearest_ratio);
                 if (nearest_ratio != 2f)
                 {
                     float columnHeight = (rendererData->cache_colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
