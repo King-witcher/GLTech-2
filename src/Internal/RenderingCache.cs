@@ -29,22 +29,22 @@ namespace GLTech2
             Marshal.FreeHGlobal((IntPtr)cache_angles);
         }
 
-        internal void RefreshCaches(int bitmap_width, int bitmap_height)
+        private void RefreshCaches(int width, int height)
         {
             const double TORAD = Math.PI / 180.0f;
             double tan = Math.Tan(TORAD * camera_HFOV / 2);
 
-            cache_colHeight1 = bitmap_width / (float)(2 * tan);
+            cache_colHeight1 = width / (float)(2 * tan);
 
             //Ambos os caches são alocados lado a lado para facilitar o chaching em nível de processador.
             if (cache_angles != null)
-                Marshal.ReAllocHGlobal((IntPtr)cache_angles, (IntPtr)(2 * sizeof(float) * bitmap_width));
+                Marshal.ReAllocHGlobal((IntPtr)cache_angles, (IntPtr)(2 * sizeof(float) * width));
             else
-                cache_angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * bitmap_width);
-            cache_cosines = cache_angles + bitmap_width;
+                cache_angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
+            cache_cosines = cache_angles + width;
 
-            double step = 2 * tan / (bitmap_width - 1);
-            for (int i = 0; i < bitmap_width; i++)
+            double step = 2 * tan / (width - 1);
+            for (int i = 0; i < width; i++)
             {
                 float angle = (float)(Math.Atan(i * step - tan) / TORAD);
                 cache_angles[i] = angle;
