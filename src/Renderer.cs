@@ -94,7 +94,7 @@ namespace GLTech2
 
 
         internal static Bitmap                  bitmapFromBuffer;
-        internal unsafe static RendererData*    rendererData;   // Rever
+        internal unsafe static RenderingCache*    rendererData;   // Rever
         internal unsafe static PixelBuffer      outputBuffer;
         private static readonly int             pixelsize = 4;
         private static Display                  display;
@@ -151,36 +151,15 @@ namespace GLTech2
             Exit();
         }
 
-        private static unsafe void ReloadBuffer()
-        {
-            if (bitmapFromBuffer != null)
-                bitmapFromBuffer.Dispose();
-
-            bitmapFromBuffer = new Bitmap(
-                DisplayWidth,
-                DisplayHeight,
-                DisplayWidth * pixelsize, PixelFormat.Format32bppArgb,
-                (IntPtr)rendererData->bitmap_buffer);
-
-            BitmapData data = bitmapFromBuffer.LockBits(
-                new Rectangle(0, 0, displayWidth, displayHeight),
-                ImageLockMode.ReadWrite,
-                PixelFormat.Format32bppArgb);
-
-            data.Scan0 = (IntPtr)rendererData->bitmap_buffer;
-
-            bitmapFromBuffer.UnlockBits(data);
-        }
-
         private static unsafe void ReloadRendererData()
         {
             if (rendererData != null)
             {
-                rendererData->Free();   //May cause bugs
+                rendererData->Dispose();   //May cause bugs
                 Marshal.FreeHGlobal((IntPtr)rendererData);
             }
 
-            rendererData = RendererData.Create(DisplayWidth, DisplayHeight);
+            rendererData = RenderingCache.Create(DisplayWidth, DisplayHeight);
         }
 
 

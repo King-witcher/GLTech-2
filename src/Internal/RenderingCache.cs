@@ -4,12 +4,8 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct RendererData
+    internal unsafe struct RenderingCache : IDisposable
     {
-        // Resposabillity of the Renderer
-        internal volatile UInt32* bitmap_buffer;
-
-        // RenderingCache
         internal float* cache_angles;
         internal float cache_colHeight1;
         internal float* cache_cosines;
@@ -17,12 +13,9 @@ namespace GLTech2
 
         internal float camera_HFOV;
 
-        // Responsabillity of the Renderer (current_scene)
-
-        internal static RendererData* Create(int width, int height)
+        internal static RenderingCache* Create(int width, int height)
         {
-            RendererData* result = (RendererData*)Marshal.AllocHGlobal(sizeof(RendererData));
-            result->bitmap_buffer = (UInt32*)Marshal.AllocHGlobal(sizeof(UInt32) * width * height);
+            RenderingCache* result = (RenderingCache*)Marshal.AllocHGlobal(sizeof(RenderingCache));
             result->camera_HFOV = 90f;
             result->cache_angles = null;
             result->cache_cosines = null; //Atribuição possivelmente desnecessária.
@@ -31,10 +24,9 @@ namespace GLTech2
             return result;
         }
 
-        public void Free()
+        public void Dispose()
         {
-            Marshal.FreeHGlobal((IntPtr)cache_angles); //Cossenos estão incluídos porque ângulos e cossenos são alocados contiguamente.
-            Marshal.FreeHGlobal((IntPtr)bitmap_buffer);
+            Marshal.FreeHGlobal((IntPtr)cache_angles);
         }
 
         internal void RefreshCaches(int bitmap_width, int bitmap_height)
