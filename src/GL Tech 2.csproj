@@ -53,6 +53,7 @@
     <Compile Include="Elements\Observer.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="Internal\PixelBuffer.cs" />
     <Compile Include="Internal\ElementEnumerator.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Elements\Empty.cs" />

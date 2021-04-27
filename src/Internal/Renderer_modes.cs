@@ -14,7 +14,7 @@ namespace GLTech2
         //[DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         //private unsafe static extern void NativeRender(RendererData* camera);
 
-        private unsafe static void CLRRender()
+        private unsafe static void CLRRender(uint* target)
         {
             //Caching frequently used values.
             int display_width = rendererData->bitmap_width;
@@ -55,12 +55,12 @@ namespace GLTech2
                             float screenVratio = (float)line / display_height;
                             float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                             uint color = background.MapPixel(background_hratio, background_vratio);
-                            rendererData->bitmap_buffer[display_width * line + ray_id] = color;
+                            target[display_width * line + ray_id] = color;
                         }
                         else
                         {
                             uint pixel = nearest->material.MapPixel(nearest_ratio, vratio);
-                            rendererData->bitmap_buffer[display_width * line + ray_id] = pixel;
+                            target[display_width * line + ray_id] = pixel;
                         }
                     }
                 }
@@ -74,10 +74,15 @@ namespace GLTech2
                         float screenVratio = (float)line / display_height;
                         float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                         uint color = background.MapPixel(background_hratio, background_vratio);
-                        rendererData->bitmap_buffer[display_width * line + ray_id] = color;
+                        target[display_width * line + ray_id] = color;
                     }
                 }
             }
+        }
+
+        private unsafe static void FXAA(byte threshold)
+        {
+
         }
 
         private unsafe static void PostProcess()

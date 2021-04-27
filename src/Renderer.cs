@@ -190,7 +190,7 @@ namespace GLTech2
                 //if (CppRendering)
                 //    NativeRender(rendererData);
                 //else
-                    CLRRender();
+                    CLRRender(rendererData->bitmap_buffer);
                 //PostProcess();
                 isRendering = false;
 
