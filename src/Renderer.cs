@@ -133,7 +133,7 @@ namespace GLTech2
                 (IntPtr)outputBuffer.buffer);
 
             keepRendering = true;
-            Task.Run(() => ControlTrhead(outputBuffer));
+            Task.Run(() => ControlTrhead(ref outputBuffer));
 
             void rePaint(object sender, EventArgs e)
             {
@@ -165,7 +165,7 @@ namespace GLTech2
         private static bool isRendering = false;
 
         //Initialize Time, render and reset Time.
-        private unsafe static void ControlTrhead(PixelBuffer outputBuffer)
+        private unsafe static void ControlTrhead(ref PixelBuffer outputBuffer)
         {
             Time.Start();
             activeScene.InvokeStart();

@@ -61,6 +61,7 @@
     <Compile Include="Internal\RenderingCache.cs" />
     <Compile Include="Internal\SceneData.cs" />
     <Compile Include="Internal\TextureData.cs" />
+    <Compile Include="PostProcessing\GLTXAA.cs" />
     <Compile Include="PostProcessing\FXAA.cs" />
     <Compile Include="PostProcessing\PostProcessing.cs" />
     <Compile Include="Program\TestKeyboard.cs" />
@@ -105,7 +106,9 @@
   <ItemGroup>
     <None Include="Resources\GL Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\metal.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\wall.jpg" />
   </ItemGroup>
