@@ -5,13 +5,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GLTech2
 {
+    using PostProcessment;
+
     public static partial class Renderer
     {
         public static bool  CppRendering { get; set; } = false;
@@ -94,12 +95,11 @@ namespace GLTech2
 
 
         internal static Bitmap                  bitmapFromBuffer;
-        internal unsafe static RenderingCache*    rendererData;   // Rever
+        internal unsafe static RenderingCache*  rendererData;   // Rever
         internal unsafe static PixelBuffer      outputBuffer;
         private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Scene                    activeScene = null;
-        private static List<PostProcessing>     postProcessing = new List<PostProcessing>();
 
 
         public unsafe static void Run(Scene scene)
@@ -137,8 +137,6 @@ namespace GLTech2
 
             void rePaint(object sender, EventArgs e)
             {
-                //while (isRendering)
-                    //Thread.Yield();
                 display.pictureBox.Image = outputBitmap;
             }
 
@@ -172,25 +170,23 @@ namespace GLTech2
             Time.Start();
             activeScene.InvokeStart();
 
-            PixelBuffer primaryBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
+            PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
 
-            Stopwatch swtest = new Stopwatch();
+            Stopwatch rendersw = new Stopwatch();
             while (keepRendering)
             {
-
-                swtest.Restart();
+                rendersw.Restart();
                 isRendering = true;
 
-                CLRRender(primaryBuffer, activeScene.unmanaged);
-                FXAA(primaryBuffer, 0);
-                FXAA(primaryBuffer, 0);
-                FXAA(primaryBuffer, 0);
-                FXAA(primaryBuffer, 0);
-                outputBuffer.Clone(primaryBuffer);
+                CLRRender(activeBuffer, activeScene.unmanaged);
+                PostProcess(activeBuffer);
+
+                outputBuffer.Clone(activeBuffer);
 
                 isRendering = false;
 
-                Time.renderTime = (double)swtest.ElapsedTicks / Stopwatch.Frequency;
+
+                Time.renderTime = (double)rendersw.ElapsedTicks / Stopwatch.Frequency;
 
                 while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
@@ -199,12 +195,29 @@ namespace GLTech2
                 Time.NewFrame();
             }
 
+            activeBuffer.Dispose();
             Time.Reset();
         }
 
         private static void LoadScene(Scene scene)
         {
 
+        }
+
+        private static List<PostProcessing> postProcessings = new List<PostProcessing>();
+        private static void PostProcess(PixelBuffer target)
+        {
+            foreach (var p in postProcessings)
+                p.Process(target);
+        }
+
+        public static void AddPostProcessing(PostProcessing postProcessing)
+        {
+            postProcessings.Add(postProcessing);
+        }
+        public static void AddPostProcessing<P>() where P : PostProcessing, new()
+        {
+            AddPostProcessing(new P());
         }
 
 

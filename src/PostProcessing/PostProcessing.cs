@@ -4,15 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GLTech2
+namespace GLTech2.PostProcessment
 {
     public abstract class PostProcessing
     {
-        internal PostProcessing()
-        {
-
-        }
-
-        internal abstract void Process(PixelBuffer buffer);
+        internal unsafe abstract void Process(PixelBuffer target);
     }
 }

@@ -33,6 +33,8 @@ namespace GLTech2
             Renderer.FullScreen = false;
             Renderer.ParallelRendering = true;
 
+            Renderer.AddPostProcessing(new PostProcessment.FXAA(1600, 900, 70));
+
             Renderer.Run(scene);
         }
 

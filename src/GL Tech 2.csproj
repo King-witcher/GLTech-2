@@ -61,6 +61,7 @@
     <Compile Include="Internal\RenderingCache.cs" />
     <Compile Include="Internal\SceneData.cs" />
     <Compile Include="Internal\TextureData.cs" />
+    <Compile Include="PostProcessing\FXAA.cs" />
     <Compile Include="PostProcessing\PostProcessing.cs" />
     <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />

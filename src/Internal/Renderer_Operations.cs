@@ -94,17 +94,17 @@ namespace GLTech2
                     int up = target.width * (i - 1) + j;
                     int left = target.width * i + j - 1;
 
-                    int differenceV = difference(
+                    int differenceV = sqrdist(
                         target.buffer[cur],
                         target.buffer[up]);
 
-                    int differenceH = difference(
+                    int differenceH = sqrdist(
                         target.buffer[cur],
                         target.buffer[left]);
 
-                    if (differenceV > 12)
+                    if (differenceV > 128 * 64)
                         temp.buffer[target.width * i + j] = mix(target.buffer[up], target.buffer[cur]);
-                   else if (differenceH > 12)
+                    else if (differenceH > 128 * 64)
                         temp.buffer[target.width * i + j] = mix(target.buffer[left], target.buffer[cur]);
 
                 }
@@ -113,16 +113,33 @@ namespace GLTech2
             target.Clone(temp);
             temp.Dispose();
 
-            int difference(uint pixel1, uint pixel2)
+            int sqrdist(uint pixel1, uint pixel2)
             {
-                int B = (int)pixel1 % 256 - (int)pixel2 % 256;
+                int sum = 0;
+                int tmp;
+
+                tmp = (byte)pixel1 - (byte)pixel2;
+                tmp *= tmp;
+                sum += tmp;
                 pixel1 >>= 8;
                 pixel2 >>= 8;
-                int G = (int)pixel1 % 256 - (int)pixel2 % 256;
+                tmp = (byte)pixel1 - (byte)pixel2;
+                tmp *= tmp;
+                sum += tmp;
                 pixel1 >>= 8;
                 pixel2 >>= 8;
-                int R = (int)pixel1 % 256 - (int)pixel2 % 256;
-                return (int) (Math.Sqrt(B * B + G * G + R * R));
+                tmp = (byte)pixel1 - (byte)pixel2;
+                tmp *= tmp;
+                sum += tmp;
+                pixel1 >>= 8;
+                pixel2 >>= 8;
+                tmp = (byte)pixel1 - (byte)pixel2;
+                tmp *= tmp;
+                sum += tmp;
+                pixel1 >>= 8;
+                pixel2 >>= 8;
+
+                return sum;
             }
 
             uint mix(uint pixel1, uint pixel2)
@@ -130,43 +147,11 @@ namespace GLTech2
                 uint res = 0;
                 for (int i = 0; i < 4; i++)
                 {
-                    res += (pixel1 % 256 + pixel2 % 256) / 2 << (8 * i);
+                    res += (uint)((byte)pixel1 + (byte)pixel2) / 2 << (8 * i);
                     pixel1 >>= 8;
                     pixel2 >>= 8;
                 }
                 return res;
-            }
-        }
-
-        private unsafe static void PostProcess(PixelBuffer target)
-        {
-            Random rnd = new Random();
-            Parallel.For(0, target.height, (i) =>
-            {
-                for (int j = 0; j < target.width; j++)
-                {
-                    uint* pixel = target.buffer + (j + target.width * i);
-                    *pixel = darker(*pixel);
-                }
-            });
-
-            uint darker(uint color)
-            {
-                uint result = 0u;
-                uint newColor;
-                uint currentColor;
-
-                for (int i = 0; i < 4; i++)
-                {
-                    currentColor = (color % 256u);
-
-                    newColor = currentColor / 2;
-
-                    result += newColor << 8 * i;
-                    color >>= 8;
-                }
-
-                return result;
             }
         }
     }
