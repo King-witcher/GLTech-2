@@ -21,6 +21,13 @@ namespace GLTech2
             Buffer.MemoryCopy(pb.buffer, this.buffer, 4 * height * width, 4 * height * width);
         }
 
+        internal static void Swap(ref PixelBuffer pb1, ref PixelBuffer pb2)
+        {
+            PixelBuffer tmp = pb1;
+            pb1 = pb2;
+            pb2 = tmp;
+        }
+
         public void Dispose()
         {
             Marshal.FreeHGlobal((IntPtr)buffer);

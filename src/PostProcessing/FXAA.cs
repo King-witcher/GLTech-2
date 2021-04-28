@@ -50,11 +50,10 @@ namespace GLTech2.PostProcessment
                         pixelBuffer.buffer[target.width * i + j] = avg(target.buffer[up], target.buffer[cur]);
                     else if (differenceH >= sqrThreshold)
                         pixelBuffer.buffer[target.width * i + j] = avg(target.buffer[left], target.buffer[cur]);
-
                 }
             });
 
-            target.Clone(pixelBuffer);
+            PixelBuffer.Swap(ref pixelBuffer, ref target);
             return;
 
 
@@ -76,8 +75,6 @@ namespace GLTech2.PostProcessment
                 tmp = (byte)pixel1 - (byte)pixel2;
                 tmp *= tmp;
                 sum += tmp;
-                pixel1 >>= 8;
-                pixel2 >>= 8;
 
                 return sum;
             }
@@ -99,11 +96,6 @@ namespace GLTech2.PostProcessment
         public void Dispose()
         {
             pixelBuffer.Dispose();
-        }
-        
-        ~FXAA()
-        {
-            Dispose();
         }
     }
 }
