@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GLTech2.Properties;
 using GLTech2.PrefabElements;
+using GLTech2.PostProcessment;
 
 namespace GLTech2
 {
@@ -33,7 +34,7 @@ namespace GLTech2
             Renderer.FullScreen = false;
             Renderer.ParallelRendering = true;
 
-            Renderer.AddPostProcessing(new PostProcessment.FXAA(1600, 900, 70));
+            Renderer.AddPostProcessing(new FXAA(1600, 900));
 
             Renderer.Run(scene);
         }

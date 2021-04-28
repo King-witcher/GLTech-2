@@ -9,7 +9,7 @@ namespace GLTech2.PostProcessment
 {
     public sealed unsafe class FXAA : PostProcessing, IDisposable
     {
-        public FXAA(int width, int height, int threshold)
+        public FXAA(int width, int height, int threshold = 70)
         {
             pixelBuffer = new PixelBuffer(width, height);
             if (threshold > 255)

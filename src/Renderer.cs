@@ -170,32 +170,30 @@ namespace GLTech2
             Time.Start();
             activeScene.InvokeStart();
 
-            PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
-
             Stopwatch rendersw = new Stopwatch();
-            while (keepRendering)
-            {
-                rendersw.Restart();
-                isRendering = true;
 
-                CLRRender(activeBuffer, activeScene.unmanaged);
-                PostProcess(activeBuffer);
+            using (PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height))
+                while (keepRendering)
+                {
+                    rendersw.Restart();
+                    isRendering = true;
 
-                outputBuffer.Clone(activeBuffer);
+                    CLRRender(activeBuffer, activeScene.unmanaged);
+                    PostProcess(activeBuffer);
 
-                isRendering = false;
+                    outputBuffer.Clone(activeBuffer);
 
+                    isRendering = false;
 
-                Time.renderTime = (double)rendersw.ElapsedTicks / Stopwatch.Frequency;
+                    Time.renderTime = (double)rendersw.ElapsedTicks / Stopwatch.Frequency;
 
-                while (Time.DeltaTime * 1000 < minframetime)
-                    Thread.Yield();
+                    while (Time.DeltaTime * 1000 < minframetime)
+                        Thread.Yield();
 
-                activeScene.InvokeUpdate();
-                Time.NewFrame();
-            }
+                    activeScene.InvokeUpdate();
+                    Time.NewFrame();
+                }
 
-            activeBuffer.Dispose();
             Time.Reset();
         }
 
