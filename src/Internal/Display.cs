@@ -4,17 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace GLTech2
 {
-    internal sealed class Display : Form
+    internal sealed class Display : Form, IDisposable
     {
-        internal PictureBox pictureBox;
+        private PictureBox pictureBox;  // Will only be released by GC
+        private Bitmap source;
 
-        internal Display()
+        internal Display(bool fullscreen, int width, int height, Bitmap videoSource)
         {
             InitializeComponent();
+            source = videoSource;
+
+            if (fullscreen)
+            {
+                WindowState = FormWindowState.Maximized;
+                FormBorderStyle = FormBorderStyle.None;
+            }
+            else
+                SetSize(width, height);
+
+            // This create an infinite loop that keeps updating the image on the screen.
+            pictureBox.Paint += RePaint;
         }
+
+        internal void RePaint(object _ = null, EventArgs __ = null) =>
+            pictureBox.Image = source;
 
         private void InitializeComponent()
         {
@@ -45,7 +62,6 @@ namespace GLTech2
             this.MaximizeBox = false;
             this.Name = "Display";
             this.Text = "GL Tech 2 Renderer";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseForm);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -55,16 +71,6 @@ namespace GLTech2
         {
             pictureBox.Size = new System.Drawing.Size(width, height);
             this.ClientSize = new System.Drawing.Size(width, height);
-        }
-
-        private void OnLoad(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CloseForm(object sender, FormClosedEventArgs e)
-        {
-            Renderer.Exit(); // Needs to be better implemented.
         }
     }
 }

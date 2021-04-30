@@ -76,62 +76,43 @@ namespace GLTech2
         internal unsafe static PixelBuffer      outputBuffer;
         private static Scene                    activeScene = null;
 
-        private static Display LoadDisplay(bool fullscreen, int width = 1600, int height = 900)
-        {
-            var result = new Display();
-            if (fullscreen)
-            {
-                result.SetSize(customWidth, customHeight);
-                result.WindowState = FormWindowState.Maximized;
-                result.FormBorderStyle = FormBorderStyle.None;
-                Cursor.Hide();
-            }
-            else
-                result.SetSize(width, height);
-
-            return result;
-        }
-
         public unsafe static void Run(Scene scene)
         {
             if (IsRunning)
                 return;
             IsRunning = true;
 
-            var display = LoadDisplay(FullScreen, CustomWidth, CustomHeight);
-
-            activeScene = scene; // Rever isso
-
-            ReloadCache();
+            activeScene = scene;
 
             outputBuffer = new PixelBuffer(CustomWidth, customHeight);
 
             // Create a bitmap that uses the output buffer.
-            Bitmap outputBitmap = new Bitmap(
+            var sourceBitmap = new Bitmap(
                 CustomWidth, CustomHeight,
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)outputBuffer.buffer);
 
-            keepRendering = true;
-            Task.Run(() => ControlTrhead(ref outputBuffer));
+            var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
+            ReloadCache();
 
-            void rePaint(object sender, EventArgs e) => display.pictureBox.Image = outputBitmap;
-            display.pictureBox.Paint += rePaint;
+            bool cancellationSource = false;
+            Task.Run(() => ControlTrhead(ref outputBuffer, in cancellationSource));
 
             Application.Run(display);
 
+            //
             // Theese lines run after the renderer window is closed.
+            cancellationSource = true;
+
             if (fullScreen)
                 Cursor.Show();
 
-
+            display.Dispose();
             outputBuffer.Dispose();
-            outputBitmap.Dispose();
+            sourceBitmap.Dispose();
 
             Time.Reset();
-
-            keepRendering = false;
             IsRunning = false;
         }
 
@@ -143,11 +124,10 @@ namespace GLTech2
         }
 
 
-        private static bool keepRendering = false;
         private static bool isRendering = false;
 
         //Initialize Time, render and reset Time.
-        private unsafe static void ControlTrhead(ref PixelBuffer outputBuffer)
+        private unsafe static void ControlTrhead(ref PixelBuffer outputBuffer, in bool cancellationSource)
         {
             Time.Start();
             activeScene.InvokeStart();
@@ -156,7 +136,7 @@ namespace GLTech2
 
             PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
 
-            while (keepRendering)
+            while (!cancellationSource)
             {
                 rendersw.Restart();
                 isRendering = true;
