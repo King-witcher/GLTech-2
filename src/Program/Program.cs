@@ -38,7 +38,7 @@ namespace GLTech2
             //Renderer.AddPostProcessing(new FXAA(1600, 900));
 
             Renderer.Run(scene);
-            //Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }

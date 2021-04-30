@@ -33,7 +33,9 @@ namespace GLTech2
             frameStopwatch.Restart();
         }
 
-
+        /// <summary>
+        /// Interrupts measurement of time and redefines the to initial.
+        /// </summary>
         internal static void Reset()
         {
             sceneStopwatch.Reset();

@@ -84,9 +84,10 @@ namespace GLTech2
 
             activeScene = scene;
 
+            // Unmanaged buffer where the video will be put.
             outputBuffer = new PixelBuffer(CustomWidth, customHeight);
 
-            // Create a bitmap that uses the output buffer.
+            // Create a whapper "Bitmap" that refers to the buffer.
             var sourceBitmap = new Bitmap(
                 CustomWidth, CustomHeight,
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
@@ -94,25 +95,39 @@ namespace GLTech2
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
+            // Caches numbers that will use repeatedly by the render.
             ReloadCache();
 
-            bool cancellationSource = false;
-            Task.Run(() => ControlTrhead(ref outputBuffer, in cancellationSource));
+            //
+            // We must define two booleans to communicate with the tread.
+            // The first is necessary to send a stop request.
+            // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and
+            // then be able to realease them all.
+            var stopRequest = false;
+            var controlThreadRunning = true;
 
+            // And then start the control thread, which is reponsible for distributing the buffer among the threads
+            // and running the scene scripts.
+            var controlThread = Task.Run(() => ControlTrhead(outputBuffer, in stopRequest, ref controlThreadRunning));
+
+            // Finally passes control to the rendering screen and displays it.
             Application.Run(display);
 
-            //
             // Theese lines run after the renderer window is closed.
-            cancellationSource = true;
+            stopRequest = true;
 
             if (fullScreen)
                 Cursor.Show();
 
+            // Wait for the control thread to stop using outputBuffer.
+            while (controlThreadRunning)
+                Thread.Yield();
+
+            // Finally, dispose everythihng.
             display.Dispose();
             outputBuffer.Dispose();
             sourceBitmap.Dispose();
 
-            Time.Reset();
             IsRunning = false;
         }
 
@@ -123,32 +138,37 @@ namespace GLTech2
             cache = RenderingCache.Create(CustomWidth, CustomHeight);
         }
 
-
-        private static bool isRendering = false;
-
-        //Initialize Time, render and reset Time.
-        private unsafe static void ControlTrhead(ref PixelBuffer outputBuffer, in bool cancellationSource)
+        private unsafe static void ControlTrhead(
+            PixelBuffer outputBuffer,
+            in bool cancellationRequest,
+            ref bool controlThreadRunning)
         {
-            Time.Start();
-            activeScene.InvokeStart();
-
-            Stopwatch rendersw = new Stopwatch();
-
+            // Primary buffer where the image will be rendered and postprocessed and then copyed to the
+            // original buffer.
             PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
 
-            while (!cancellationSource)
+            // Stopwatch that counts RenderTime.
+            Stopwatch controlSW = new Stopwatch();
+
+            // Initialize everything before rendering first frame.
+            activeScene.InvokeStart();
+            Time.Start();
+
+            // While this variable is set to true, outputBuffer cannot be released.
+            controlThreadRunning = true;
+
+            while (!cancellationRequest)
             {
-                rendersw.Restart();
-                isRendering = true;
+                controlSW.Restart();
 
                 CLRRender(activeBuffer, activeScene.unmanaged);
                 PostProcess(activeBuffer);
+                // Copies the working buffer to the original.
                 outputBuffer.Clone(activeBuffer);
 
-                isRendering = false;
+                Time.renderTime = (double)controlSW.ElapsedTicks / Stopwatch.Frequency;
 
-                Time.renderTime = (double)rendersw.ElapsedTicks / Stopwatch.Frequency;
-
+                // This ensures that Time.DeltaTime won't be low enough to cause undefined physics behaviour.
                 while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
 
@@ -156,8 +176,10 @@ namespace GLTech2
                 Time.NewFrame();
             }
 
-            activeBuffer.Dispose();
+            // Tells the main thread that outputBuffer is up to be released.
+            controlThreadRunning = false;
 
+            activeBuffer.Dispose();
             Time.Reset();
         }
 
