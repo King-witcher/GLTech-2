@@ -31,7 +31,7 @@ namespace GLTech2.PostProcessing
             if (target.width != previousFrame.width || target.height != previousFrame.height)
                 return;
 
-            copy.Clone(target);
+            copy.Copy(target);
 
             Parallel.For(1, target.height - 1, (y) =>
             {
@@ -44,12 +44,12 @@ namespace GLTech2.PostProcessing
                     int right = target.width * y + x + 1;
 
                     int differenceV = dist(
-                        target.buffer[up],
-                        target.buffer[down]);
+                        target.uint0[up],
+                        target.uint0[down]);
 
                     int differenceH = dist(
-                        target.buffer[right],
-                        target.buffer[left]);
+                        target.uint0[right],
+                        target.uint0[left]);
 
                     float factorv = differenceV / (255f * 255f * 3f);
 
@@ -58,17 +58,17 @@ namespace GLTech2.PostProcessing
                     if (factor > 0.2f)
                         factor = 0.95f;
 
-                    copy.buffer[cur] = avg(
-                        previousFrame.buffer[cur],
-                        target.buffer[cur],
+                    copy.uint0[cur] = avg(
+                        previousFrame.uint0[cur],
+                        target.uint0[cur],
                         factor);
                     
                     //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
                 }
             });
 
-            target.Clone(copy);
-            previousFrame.Clone(target);
+            target.Copy(copy);
+            previousFrame.Copy(target);
             return;
 
 

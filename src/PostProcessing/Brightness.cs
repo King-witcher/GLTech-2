@@ -28,8 +28,8 @@ namespace GLTech2.PostProcessing
                 {
                     int cur = target.width * y + x;
 
-                    RGB color = target.buffer[cur];
-                    target.buffer[cur] = color * factor;
+                    RGB color = target.uint0[cur];
+                    target.uint0[cur] = color * factor;
                 }
             });
         }

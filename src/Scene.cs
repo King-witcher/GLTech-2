@@ -102,6 +102,7 @@ namespace GLTech2
 
             SceneData.Delete(unmanaged);
             unmanaged = null;
+            activeObserver = null;
 
             elements.Clear();
         }

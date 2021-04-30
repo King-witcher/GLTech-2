@@ -91,7 +91,7 @@ namespace GLTech2
             var sourceBitmap = new Bitmap(
                 CustomWidth, CustomHeight,
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
-                (IntPtr)outputBuffer.buffer);
+                (IntPtr)outputBuffer.uint0);
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
@@ -164,7 +164,7 @@ namespace GLTech2
                 CLRRender(activeBuffer, activeScene.unmanaged);
                 PostProcess(activeBuffer);
                 // Copies the working buffer to the original.
-                outputBuffer.Clone(activeBuffer);
+                outputBuffer.Copy(activeBuffer);
 
                 Time.renderTime = (double)controlSW.ElapsedTicks / Stopwatch.Frequency;
 

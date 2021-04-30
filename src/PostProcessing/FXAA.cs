@@ -28,7 +28,7 @@ namespace GLTech2.PostProcessing
             if (target.width != pixelBuffer.width || target.height != pixelBuffer.height)
                 return;
 
-            pixelBuffer.Clone(target);
+            pixelBuffer.Copy(target);
 
             Parallel.For(1, target.height, (i) =>
             {
@@ -39,17 +39,17 @@ namespace GLTech2.PostProcessing
                     int left = target.width * i + j - 1;
 
                     int differenceV = dist(
-                        target.buffer[cur],
-                        target.buffer[up]);
+                        target.uint0[cur],
+                        target.uint0[up]);
 
                     int differenceH = dist(
-                        target.buffer[cur],
-                        target.buffer[left]);
+                        target.uint0[cur],
+                        target.uint0[left]);
 
                     if (differenceV >= sqrThreshold)
-                        pixelBuffer.buffer[target.width * i + j] = avg(target.buffer[up], target.buffer[cur]);
+                        pixelBuffer.uint0[target.width * i + j] = avg(target.uint0[up], target.uint0[cur]);
                     else if (differenceH >= sqrThreshold)
-                        pixelBuffer.buffer[target.width * i + j] = avg(target.buffer[left], target.buffer[cur]);
+                        pixelBuffer.uint0[target.width * i + j] = avg(target.uint0[left], target.uint0[cur]);
                 }
             });
 

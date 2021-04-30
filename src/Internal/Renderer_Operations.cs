@@ -17,7 +17,7 @@ namespace GLTech2
         private unsafe static void CLRRender(PixelBuffer target, SceneData* scene)        // Must be changed
         {
             //Caching frequently used values.
-            uint* buffer = target.buffer;
+            uint* buffer = target.uint0;
             int width = target.width;
             int height = target.height;
             Material background = scene->background;

@@ -14,7 +14,7 @@ namespace GLTech2
         public int Height => unmanaged->height;
         public int Width => unmanaged->width;
         public IntPtr Scan0 => (IntPtr) unmanaged->buffer;
-        public PixelFormat PixelFormat => PixelFormat.Format32bppRgb;
+        public PixelFormat PixelFormat => PixelFormat.Format32bppArgb;
 
         public Texture(Bitmap texture) =>
             unmanaged = TextureData.Create(texture);
