@@ -29,8 +29,8 @@ namespace GLTech2
 
             pov.AddBehaviour<CountFPS>();
 
-            Renderer.DisplayHeight = 900;
-            Renderer.DisplayWidth = 1600;
+            Renderer.CustomHeight = 900;
+            Renderer.CustomWidth = 1600;
             Renderer.FullScreen = false;
             Renderer.ParallelRendering = true;
 

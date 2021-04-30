@@ -15,14 +15,14 @@ namespace GLTech2
 
     public static partial class Renderer
     {
-        public static bool  CppRendering { get; set; } = false;
-        public static bool  ParallelRendering { get; set; } = true;
+        public static bool CppRendering { get; } = false;
+        public static bool ParallelRendering { get; set; } = true;
+        public static bool DoubleBuffering { get; set; } = true;
 
-        public static bool DoubleBuffering { get; set; } = false;
-
-        private static float minframetime = 4;
 
         public static Scene ActiveScene => activeScene;
+
+        private static float minframetime = 4;
         public static int MaxFps
         {
             get
@@ -41,48 +41,38 @@ namespace GLTech2
             }
         }
 
-        private static int displayWidth = 640;
-        public static int DisplayWidth
+        private static int customWidth = 640;
+        public static int CustomWidth
         {
-            get => displayWidth;
-            set
-            {
-                if (IsRunning)
-                    Debug.LogWarning("Render.DisplayWidth cannot be modified while running.");
-                displayWidth = value;
-            }
+            get => customWidth;
+            set => ChangeIfNotRunning("CustomWidth", ref customWidth, value);
         }
-        private static int displayHeight = 360;
-        public static int DisplayHeight
+        private static int customHeight = 360;
+        public static int CustomHeight
         {
-            get => displayHeight;
-            set
-            {
-                if (IsRunning)
-                    Debug.LogWarning("Render.DisplayHeight cannot be modified while running.");
-                displayHeight = value;
-            }
+            get => customHeight;
+            set => ChangeIfNotRunning("CustomHeight", ref customHeight, value);
         }
 
         static bool fullScreen;
         public static bool FullScreen
         {
             get => fullScreen;
-            set
-            {
-                if (IsRunning)
-                {
-                    Debug.LogWarning("Render.FullScreen cannot be modified while running.");
-                    return;
-                }
-                fullScreen = value;
-            }
+            set => ChangeIfNotRunning("FullScreen", ref fullScreen, value);
+        }
+
+        private static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
+        {
+            if (IsRunning)
+                Debug.LogWarning(name + " cannot be modified while running.");
+            else
+                obj = value;
         }
 
         public static bool  IsRunning { get; private set; } = false;
 
 
-        internal unsafe static RenderingCache*  cache;   // Rever
+        internal unsafe static RenderingCache*  cache;
         internal unsafe static PixelBuffer      outputBuffer;
         private static Display                  display;
         private static Scene                    activeScene = null;
@@ -98,24 +88,24 @@ namespace GLTech2
             display = new Display();
             if (FullScreen is true is true is true is true is true == true.Equals(true))
             {
-                displayWidth = Screen.PrimaryScreen.Bounds.Width;
-                displayHeight = Screen.PrimaryScreen.Bounds.Height;
-                display.SetSize(displayWidth, displayHeight);
+                customWidth = Screen.PrimaryScreen.Bounds.Width;
+                customHeight = Screen.PrimaryScreen.Bounds.Height;
+                display.SetSize(customWidth, customHeight);
                 display.WindowState = FormWindowState.Maximized;
                 display.FormBorderStyle = FormBorderStyle.None;
                 Cursor.Hide();
             }
             else
-                display.SetSize(DisplayWidth, DisplayHeight);
+                display.SetSize(CustomWidth, CustomHeight);
 
             activeScene = scene; // Rever isso
             ReloadRendererData();
             //ReloadBuffer(); // Rever isso
 
-            outputBuffer = new PixelBuffer(DisplayWidth, displayHeight);
+            outputBuffer = new PixelBuffer(CustomWidth, customHeight);
             Bitmap outputBitmap = new Bitmap(
-                DisplayWidth, DisplayHeight,
-                DisplayWidth * sizeof(uint), PixelFormat.Format32bppRgb,
+                CustomWidth, CustomHeight,
+                CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)outputBuffer.buffer);
 
             keepRendering = true;
@@ -143,7 +133,7 @@ namespace GLTech2
                 Marshal.FreeHGlobal((IntPtr)cache);
             }
 
-            cache = RenderingCache.Create(DisplayWidth, DisplayHeight);
+            cache = RenderingCache.Create(CustomWidth, CustomHeight);
         }
 
 
