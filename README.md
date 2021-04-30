@@ -5,4 +5,4 @@ GL Tech 2 is a 3D engine designed with it's interface entirely in C# and parts o
 **How to build**
 
 
-If you already have Visual Studio Community 2019 installed, just open `solution.sln` and press F5 or make whatever you want with the IDE.
+If you already have Visual Studio Community 2019 installed, just open `CLICKME.sln` and press F5 or make whatever you want with the IDE.
