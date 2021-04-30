@@ -74,8 +74,23 @@ namespace GLTech2
         internal unsafe static RenderingCache*  cache;
 
         internal unsafe static PixelBuffer      outputBuffer;
-        private static Display                  display;
         private static Scene                    activeScene = null;
+
+        private static Display LoadDisplay(bool fullscreen, int width = 1600, int height = 900)
+        {
+            var result = new Display();
+            if (fullscreen)
+            {
+                result.SetSize(customWidth, customHeight);
+                result.WindowState = FormWindowState.Maximized;
+                result.FormBorderStyle = FormBorderStyle.None;
+                Cursor.Hide();
+            }
+            else
+                result.SetSize(width, height);
+
+            return result;
+        }
 
         public unsafe static void Run(Scene scene)
         {
@@ -83,24 +98,15 @@ namespace GLTech2
                 return;
             IsRunning = true;
 
-
-            display = new Display();
-            if (FullScreen is true is true is true is true is true == true.Equals(true))
-            {
-                customWidth = Screen.PrimaryScreen.Bounds.Width;
-                customHeight = Screen.PrimaryScreen.Bounds.Height;
-                display.SetSize(customWidth, customHeight);
-                display.WindowState = FormWindowState.Maximized;
-                display.FormBorderStyle = FormBorderStyle.None;
-                Cursor.Hide();
-            }
-            else
-                display.SetSize(CustomWidth, CustomHeight);
+            var display = LoadDisplay(FullScreen, CustomWidth, CustomHeight);
 
             activeScene = scene; // Rever isso
+
             ReloadCache();
 
             outputBuffer = new PixelBuffer(CustomWidth, customHeight);
+
+            // Create a bitmap that uses the output buffer.
             Bitmap outputBitmap = new Bitmap(
                 CustomWidth, CustomHeight,
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
@@ -109,18 +115,24 @@ namespace GLTech2
             keepRendering = true;
             Task.Run(() => ControlTrhead(ref outputBuffer));
 
-            void rePaint(object sender, EventArgs e)
-            {
-                display.pictureBox.Image = outputBitmap;
-            }
 
-            display.pictureBox.Paint += rePaint; // Must be subtracted!
-            //display.pictureBox.Image = bitmapFromBuffer;
+            void rePaint(object sender, EventArgs e) => display.pictureBox.Image = outputBitmap;
+            display.pictureBox.Paint += rePaint;
 
             Application.Run(display);
 
+            // Theese lines run after the renderer window is closed.
+            if (fullScreen)
+                Cursor.Show();
+
+
             outputBuffer.Dispose();
-            Exit();
+            outputBitmap.Dispose();
+
+            Time.Reset();
+
+            keepRendering = false;
+            IsRunning = false;
         }
 
         private static unsafe void ReloadCache()
@@ -185,27 +197,10 @@ namespace GLTech2
         {
             Renderer.postProcessing.Add(postProcessing);
         }
+
         public static void AddPostProcessing<P>() where P : Effect, new()
         {
             AddPostProcessing(new P());
-        }
-
-
-        public unsafe static void Exit()
-        {
-            if (fullScreen)
-                Cursor.Show();
-
-            keepRendering = false;
-            //while (isRendering)
-            //    Thread.Sleep(10);
-
-            //rendererData->Free(); //Causes access violation at rendering task.
-            display.Dispose();
-
-            Time.Reset();
-
-            IsRunning = false;
         }
     }
 }
