@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace GLTech2
 {
-    using PostProcessment;
+    using PostProcessing;
 
     public static partial class Renderer
     {
@@ -204,18 +204,18 @@ namespace GLTech2
 
         }
 
-        private static List<PostProcessing> postProcessings = new List<PostProcessing>();
+        private static List<Effect> postProcessings = new List<Effect>();
         private static void PostProcess(PixelBuffer target)
         {
             foreach (var p in postProcessings)
                 p.Process(target);
         }
 
-        public static void AddPostProcessing(PostProcessing postProcessing)
+        public static void AddPostProcessing(Effect postProcessing)
         {
             postProcessings.Add(postProcessing);
         }
-        public static void AddPostProcessing<P>() where P : PostProcessing, new()
+        public static void AddPostProcessing<P>() where P : Effect, new()
         {
             AddPostProcessing(new P());
         }

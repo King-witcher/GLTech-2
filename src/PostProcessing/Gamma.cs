@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GLTech2.PostProcessment
+namespace GLTech2.PostProcessing
 {
-    internal unsafe sealed class Gamma : PostProcessing
+    internal unsafe sealed class Gamma : Effect
     {
         Random rnd = new Random(5);
         internal override void Process(PixelBuffer target)

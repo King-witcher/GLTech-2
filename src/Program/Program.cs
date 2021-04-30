@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GLTech2.Properties;
 using GLTech2.PrefabElements;
-using GLTech2.PostProcessment;
+using GLTech2.PostProcessing;
 
 namespace GLTech2
 {

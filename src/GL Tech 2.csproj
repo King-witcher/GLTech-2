@@ -64,7 +64,7 @@
     <Compile Include="PostProcessing\GLTXAA.cs" />
     <Compile Include="PostProcessing\FXAA.cs" />
     <Compile Include="PostProcessing\Gamma.cs" />
-    <Compile Include="PostProcessing\PostProcessing.cs" />
+    <Compile Include="PostProcessing\Abstract Effect.cs" />
     <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
