@@ -67,6 +67,7 @@
     <Compile Include="PostProcessing\FXAA.cs" />
     <Compile Include="PostProcessing\Brightness.cs" />
     <Compile Include="PostProcessing\Abstract Effect.cs" />
+    <Compile Include="PostProcessing\TestEffect.cs" />
     <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
