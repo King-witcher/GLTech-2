@@ -9,7 +9,7 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct TextureData
     {
-        internal UInt32* buffer;
+        internal uint* buffer;
         internal int height;
         internal int width;
 

@@ -24,7 +24,7 @@ namespace GLTech2
             Observer pov = new Observer(Vector.Origin, 0);
             scene.AddElement(pov);
 
-            Element tri = new RegularPolygon(Vector.Origin * 3, 3, -2f, mat);
+            //Element tri = new RegularPolygon(Vector.Origin * 3, 3, -2f, mat);
             //scene.AddElement(tri);
 
             pov.AddBehaviour<CountFPS>();
@@ -34,7 +34,7 @@ namespace GLTech2
             Renderer.FullScreen = false;
             Renderer.ParallelRendering = true;
 
-            Renderer.AddPostProcessing(new GrayScale());
+            //Renderer.AddPostProcessing(new GrayScale());
             //Renderer.AddPostProcessing(new FXAA(1600, 900));
 
             Renderer.Run(scene);

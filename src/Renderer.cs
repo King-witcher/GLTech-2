@@ -61,6 +61,8 @@ namespace GLTech2
             set => ChangeIfNotRunning("FullScreen", ref fullScreen, value);
         }
 
+        public static bool IsRunning { get; private set; } = false;
+
         private static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
         {
             if (IsRunning)
@@ -69,14 +71,11 @@ namespace GLTech2
                 obj = value;
         }
 
-        public static bool  IsRunning { get; private set; } = false;
-
-
         internal unsafe static RenderingCache*  cache;
+
         internal unsafe static PixelBuffer      outputBuffer;
         private static Display                  display;
         private static Scene                    activeScene = null;
-
 
         public unsafe static void Run(Scene scene)
         {
@@ -175,16 +174,16 @@ namespace GLTech2
 
         }
 
-        private static List<Effect> postProcessings = new List<Effect>();
+        private static List<Effect> postProcessing = new List<Effect>();
         private static void PostProcess(PixelBuffer target)
         {
-            foreach (var p in postProcessings)
-                p.Process(target);
+            foreach (var effect in postProcessing)
+                effect.Process(target);
         }
 
         public static void AddPostProcessing(Effect postProcessing)
         {
-            postProcessings.Add(postProcessing);
+            Renderer.postProcessing.Add(postProcessing);
         }
         public static void AddPostProcessing<P>() where P : Effect, new()
         {
