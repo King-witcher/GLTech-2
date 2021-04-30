@@ -35,6 +35,7 @@ namespace GLTech2
             Renderer.ParallelRendering = true;
 
             Renderer.AddPostProcessing(new FXAA(1600, 900));
+            Renderer.AddPostProcessing(new Gamma());
 
             Renderer.Run(scene);
         }
