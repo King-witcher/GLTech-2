@@ -99,8 +99,7 @@ namespace GLTech2
                 display.SetSize(CustomWidth, CustomHeight);
 
             activeScene = scene; // Rever isso
-            ReloadRendererData();
-            //ReloadBuffer(); // Rever isso
+            ReloadCache();
 
             outputBuffer = new PixelBuffer(CustomWidth, customHeight);
             Bitmap outputBitmap = new Bitmap(
@@ -125,14 +124,10 @@ namespace GLTech2
             Exit();
         }
 
-        private static unsafe void ReloadRendererData()
+        private static unsafe void ReloadCache()
         {
             if (cache != null)
-            {
-                cache->Dispose();   //May cause bugs
-                Marshal.FreeHGlobal((IntPtr)cache);
-            }
-
+                RenderingCache.Delete(cache);
             cache = RenderingCache.Create(CustomWidth, CustomHeight);
         }
 
