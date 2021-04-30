@@ -80,24 +80,10 @@ namespace GLTech2
         }
 
         public static bool  IsRunning { get; private set; } = false;
-        public static Texture Screenshot
-        {
-            get
-            {
-                if (IsRunning is false)
-                {
-                    Debug.LogWarning("Render must be running to take a screenshot.");
-                    return null;
-                }
-                return new Texture(bitmapFromBuffer.Clone() as Bitmap);
-            }
-        }
 
 
-        internal static Bitmap                  bitmapFromBuffer;
-        internal unsafe static RenderingCache*  rendererData;   // Rever
+        internal unsafe static RenderingCache*  cache;   // Rever
         internal unsafe static PixelBuffer      outputBuffer;
-        private static readonly int             pixelsize = 4;
         private static Display                  display;
         private static Scene                    activeScene = null;
 
@@ -151,13 +137,13 @@ namespace GLTech2
 
         private static unsafe void ReloadRendererData()
         {
-            if (rendererData != null)
+            if (cache != null)
             {
-                rendererData->Dispose();   //May cause bugs
-                Marshal.FreeHGlobal((IntPtr)rendererData);
+                cache->Dispose();   //May cause bugs
+                Marshal.FreeHGlobal((IntPtr)cache);
             }
 
-            rendererData = RenderingCache.Create(DisplayWidth, DisplayHeight);
+            cache = RenderingCache.Create(DisplayWidth, DisplayHeight);
         }
 
 
@@ -236,7 +222,6 @@ namespace GLTech2
             Time.Reset();
 
             IsRunning = false;
-            Application.Exit();
         }
     }
 }

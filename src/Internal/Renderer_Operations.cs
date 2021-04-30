@@ -34,15 +34,15 @@ namespace GLTech2
             //for (int ray_id = 0; ray_id < rendererData->bitmap_width; ray_id++)
             {
                 //Caching
-                float ray_cos = rendererData->cache_cosines[ray_id];
-                float ray_angle = rendererData->cache_angles[ray_id] + scene->activeObserver->rotation;
+                float ray_cos = cache->cache_cosines[ray_id];
+                float ray_angle = cache->cache_angles[ray_id] + scene->activeObserver->rotation;
                 Ray ray = new Ray(scene->activeObserver->position, ray_angle);
 
                 //Cast the ray towards every wall.
                 WallData* nearest = ray.NearestWall(scene, out float nearest_dist, out float nearest_ratio);
                 if (nearest_ratio != 2f)
                 {
-                    float columnHeight = (rendererData->cache_colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
+                    float columnHeight = (cache->cache_colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
                     float fullColumnRatio = height / columnHeight;
                     float topIndex = -(fullColumnRatio - 1f) / 2f;
                     for (int line = 0; line < height; line++)
