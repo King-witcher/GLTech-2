@@ -8,6 +8,6 @@ namespace GLTech2.PostProcessing
 {
     public abstract class Effect
     {
-        internal unsafe abstract void Process(PixelBuffer target);
+        internal abstract void Process(PixelBuffer target);
     }
 }
