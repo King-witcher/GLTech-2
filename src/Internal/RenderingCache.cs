@@ -24,11 +24,6 @@ namespace GLTech2
             return result;
         }
 
-        public void Dispose()
-        {
-            Marshal.FreeHGlobal((IntPtr)cache_angles);
-        }
-
         private void RefreshCaches(int width, int height)
         {
             const double TORAD = Math.PI / 180.0f;
@@ -50,6 +45,11 @@ namespace GLTech2
                 cache_angles[i] = angle;
                 cache_cosines[i] = (float)(Math.Cos(TORAD * angle));
             }
+        }
+
+        public void Dispose()
+        {
+            Marshal.FreeHGlobal((IntPtr)cache_angles);
         }
     }
 }

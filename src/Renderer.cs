@@ -129,7 +129,7 @@ namespace GLTech2
             outputBuffer = new PixelBuffer(DisplayWidth, displayHeight);
             Bitmap outputBitmap = new Bitmap(
                 DisplayWidth, DisplayHeight,
-                DisplayWidth * sizeof(uint), PixelFormat.Format32bppArgb,
+                DisplayWidth * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)outputBuffer.buffer);
 
             keepRendering = true;

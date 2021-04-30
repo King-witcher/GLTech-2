@@ -34,22 +34,10 @@ namespace GLTech2
             Renderer.FullScreen = false;
             Renderer.ParallelRendering = true;
 
-            Renderer.AddPostProcessing(new FXAA(1600, 900));
-            Renderer.AddPostProcessing(new Gamma());
+            Renderer.AddPostProcessing(new GrayScale());
+            //Renderer.AddPostProcessing(new FXAA(1600, 900));
 
             Renderer.Run(scene);
-        }
-
-        static Empty GetCylinder(Vector position, float radius, Material material)
-        {
-            Empty empty = new Empty(position);
-            Vector[] verts = Vector.GetPolygon(position, radius, 64);
-            Wall[] walls = Wall.CreatePolygon(material, verts);
-            foreach (Wall wall in walls)
-            {
-                wall.Parent = empty;
-            }
-            return empty;
         }
     }
 }

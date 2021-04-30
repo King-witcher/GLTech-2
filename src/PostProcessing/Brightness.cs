@@ -6,9 +6,20 @@ using System.Threading.Tasks;
 
 namespace GLTech2.PostProcessing
 {
-    internal unsafe sealed class Gamma : Effect
+    public unsafe sealed class Brightness : Effect
     {
-        Random rnd = new Random(5);
+        float factor;
+        public float Factor
+        {
+            get => factor;
+            set => factor = value;
+        }
+
+        public Brightness(float factor)
+        {
+            this.factor = factor;
+        }
+
         internal override void Process(PixelBuffer target)
         {
             Parallel.For(0, target.width, (x) =>
@@ -16,15 +27,11 @@ namespace GLTech2.PostProcessing
                 for (int y = 0; y < target.height; y++)
                 {
                     int cur = target.width * y + x;
+
+                    RGB color = target.buffer[cur];
+                    target.buffer[cur] = color * factor;
                 }
             });
-
-            byte gamma(byte pixel1)
-            {
-                double f = pixel1 / 255.0;
-                f = Math.Pow(f, 2);
-                return (byte)(255.0 * f);
-            }
         }
     }
 }

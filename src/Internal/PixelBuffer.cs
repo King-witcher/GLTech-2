@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace GLTech2
 {
@@ -26,6 +28,23 @@ namespace GLTech2
             PixelBuffer tmp = pb1;
             pb1 = pb2;
             pb2 = tmp;
+        }
+
+        [MethodImpl(methodImplOptions:MethodImplOptions.AggressiveInlining)]
+        internal void Foreach(Func<RGB, RGB> transformation)
+        {
+            int height = this.height;
+            int width = this.width;
+            uint* buffer = this.buffer;
+
+            Parallel.For(0, width, (x) =>
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    int cur = width * y + x;
+                    buffer[cur] = transformation(buffer[cur]);
+                }
+            });
         }
 
         public void Dispose()
