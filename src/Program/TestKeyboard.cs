@@ -11,8 +11,6 @@ namespace GLTech2
     {
         void Update()
         {
-            if (Input.GetKeyDown(Input.Keys.W))
-                Element.Translate(Vector.Unit * Time.DeltaTime);
         }
 
         void Start()

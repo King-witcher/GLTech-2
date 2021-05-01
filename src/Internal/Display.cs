@@ -61,7 +61,9 @@ namespace GLTech2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Display";
-            this.Text = "GL Tech 2 Renderer";
+            this.Text = "GL Tech 2 Screen";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Display_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -71,6 +73,16 @@ namespace GLTech2
         {
             pictureBox.Size = new System.Drawing.Size(width, height);
             this.ClientSize = new System.Drawing.Size(width, height);
+        }
+
+        private void Display_KeyDown(object sender, KeyEventArgs e)
+        {
+            Input.KeyDown((Key)e.KeyCode);
+        }
+
+        private void Display_KeyUp(object sender, KeyEventArgs e)
+        {
+            Input.KeyUp((Key)e.KeyCode);
         }
     }
 }

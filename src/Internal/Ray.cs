@@ -61,7 +61,6 @@ namespace GLTech2
             nearest_hratio = 2f;
             WallData* nearest = null;
             WallData** pptr = map->walls;
-            WallData* ptr;
 
             while(*pptr != null)
             {
