@@ -137,6 +137,8 @@ namespace GLTech2
                 return false;
         }
 
+        public static float DotProduct(Vector left, Vector right) =>
+            left.x * right.x + left.y * right.y;
 
         public static Vector operator -(Vector vector) =>
             new Vector(
