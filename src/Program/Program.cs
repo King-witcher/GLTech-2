@@ -38,7 +38,7 @@ namespace GLTech2
 
             //pov.AddBehaviour<CountFPS>();
             pov.AddBehaviour<TestKeyboard>();
-            pov.AddBehaviour<NoclipController>();
+            pov.AddBehaviour<QuakeMovement>();
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
             pov.AddBehaviour(mouseLook);

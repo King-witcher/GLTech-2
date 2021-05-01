@@ -89,6 +89,7 @@
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Elements\Sprite.cs" />
     <Compile Include="StandardBehaviours\MouseLook.cs" />
+    <Compile Include="StandardBehaviours\QuakeMovement.cs" />
     <Compile Include="StandardBehaviours\NoclipController.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="Elements\RegularPolygon.cs" />
