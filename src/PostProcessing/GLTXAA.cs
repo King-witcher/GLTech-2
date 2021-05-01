@@ -47,24 +47,21 @@ namespace GLTech2.PostProcessing
                         int down = target.width * (y + 1) + x;
                         int right = target.width * y + x + 1;
 
-                        int differenceV = dist(
+                        float differenceV = dist(
                             target.uint0[up],
                             target.uint0[down]);
 
-                        int differenceH = dist(
+                        float differenceH = dist(
                             target.uint0[right],
                             target.uint0[left]);
 
-                        float factorv = differenceV / (255f * 255f * 3f);
+                        float factor = differenceH > differenceV ? differenceH : differenceV;
+                        factor = 0.95f * adjust(factor);
 
-                        int edge = differenceH + differenceV;
-                        float factor = edge / (255f * 2);
-                        factor = factor > 0.05f ? 0.5f : 0.0f;
-
-                        temporaryBuffer.uint0[cur] = avg(
-                            previousFrame.uint0[cur],
-                            target.uint0[cur],
-                            factor);
+                            temporaryBuffer.uint0[cur] = avg(
+                                previousFrame.uint0[cur],
+                                target.uint0[cur],
+                                factor / 2);
 
                         //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
                     }
@@ -85,25 +82,18 @@ namespace GLTech2.PostProcessing
                         int down = target.width * (y + 1) + x;
                         int right = target.width * y + x + 1;
 
-                        int differenceV = dist(
+                        float differenceV = dist(
                             target.uint0[up],
                             target.uint0[down]);
 
-                        int differenceH = dist(
+                        float differenceH = dist(
                             target.uint0[right],
                             target.uint0[left]);
 
-                        float factorv = differenceV / (255f * 255f * 3f);
+                        float factor = differenceH > differenceV ? differenceH : differenceV;
+                        factor = 0.95f * adjust(factor);
 
-                        int edge = differenceH + differenceV;
-                        float factor = edge / (255f * 2);
-
-                        temporaryBuffer.uint0[cur] = avg(
-                            previousFrame.uint0[cur],
-                            target.uint0[cur],
-                            factor);
-
-                        temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101 + 0xff000000;
+                        temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
                 previousFrame.Copy(target);
@@ -114,29 +104,29 @@ namespace GLTech2.PostProcessing
             previousFrame.Copy(target);
             return;
 
-            int dist(uint pixel1, uint pixel2)
+            float adjust(float x) => -x * x + 2 * x;
+
+            float dist(uint pixel1, uint pixel2)
             {
-                int sum = 0;
+                float sum = 0f;
                 int tmp;
 
                 tmp = (byte)pixel1 - (byte)pixel2;
-                sum += tmp;
+                sum += tmp * tmp / 255f;
 
                 pixel1 >>= 8;
                 pixel2 >>= 8;
 
                 tmp = (byte)pixel1 - (byte)pixel2;
-                sum += tmp;
+                sum += tmp * tmp / 255f;
 
                 pixel1 >>= 8;
                 pixel2 >>= 8;
 
                 tmp = (byte)pixel1 - (byte)pixel2;
-                sum += tmp;
+                sum += tmp * tmp / 255f;
 
-                sum = Math.Abs(sum) / 3;
-
-                return sum;
+                return sum / (3f * 255f);
             }
 
             uint avg(uint pixel1, uint pixel2, float factor1)

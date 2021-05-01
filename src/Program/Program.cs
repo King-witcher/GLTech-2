@@ -55,9 +55,9 @@ namespace GLTech2
             scene.AddElement(pov);
 
             // Add behaviours
-            cyl.AddBehaviour(new Rotate { Speed = 120f });
-            cyl2.AddBehaviour(new Rotate { Speed = 120f });
-            cyl3.AddBehaviour(new Rotate { Speed = 120f });
+            cyl.AddBehaviour(new Rotate { Speed = 180f });
+            cyl2.AddBehaviour(new Rotate { Speed = 180f });
+            cyl3.AddBehaviour(new Rotate { Speed = 180f });
             center.AddBehaviour(new Rotate { Speed = -60f });
             pov.AddBehaviour<DebugFps>();
             pov.AddBehaviour<NoclipMovement>();
@@ -71,8 +71,9 @@ namespace GLTech2
             Renderer.FullScreen = true;
 
             // Add post processing effects
-            var AA = new GLTXAA(Renderer.CustomWidth, Renderer.CustomHeight, 127);
-            Renderer.AddPostProcessing(AA);
+            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 12);
+            Renderer.AddPostProcessing(antiAliasing);
+            //AA.EdgeDettection = true;
 
             // Run!
             Renderer.Run(scene);

@@ -104,9 +104,6 @@ namespace GLTech2
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
-            // Caches numbers that will use repeatedly by the render.
-            ReloadCache();
-
             //
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.
@@ -152,6 +149,9 @@ namespace GLTech2
             in bool cancellationRequest,
             ref bool controlThreadRunning)
         {
+            // Caches numbers that will use repeatedly by the render.
+            ReloadCache();
+
             // Primary buffer where the image will be rendered and postprocessed and then copyed to the
             // original buffer.
             PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);

@@ -11,7 +11,7 @@ namespace GLTech2.PostProcessing
     {
         public FXAA(int width, int height, int threshold = 70)
         {
-            pixelBuffer = new PixelBuffer(width, height);
+            temporaryBuffer = new PixelBuffer(width, height);
             if (threshold > 255)
                 this.sqrThreshold = 255 * 255 * 3;
             else if (threshold < 0)
@@ -20,15 +20,15 @@ namespace GLTech2.PostProcessing
                 this.sqrThreshold = threshold * threshold * 3;
         }
 
-        private PixelBuffer pixelBuffer;
+        private PixelBuffer temporaryBuffer;
         private int sqrThreshold;
 
         internal override void Process(PixelBuffer target)
         {
-            if (target.width != pixelBuffer.width || target.height != pixelBuffer.height)
+            if (target.width != temporaryBuffer.width || target.height != temporaryBuffer.height)
                 return;
 
-            pixelBuffer.Copy(target);
+            temporaryBuffer.Copy(target);
 
             Parallel.For(1, target.height, (i) =>
             {
@@ -47,13 +47,13 @@ namespace GLTech2.PostProcessing
                         target.uint0[left]);
 
                     if (differenceV >= sqrThreshold)
-                        pixelBuffer.uint0[target.width * i + j] = avg(target.uint0[up], target.uint0[cur]);
+                        temporaryBuffer.uint0[target.width * i + j] = avg(target.uint0[up], target.uint0[cur]);
                     else if (differenceH >= sqrThreshold)
-                        pixelBuffer.uint0[target.width * i + j] = avg(target.uint0[left], target.uint0[cur]);
+                        temporaryBuffer.uint0[target.width * i + j] = avg(target.uint0[left], target.uint0[cur]);
                 }
             });
 
-            PixelBuffer.Swap(ref pixelBuffer, ref target);
+            target.Copy(temporaryBuffer);
             return;
 
 
@@ -95,7 +95,7 @@ namespace GLTech2.PostProcessing
 
         public void Dispose()
         {
-            pixelBuffer.Dispose();
+            temporaryBuffer.Dispose();
         }
     }
 }
