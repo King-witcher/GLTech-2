@@ -16,7 +16,7 @@ namespace GLTech2.PrefabElements
                 throw new ArgumentException("\"radius\" cannot be zero.");
 
             AbsolutePosition = position;
-            AbsoluteNormal = Vector.Unit;
+            AbsoluteNormal = Vector.Forward;
 
             Vector[] verts = Vector.GetPolygon(position, radius, edges);
             Wall[] walls = Wall.CreatePolygon(material, verts);

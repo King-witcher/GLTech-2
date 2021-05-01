@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GLTech2.StandardBehaviours
 {
-    public class MouseLook : Behaviour
+    public sealed class MouseLook : Behaviour
     {
         public bool Enabled { get; set; } = true;
         public float Sensitivity { get; set; } = 5;

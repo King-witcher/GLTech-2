@@ -18,7 +18,7 @@ namespace GLTech2
             if (Time.Elapsed < 50)
             {
                 Element.Rotate(Time.DeltaTime * 6);
-                Element.Translate(Time.DeltaTime * Vector.Unit * 0.08f);
+                Element.Translate(Time.DeltaTime * Vector.Forward * 0.08f);
             }
 
             frames++;

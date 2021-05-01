@@ -83,7 +83,10 @@ namespace GLTech2
         }
 
         public static Vector Origin { get => new Vector(0, 0); }
-        public static Vector Unit { get => new Vector(0, 1); }
+        public static Vector Forward { get => new Vector(0, 1); }
+        public static Vector Right { get => new Vector(1, 0); }
+        public static Vector Backward { get => new Vector(0, -1); }
+        public static Vector Left { get => new Vector(-1, 0); }
 
         public static Vector[] GetPolygon(Vector center, float radius, int edges)
         {
@@ -135,6 +138,10 @@ namespace GLTech2
         }
 
 
+        public static Vector operator -(Vector vector) =>
+            new Vector(
+                -vector.x,
+                -vector.y);
         public static Vector operator +(Vector left, Vector right) =>
             new Vector(
                 left.x + right.x,

@@ -38,6 +38,7 @@ namespace GLTech2
 
             //pov.AddBehaviour<CountFPS>();
             pov.AddBehaviour<TestKeyboard>();
+            pov.AddBehaviour<NoclipController>();
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
             pov.AddBehaviour(mouseLook);
@@ -49,6 +50,7 @@ namespace GLTech2
 
             var fxaa = new FXAA(1600, 900);
             Renderer.AddPostProcessing(fxaa);
+            //Renderer.AddPostProcessing<GrayScale>();
 
             Renderer.Run(scene);
             scene.Dispose();

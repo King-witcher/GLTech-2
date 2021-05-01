@@ -165,7 +165,7 @@ namespace GLTech2
 
         public void Translate(Vector direction)
         {
-            Position += direction;
+            Position += direction * Normal;
         }
 
         public void Rotate(float rotation)

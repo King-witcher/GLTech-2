@@ -4,7 +4,7 @@ namespace GLTech2.StandardBehaviours
 {
     public sealed class Move : Behaviour
     {
-        public Vector Direction { get; set; } = Vector.Unit;
+        public Vector Direction { get; set; } = Vector.Forward;
         public float Speed { get; set; } = 2f;
 
         void Update()

@@ -12,19 +12,24 @@ namespace GLTech2
     {
         static LinkedList<Key> Keys = new LinkedList<Key>();
 
+        public static bool CaptureMouse { get; set; } = false;
+        public static int MouseDisplacementX { get; private set; }
+        public static int MouseDisplacementY { get; private set; }
+
         public static bool IsKeyDown(Key key) => Keys.Contains(key);
         public static event Action<Key> OnKeyDown;
         public static event Action<Key> OnKeyUp;
 
         internal static void KeyDown(Key key)
         {
-            OnKeyDown?.Invoke(key);
             Keys.AddFirst(key);
+            OnKeyDown?.Invoke(key);
         }
         internal static void KeyUp(Key key)
         {
+            while (Keys.Contains(key))  // Suboptimal
+                Keys.Remove(key);
             OnKeyUp?.Invoke(key);
-            Keys.Remove(key);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GLTech2
         public Empty(Vector pos)
         {
             AbsolutePosition = pos;
-            AbsoluteNormal = Vector.Unit;
+            AbsoluteNormal = Vector.Forward;
         }
         public Empty(float x, float y) : this(new Vector(x, y))
         {
