@@ -1,15 +1,8 @@
-﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using GLTech2.Properties;
+﻿using GLTech2.PostProcessing;
 using GLTech2.PrefabElements;
-using GLTech2.PostProcessing;
+using GLTech2.Properties;
 using GLTech2.StandardBehaviours;
+using System;
 
 namespace GLTech2
 {
@@ -21,41 +14,73 @@ namespace GLTech2
             Console.ReadKey();
             Console.Write("\b \b");
 
-            Texture background = (Texture)Resources.Black;
-            Scene scene = new Scene(new Material(background, 0, 3));
+            // Load textures frmo bitmaps
+            Texture universe = (Texture)Resources.Universe;
+            Texture colortest = (Texture)Resources.ColorTest;
+            Texture metal = (Texture)Resources.Metal;
+            Texture brick = (Texture)Resources.Wall;
 
-            Texture metal = (Texture) Resources.Test;
-            Material mat = new Material(metal, 0, 5);
+            // Create materials
+            Material universe_mat = new Material(
+                texture: universe,
+                hoffset: 0f,
+                hrepeat: 3f);
+            Material colortestCylinder = new Material(
+                texture: colortest,
+                hoffset: 0f,
+                hrepeat: 6f);
+            Material metal_mat = new Material(
+                texture: metal,
+                hoffset: 0f,
+                hrepeat: 2f);
+            Material brick_mat = new Material(
+                texture: brick,
+                hoffset: 0f,
+                hrepeat: 2f);
 
-            Element penta = new RegularPolygon(Vector.Origin, 50, 2f, mat);
-            scene.AddElement(penta);
-            penta.AddBehaviour<Rotate>(); // Why isnt it working?
+            // Create scene
+            Scene scene = new Scene(universe_mat);
 
-            Observer pov = new Observer(Vector.Origin, 0);
+            // Create scene elements
+            Element cyl = new RegularPolygon(new Vector(-0.5f, 0f), 4, 0.5f, colortestCylinder);
+            Element cyl2 = new RegularPolygon(new Vector(0.5f, 0f), 100, 0.5f, metal_mat);
+            Element cyl3 = new RegularPolygon(new Vector(0f, 0.866f), 3, 0.5f, brick_mat);
+            Empty center = new Empty(0, 0.2868f);
+            cyl.Parent = center;
+            cyl2.Parent = center;
+            cyl3.Parent = center;
+            Observer pov = new Observer(Vector.Backward, 0);
+
+            scene.AddElement(center);
             scene.AddElement(pov);
 
-            //Element tri = new RegularPolygon(Vector.Origin * 3, 3, -2f, mat);
-            //scene.AddElement(tri);
-
+            // Add behaviours
+            cyl.AddBehaviour(new Rotate { Speed = 120f });
+            cyl2.AddBehaviour(new Rotate { Speed = 120f });
+            cyl3.AddBehaviour(new Rotate { Speed = 120f });
+            center.AddBehaviour(new Rotate { Speed = -60f });
             pov.AddBehaviour<DebugFps>();
             pov.AddBehaviour<NoclipMovement>();
+
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
             pov.AddBehaviour(mouseLook);
 
-            Renderer.CustomHeight = 900;
-            Renderer.CustomWidth = 1600;
-            Renderer.FullScreen = true;
-            Renderer.ParallelRendering = true;
 
-            var AA = new GLTXAA(Renderer.CustomWidth, Renderer.CustomHeight, 200);
-            AA.EdgeDettection = false;
+            // Setup Renderer
+            Renderer.FullScreen = true;
+
+            // Add post processing effects
+            var AA = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 127);
             Renderer.AddPostProcessing(AA);
 
+            // Run!
             Renderer.Run(scene);
+
+            // Release everything
             scene.Dispose();
             metal.Dispose();
-            background.Dispose();
+            colortest.Dispose();
             Console.WriteLine("Press any key to close.");
             Console.ReadKey();
         }

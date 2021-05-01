@@ -93,9 +93,9 @@ namespace GLTech2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap metal {
+        internal static System.Drawing.Bitmap Metal {
             get {
-                object obj = ResourceManager.GetObject("metal", resourceCulture);
+                object obj = ResourceManager.GetObject("Metal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

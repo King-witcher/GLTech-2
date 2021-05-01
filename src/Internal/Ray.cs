@@ -34,6 +34,7 @@ namespace GLTech2
                 dry = wall->geom_direction.y;
 
             float det = direction.x * dry - direction.y * drx; // Caching can only be used here
+
             if (det == 0) // Parallel
             {
                 cur_dist = float.PositiveInfinity;

@@ -24,7 +24,7 @@ namespace GLTech2
         private protected abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
 
 
-        internal event Action OnChange;
+        internal event Action OnMoveOrRotate;
 
 
         // Gets and sets RELATIVE position.
@@ -40,7 +40,10 @@ namespace GLTech2
             set
             {
                 if (parent is null)
+                {
                     AbsolutePosition = value;
+                    OnMoveOrRotate?.Invoke();
+                }
                 else
                 {
                     relativePosition = value;
@@ -62,7 +65,10 @@ namespace GLTech2
             set
             {
                 if (parent is null)
+                {
                     AbsoluteNormal = value;
+                    OnMoveOrRotate?.Invoke();
+                }
                 else
                 {
                     relativeNormal = value;
@@ -88,6 +94,7 @@ namespace GLTech2
                     Vector newNormal = AbsoluteNormal;
                     newNormal.Angle = value;
                     AbsoluteNormal = newNormal;
+                    OnMoveOrRotate?.Invoke();
                 }
                 else
                 {
@@ -113,16 +120,17 @@ namespace GLTech2
 
                 if (parent != null)
                 {
-                    parent.OnChange -= UpdateAbsolute;
+                    parent.OnMoveOrRotate -= UpdateAbsolute;
                     parent.childs.Remove(this);
                 }
 
                 if (value != null)
                 {
-                    value.OnChange += UpdateAbsolute;
+                    value.OnMoveOrRotate += UpdateAbsolute;
                     value.childs.Add(this);
                 }
                 this.parent = value;
+
                 UpdateRelative();
             }
         }
@@ -158,7 +166,7 @@ namespace GLTech2
                 AbsolutePosition = relativePosition.AsProjectionOf(parent.AbsolutePosition, parent.AbsoluteNormal);
                 AbsoluteNormal = relativeNormal * parent.AbsoluteNormal;
             }
-            OnChange?.Invoke();
+            OnMoveOrRotate?.Invoke();
         }
 
 

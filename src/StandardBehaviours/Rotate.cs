@@ -4,7 +4,7 @@ namespace GLTech2.StandardBehaviours
 {
     public sealed class Rotate : Behaviour
     {
-        float Speed { get; set; } = 30f;
+        public float Speed { get; set; } = 30f;
         void Update()
         {
             Element.Rotate(Speed * Time.DeltaTime);

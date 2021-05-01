@@ -22,7 +22,6 @@ namespace GLTech2.PrefabElements
             Wall[] walls = Wall.CreatePolygon(material, verts);
             foreach (Wall wall in walls)
                 wall.Parent = this;
-
         }
 
         private protected override Vector AbsolutePosition { get; set; }
