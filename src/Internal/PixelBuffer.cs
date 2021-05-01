@@ -46,7 +46,7 @@ namespace GLTech2
             pb2 = tmp;
         }
 
-        [MethodImpl(methodImplOptions:MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]
         internal void Foreach(Func<RGB, RGB> transformation)
         {
             int height = this.height;
@@ -56,6 +56,23 @@ namespace GLTech2
             Parallel.For(0, width, (x) =>
             {
                 for (int y = 0; y < height; y++)
+                {
+                    int cur = width * y + x;
+                    buffer[cur] = transformation(buffer[cur]);
+                }
+            });
+        }
+
+        [MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]
+        internal void Foreach(Func<RGB, RGB> transformation, int x1, int x2, int y1, int y2)
+        {
+            int height = this.height;
+            int width = this.width;
+            uint* buffer = this.uint0;
+
+            Parallel.For(x1, x2, (x) =>
+            {
+                for (int y = y1; y < y2; y++)
                 {
                     int cur = width * y + x;
                     buffer[cur] = transformation(buffer[cur]);

@@ -13,7 +13,7 @@ namespace GLTech2.PostProcessing
         public GLTXAA(int width, int height, int threshold = 70)
         {
             previousFrame = new PixelBuffer(width, height);
-            copy = new PixelBuffer(width, height);
+            temporaryBuffer = new PixelBuffer(width, height);
             if (threshold > 255)
                 this.sqrThreshold = 255 * 255 * 3;
             else if (threshold < 0)
@@ -23,55 +23,96 @@ namespace GLTech2.PostProcessing
         }
 
         private PixelBuffer previousFrame;
-        private PixelBuffer copy;
+        private PixelBuffer temporaryBuffer;
         private int sqrThreshold;
+
+        public bool EdgeDettection { get; set; } = false;
 
         internal override void Process(PixelBuffer target)
         {
             if (target.width != previousFrame.width || target.height != previousFrame.height)
                 return;
 
-            copy.Copy(target);
+            temporaryBuffer.Copy(target);
 
-            Parallel.For(1, target.height - 1, (y) =>
+            if (!EdgeDettection)
             {
-                for (int x = 1; x < target.width - 1; x++)
+                Parallel.For(1, target.height - 1, (y) =>
                 {
-                    int cur = target.width * y + x;
-                    int up = target.width * (y - 1) + x;
-                    int left = target.width * y + x - 1;
-                    int down = target.width * (y + 1) + x;
-                    int right = target.width * y + x + 1;
+                    for (int x = 1; x < target.width - 1; x++)
+                    {
+                        int cur = target.width * y + x;
+                        int up = target.width * (y - 1) + x;
+                        int left = target.width * y + x - 1;
+                        int down = target.width * (y + 1) + x;
+                        int right = target.width * y + x + 1;
 
-                    int differenceV = dist(
-                        target.uint0[up],
-                        target.uint0[down]);
+                        int differenceV = dist(
+                            target.uint0[up],
+                            target.uint0[down]);
 
-                    int differenceH = dist(
-                        target.uint0[right],
-                        target.uint0[left]);
+                        int differenceH = dist(
+                            target.uint0[right],
+                            target.uint0[left]);
 
-                    float factorv = differenceV / (255f * 255f * 3f);
+                        float factorv = differenceV / (255f * 255f * 3f);
 
-                    int edge = differenceH + differenceV;
-                    float factor = edge / (255f * 2);
-                    if (factor > 0.2f)
-                        factor = 0.95f;
+                        int edge = differenceH + differenceV;
+                        float factor = edge / (255f * 2);
+                        factor = factor > 0.2f ? 0.99f : 0.0f;
 
-                    copy.uint0[cur] = avg(
-                        previousFrame.uint0[cur],
-                        target.uint0[cur],
-                        factor);
-                    
-                    //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
-                }
-            });
+                        temporaryBuffer.uint0[cur] = avg(
+                            previousFrame.uint0[cur],
+                            target.uint0[cur],
+                            factor);
 
-            target.Copy(copy);
+                        //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
+                    }
+                });
+
+                target.Copy(temporaryBuffer);
+                previousFrame.Copy(target);
+            }
+            else
+            {
+                Parallel.For(1, target.height - 1, (y) =>
+                {
+                    for (int x = 1; x < target.width - 1; x++)
+                    {
+                        int cur = target.width * y + x;
+                        int up = target.width * (y - 1) + x;
+                        int left = target.width * y + x - 1;
+                        int down = target.width * (y + 1) + x;
+                        int right = target.width * y + x + 1;
+
+                        int differenceV = dist(
+                            target.uint0[up],
+                            target.uint0[down]);
+
+                        int differenceH = dist(
+                            target.uint0[right],
+                            target.uint0[left]);
+
+                        float factorv = differenceV / (255f * 255f * 3f);
+
+                        int edge = differenceH + differenceV;
+                        float factor = edge / (255f * 2);
+
+                        temporaryBuffer.uint0[cur] = avg(
+                            previousFrame.uint0[cur],
+                            target.uint0[cur],
+                            factor);
+
+                        temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101 + 0xff000000;
+                    }
+                });
+                previousFrame.Copy(target);
+                target.Copy(temporaryBuffer);
+            }
+
+            target.Copy(temporaryBuffer);
             previousFrame.Copy(target);
             return;
-
-
 
             int dist(uint pixel1, uint pixel2)
             {

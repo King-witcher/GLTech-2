@@ -71,6 +71,16 @@ namespace GLTech2.Properties {
         }
         
         /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ColorTest {
+            get {
+                object obj = ResourceManager.GetObject("ColorTest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
         /// </summary>
         internal static System.Drawing.Icon GL_Icon {
@@ -86,6 +96,16 @@ namespace GLTech2.Properties {
         internal static System.Drawing.Bitmap metal {
             get {
                 object obj = ResourceManager.GetObject("metal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Test {
+            get {
+                object obj = ResourceManager.GetObject("Test", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

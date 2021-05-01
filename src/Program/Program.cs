@@ -21,10 +21,10 @@ namespace GLTech2
             Console.ReadKey();
             Console.Write("\b \b");
 
-            Texture background = (Texture)Resources.Universe;
+            Texture background = (Texture)Resources.Black;
             Scene scene = new Scene(new Material(background, 0, 3));
 
-            Texture metal = (Texture) Resources.metal;
+            Texture metal = (Texture) Resources.Test;
             Material mat = new Material(metal, 0, 5);
 
             Element penta = new RegularPolygon(Vector.Origin, 50, 2f, mat);
@@ -48,9 +48,9 @@ namespace GLTech2
             Renderer.FullScreen = true;
             Renderer.ParallelRendering = true;
 
-            var fxaa = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight);
-            Renderer.AddPostProcessing(fxaa);
-            //Renderer.AddPostProcessing<GrayScale>();
+            var AA = new GLTXAA(Renderer.CustomWidth, Renderer.CustomHeight, 200);
+            AA.EdgeDettection = false;
+            Renderer.AddPostProcessing(AA);
 
             Renderer.Run(scene);
             scene.Dispose();
