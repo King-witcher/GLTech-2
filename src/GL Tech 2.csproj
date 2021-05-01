@@ -69,7 +69,6 @@
     <Compile Include="PostProcessing\Brightness.cs" />
     <Compile Include="PostProcessing\Abstract Effect.cs" />
     <Compile Include="PostProcessing\TestEffect.cs" />
-    <Compile Include="Program\TestKeyboard.cs" />
     <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="Scene.cs" />
@@ -88,9 +87,10 @@
     <Compile Include="Internal\SpriteData.cs" />
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Elements\Sprite.cs" />
+    <Compile Include="StandardBehaviours\DebugFps.cs" />
     <Compile Include="StandardBehaviours\MouseLook.cs" />
-    <Compile Include="StandardBehaviours\QuakeMovement.cs" />
-    <Compile Include="StandardBehaviours\NoclipController.cs" />
+    <Compile Include="StandardBehaviours\NoclipMovement.cs" />
+    <Compile Include="StandardBehaviours\FlatMovement.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="Elements\RegularPolygon.cs" />
     <Compile Include="StandardBehaviours\Move.cs" />

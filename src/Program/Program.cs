@@ -27,8 +27,9 @@ namespace GLTech2
             Texture metal = (Texture) Resources.metal;
             Material mat = new Material(metal, 0, 5);
 
-            Element penta = new RegularPolygon(Vector.Origin, 5, 2f, mat);
+            Element penta = new RegularPolygon(Vector.Origin, 50, 2f, mat);
             scene.AddElement(penta);
+            penta.AddBehaviour<Rotate>(); // Why isnt it working?
 
             Observer pov = new Observer(Vector.Origin, 0);
             scene.AddElement(pov);
@@ -36,19 +37,18 @@ namespace GLTech2
             //Element tri = new RegularPolygon(Vector.Origin * 3, 3, -2f, mat);
             //scene.AddElement(tri);
 
-            //pov.AddBehaviour<CountFPS>();
-            pov.AddBehaviour<TestKeyboard>();
-            pov.AddBehaviour<QuakeMovement>();
+            pov.AddBehaviour<DebugFps>();
+            pov.AddBehaviour<NoclipMovement>();
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
             pov.AddBehaviour(mouseLook);
 
             Renderer.CustomHeight = 900;
             Renderer.CustomWidth = 1600;
-            Renderer.FullScreen = false;
+            Renderer.FullScreen = true;
             Renderer.ParallelRendering = true;
 
-            var fxaa = new FXAA(1600, 900);
+            var fxaa = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight);
             Renderer.AddPostProcessing(fxaa);
             //Renderer.AddPostProcessing<GrayScale>();
 

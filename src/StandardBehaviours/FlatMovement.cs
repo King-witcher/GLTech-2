@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GLTech2.StandardBehaviours
 {
-    public sealed class NoclipController : Behaviour
+    public sealed class FlatMovement : Behaviour
     {
         public bool AlwaysRun { get; set; } = false;
         public float WalkSpeed { get; set; } = 0.75f;

@@ -58,7 +58,16 @@ namespace GLTech2
         public static bool FullScreen
         {
             get => fullScreen;
-            set => ChangeIfNotRunning("FullScreen", ref fullScreen, value);
+            set
+            {
+                ChangeIfNotRunning("FullScreen", ref fullScreen, value);
+                if (fullScreen == true)
+                {
+                    CustomWidth = Screen.PrimaryScreen.Bounds.Width;
+                    customHeight = Screen.PrimaryScreen.Bounds.Height;
+                }
+
+            }
         }
 
         public static bool IsRunning { get; private set; } = false;

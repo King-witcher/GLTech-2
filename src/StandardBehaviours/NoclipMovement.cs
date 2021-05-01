@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GLTech2.StandardBehaviours
 {
-    public sealed class QuakeMovement : Behaviour
+    public sealed class NoclipMovement : Behaviour
     {
         public bool AlwaysRun { get; set; } = true;
-        public float MaxSpeed { get; set; } = 1f;
+        public float MaxSpeed { get; set; } = 2f;
         public float TurnSpeed { get; set; } = 90f;
         public float Friction { get; set; } = 10f;
         public float Acceleration { get; set; } = 10f;
@@ -31,11 +31,23 @@ namespace GLTech2.StandardBehaviours
 
         void Update()
         {
-            UpdateVelocity();
+            UpdateVelocity(GetMaxSpeed());
             UpdatePosition();
         }
 
-        void UpdateVelocity()
+        float GetMaxSpeed()
+        {
+            bool run = AlwaysRun;
+            if (Input.IsKeyDown(ChangeRun_Walk))
+                run = !run;
+
+            if (run)
+                return MaxSpeed;
+            else
+                return MaxSpeed / 2;
+        }
+
+        void UpdateVelocity(float maxspeed)
         {
             ApplyFriction();
             Vector wishdir = GetWishDir();
@@ -79,7 +91,7 @@ namespace GLTech2.StandardBehaviours
 
         void ApplyFriction()
         {
-            velocity -= Time.DeltaTime * Friction * velocity;
+            velocity -= velocity * Time.DeltaTime * Friction;
         }
     }
 }
