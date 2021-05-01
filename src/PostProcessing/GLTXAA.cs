@@ -59,7 +59,7 @@ namespace GLTech2.PostProcessing
 
                         int edge = differenceH + differenceV;
                         float factor = edge / (255f * 2);
-                        factor = factor > 0.2f ? 0.99f : 0.0f;
+                        factor = factor > 0.05f ? 0.5f : 0.0f;
 
                         temporaryBuffer.uint0[cur] = avg(
                             previousFrame.uint0[cur],

@@ -71,7 +71,7 @@ namespace GLTech2
             Renderer.FullScreen = true;
 
             // Add post processing effects
-            var AA = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 127);
+            var AA = new GLTXAA(Renderer.CustomWidth, Renderer.CustomHeight, 127);
             Renderer.AddPostProcessing(AA);
 
             // Run!
