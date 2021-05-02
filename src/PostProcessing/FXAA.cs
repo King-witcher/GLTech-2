@@ -9,6 +9,8 @@ namespace GLTech2.PostProcessing
 {
     public sealed unsafe class FXAA : Effect, IDisposable
     {
+        public bool ShowEdges { get; set; } = false;
+
         public FXAA(int width, int height, int threshold = 128)
         {
             temporaryBuffer = new PixelBuffer(width, height);
@@ -28,30 +30,59 @@ namespace GLTech2.PostProcessing
             if (target.width != temporaryBuffer.width || target.height != temporaryBuffer.height)
                 return;
 
-            temporaryBuffer.Copy(target);
-
-            Parallel.For(1, target.height, (i) =>
+            if (!ShowEdges)
             {
-                for (int j = 1; j < target.width; j++)
+                temporaryBuffer.Copy(target);
+                Parallel.For(1, target.height, (i) =>
                 {
-                    int cur = target.width * i + j;
-                    int up = target.width * (i - 1) + j;
-                    int left = target.width * i + j - 1;
+                    for (int j = 1; j < target.width; j++)
+                    {
+                        int cur = target.width * i + j;
+                        int up = target.width * (i - 1) + j;
+                        int left = target.width * i + j - 1;
 
-                    int differenceV = dist(
-                        target.uint0[cur],
-                        target.uint0[up]);
+                        int differenceV = dist(
+                            target.uint0[cur],
+                            target.uint0[up]);
 
-                    int differenceH = dist(
-                        target.uint0[cur],
-                        target.uint0[left]);
+                        int differenceH = dist(
+                            target.uint0[cur],
+                            target.uint0[left]);
 
-                    if (differenceV >= sqrThreshold)
-                        temporaryBuffer.uint0[target.width * i + j] = avg(target.uint0[up], target.uint0[cur]);
-                    else if (differenceH >= sqrThreshold)
-                        temporaryBuffer.uint0[target.width * i + j] = avg(target.uint0[left], target.uint0[cur]);
-                }
-            });
+                        if (differenceV >= sqrThreshold)
+                            temporaryBuffer.uint0[target.width * i + j] = avg(target.uint0[up], target.uint0[cur]);
+                        else if (differenceH >= sqrThreshold)
+                            temporaryBuffer.uint0[target.width * i + j] = avg(target.uint0[left], target.uint0[cur]);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(1, target.height, (i) =>
+                {
+                    for (int j = 1; j < target.width; j++)
+                    {
+                        int cur = target.width * i + j;
+                        int up = target.width * (i - 1) + j;
+                        int left = target.width * i + j - 1;
+
+                        int differenceV = dist(
+                            target.uint0[cur],
+                            target.uint0[up]);
+
+                        int differenceH = dist(
+                            target.uint0[cur],
+                            target.uint0[left]);
+
+                        if (differenceV >= sqrThreshold)
+                            temporaryBuffer.uint0[target.width * i + j] = 0xff0000;
+                        else if (differenceH >= sqrThreshold)
+                            temporaryBuffer.uint0[target.width * i + j] = 0x0000ff;
+                        else
+                            temporaryBuffer.uint0[target.width * i + j] = 0;
+                    }
+                });
+            }
 
             target.Copy(temporaryBuffer);
             return;

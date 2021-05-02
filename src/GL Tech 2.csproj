@@ -94,6 +94,7 @@
     <Compile Include="Behaviours\Move.cs" />
     <Compile Include="Behaviours\Rotate.cs" />
     <Compile Include="Static Time.cs" />
+    <Compile Include="Internal\Utilities.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Elements\Wall.cs" />
   </ItemGroup>

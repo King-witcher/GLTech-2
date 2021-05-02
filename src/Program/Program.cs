@@ -80,12 +80,13 @@ namespace GLTech2
             Renderer.FieldOfView = 85;
 
             // Add post processing effects
-            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 70);
+            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 30);
+            antiAliasing.ShowEdges = false;
             Renderer.AddEffect(antiAliasing);
             //antiAliasing.EdgeDettection = true;
 
             // Run!
-            sp.Play();
+            //sp.Play();
             Renderer.Run(scene);
             sp.Stop();
 
