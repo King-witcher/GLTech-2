@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace GLTech2
         public float Luminosity => (r + g + b) / (255f * 3f);
         public byte Luminosity256 => (byte)((r + g + b) / 3);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGB Mix(RGB rgb, float factor)
         {
             ushort parcel1, parcel2;
@@ -44,6 +46,7 @@ namespace GLTech2
             return rgb;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGB Mix(RGB rgb)
         {
             rgb.r = (byte)((r + rgb.r) >> 1);
@@ -53,6 +56,7 @@ namespace GLTech2
             return rgb;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RGB operator *(RGB rgb, float factor)
         {
             ulong red = (ulong)(rgb.r * factor);
@@ -72,12 +76,16 @@ namespace GLTech2
             return rgb;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RGB operator /(RGB color, float divisor)
         {
             return color * (1 / divisor);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator uint(RGB rgb) => rgb.rgb;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGB(uint rgb) => new RGB{rgb = rgb};
     }
 }

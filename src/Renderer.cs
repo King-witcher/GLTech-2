@@ -113,7 +113,6 @@ namespace GLTech2
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
-            //
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.
             // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and

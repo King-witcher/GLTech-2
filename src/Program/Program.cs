@@ -60,10 +60,10 @@ namespace GLTech2
             scene.AddElement(pov);
 
             // Add behaviours
-            cyl.AddBehaviour(new Rotate { Speed = 18f });
-            cyl2.AddBehaviour(new Rotate { Speed = 18f });
-            cyl3.AddBehaviour(new Rotate { Speed = 18f });
-            center.AddBehaviour(new Rotate { Speed = -6f });
+            //cyl.AddBehaviour(new Rotate { Speed = 18f });
+            //cyl2.AddBehaviour(new Rotate { Speed = 18f });
+            //cyl3.AddBehaviour(new Rotate { Speed = 18f });
+            //center.AddBehaviour(new Rotate { Speed = -6f });
             pov.AddBehaviour<DebugFps>();
             pov.AddBehaviour<NoclipMovement>();
 
@@ -77,8 +77,8 @@ namespace GLTech2
             Renderer.FieldOfView = 85;
 
             // Add post processing effects
-            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 12);
-            //Renderer.AddPostProcessing(antiAliasing);
+            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 128);
+            Renderer.AddPostProcessing(antiAliasing);
             //AA.EdgeDettection = true;
 
             // Run!

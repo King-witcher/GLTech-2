@@ -30,8 +30,10 @@ namespace GLTech2
             pictureBox.Paint += RePaint;
         }
 
-        internal void RePaint(object _ = null, EventArgs __ = null) =>
+        internal void RePaint(object _ = null, EventArgs __ = null)
+        {
             pictureBox.Image = source;
+        }
 
         private void InitializeComponent()
         {
