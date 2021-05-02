@@ -68,7 +68,6 @@
     <Compile Include="PostProcessing\Brightness.cs" />
     <Compile Include="PostProcessing\Abstract Effect.cs" />
     <Compile Include="PostProcessing\TestEffect.cs" />
-    <Compile Include="Program\FPS measure.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Material.cs" />
@@ -128,6 +127,7 @@
     <None Include="Resources\Bricks.png" />
     <Content Include="Resources\ColorTest.bmp" />
     <None Include="Resources\DoomSky.png" />
+    <None Include="Resources\d_e1m1.wav" />
     <Content Include="Resources\Test.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

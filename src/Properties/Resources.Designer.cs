@@ -101,6 +101,15 @@ namespace GLTech2.Properties {
         }
         
         /// <summary>
+        ///   Consulta um recurso localizado do tipo System.IO.UnmanagedMemoryStream semelhante a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream d_e1m1 {
+            get {
+                return ResourceManager.GetStream("d_e1m1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap DoomSky {

@@ -1,6 +1,7 @@
 ﻿using GLTech2.PostProcessing;
 using GLTech2.PrefabElements;
 using GLTech2.Properties;
+using System.Media;
 using GLTech2.StandardBehaviours;
 using System;
 
@@ -15,6 +16,8 @@ namespace GLTech2
 
         static void Example()
         {
+            SoundPlayer sp = new SoundPlayer(Resources.d_e1m1);
+
             Console.WriteLine("Press any key to start.");
             Console.ReadKey();
             Console.Write("\b \b");
@@ -82,7 +85,9 @@ namespace GLTech2
             //antiAliasing.EdgeDettection = true;
 
             // Run!
+            sp.Play();
             Renderer.Run(scene);
+            sp.Stop();
 
             // Release everything
             scene.Dispose();
