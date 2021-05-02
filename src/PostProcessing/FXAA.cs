@@ -9,7 +9,7 @@ namespace GLTech2.PostProcessing
 {
     public sealed unsafe class FXAA : Effect, IDisposable
     {
-        public FXAA(int width, int height, int threshold = 70)
+        public FXAA(int width, int height, int threshold = 128)
         {
             temporaryBuffer = new PixelBuffer(width, height);
             if (threshold > 255)
@@ -83,16 +83,13 @@ namespace GLTech2.PostProcessing
             {
                 // B
                 uint res = ((pixel1 & 0xffu) + (pixel2 & 0xffu)) / 2u;
-                pixel1 >>= 8;
-                pixel2 >>= 8;
 
                 // G
-                res |= ((pixel1 & 0xffu) + (pixel2 & 0xffu)) / 2u * 0x100u;
-                pixel1 >>= 8;
-                pixel2 >>= 8;
+                res |= ((pixel1 & 0xff00u) + (pixel2 & 0xff00u)) / 2u & 0xff00u;
 
                 // R
-                res |= ((pixel1 & 0xffu) + (pixel2 & 0xffu)) / 2u * 0x10000u;
+                res |= ((pixel1 & 0xff0000u) + (pixel2 & 0xff0000u)) / 2u & 0xff0000u;
+
                 return res;
             }
         }
