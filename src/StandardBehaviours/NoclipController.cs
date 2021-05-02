@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GLTech2.StandardBehaviours
 {
-    public sealed class NoclipMovement : Behaviour
+    public sealed class NoclipController : Behaviour
     {
         public bool AlwaysRun { get; set; } = true;
         public float MaxSpeed { get; set; } = 2f;

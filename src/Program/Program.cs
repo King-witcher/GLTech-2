@@ -65,7 +65,7 @@ namespace GLTech2
             tri.AddBehaviour(new Rotate { Speed = 18f });
             center.AddBehaviour(new Rotate { Speed = -6f });
             pov.AddBehaviour<DebugFps>();
-            pov.AddBehaviour<NoclipMovement>();
+            pov.AddBehaviour<NoclipController>();
 
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
@@ -78,7 +78,7 @@ namespace GLTech2
 
             // Add post processing effects
             var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 70);
-            Renderer.AddPostProcessing(antiAliasing);
+            Renderer.AddEffect(antiAliasing);
             //antiAliasing.EdgeDettection = true;
 
             // Run!

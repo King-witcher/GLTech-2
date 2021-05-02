@@ -212,14 +212,14 @@ namespace GLTech2
                 effect.Process(target);
         }
 
-        public static void AddPostProcessing(Effect postProcessing)
+        public static void AddEffect(Effect postProcessing)
         {
             Renderer.postProcessing.Add(postProcessing);
         }
 
         public static void AddPostProcessing<P>() where P : Effect, new()
         {
-            AddPostProcessing(new P());
+            AddEffect(new P());
         }
     }
 }

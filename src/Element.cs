@@ -218,6 +218,22 @@ namespace GLTech2
             AddBehaviour(new BehaviourType());
         }
 
+        public void AddBehaviours(IEnumerable<Behaviour> behaviours)
+        {
+            foreach (Behaviour item in behaviours)
+            {
+                if (item is null)
+                    continue;
+
+                AddBehaviour(item);
+            }
+        }
+
+        public void AddBehaviours(params Behaviour[] behaviours)
+        {
+            AddBehaviours((IEnumerable<Behaviour>) behaviours);
+        }
+
         public bool ContainsBehaviour<BehaviourType>() where BehaviourType : Behaviour
         {
             foreach (var behaviour in behaviours)

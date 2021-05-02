@@ -82,6 +82,11 @@ namespace GLTech2
             }
         }
 
+        public void AddElements(params Element[] elements)
+        {
+            AddElements((IEnumerable<Element>) elements);
+        }
+
         private void UnmanagedAddWall(Wall w)
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)

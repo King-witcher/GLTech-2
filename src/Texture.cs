@@ -23,7 +23,7 @@ namespace GLTech2
             TextureData.Delete(unmanaged);
         }
 
-        public static explicit operator Texture(Bitmap bitmap)
+        public static implicit operator Texture(Bitmap bitmap)
         {
             return new Texture(bitmap);
         }

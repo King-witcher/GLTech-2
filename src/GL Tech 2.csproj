@@ -89,7 +89,7 @@
     <Compile Include="Elements\Sprite.cs" />
     <Compile Include="StandardBehaviours\DebugFps.cs" />
     <Compile Include="StandardBehaviours\MouseLook.cs" />
-    <Compile Include="StandardBehaviours\NoclipMovement.cs" />
+    <Compile Include="StandardBehaviours\NoclipController.cs" />
     <Compile Include="StandardBehaviours\FlatMovement.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="Elements\RegularPolygon.cs" />
