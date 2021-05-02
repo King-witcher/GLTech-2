@@ -74,6 +74,7 @@ namespace GLTech2
 
             // Setup Renderer
             Renderer.FullScreen = true;
+            Renderer.FieldOfView = 85;
 
             // Add post processing effects
             var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 12);

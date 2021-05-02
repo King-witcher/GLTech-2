@@ -152,7 +152,7 @@ namespace GLTech2
         {
             if (cache != null)
                 RenderingCache.Delete(cache);
-            cache = RenderingCache.Create(CustomWidth, CustomHeight);
+            cache = RenderingCache.Create(CustomWidth, CustomHeight, FieldOfView);
         }
 
         private unsafe static void ControlTrhead(
