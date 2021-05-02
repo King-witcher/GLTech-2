@@ -20,56 +20,56 @@ namespace GLTech2
             Console.Write("\b \b");
 
             // Load textures frmo bitmaps
-            Texture universe = (Texture)Resources.Universe;
-            Texture colortest = (Texture)Resources.ColorTest;
-            Texture metal = (Texture)Resources.Metal;
-            Texture brick = (Texture)Resources.Wall;
+            Texture skybox = (Texture)Resources.DoomSky;
+            Texture carvedWall = (Texture)Resources.CarvedWall;
+            Texture bricks = (Texture)Resources.Bricks;
+            Texture wood = (Texture)Resources.Wood;
 
             // Create materials
-            Material universe_mat = new Material(
-                texture: universe,
+            Material skybox_mat = new Material(
+                texture: skybox,
                 hoffset: 0f,
-                hrepeat: 3f);
-            Material colortestCylinder = new Material(
-                texture: colortest,
+                hrepeat: 1f);
+            Material carvedWall_mat = new Material(
+                texture: carvedWall,
                 hoffset: 0f,
-                hrepeat: 6f);
-            Material metal_mat = new Material(
-                texture: metal,
+                hrepeat: 1f);
+            Material bricks_mat = new Material(
+                texture: bricks,
                 hoffset: 0f,
-                hrepeat: 2f);
-            Material brick_mat = new Material(
-                texture: brick,
+                hrepeat: 6.283f);
+            Material wood_mat = new Material(
+                texture: wood,
                 hoffset: 0f,
                 hrepeat: 2f);
 
             // Create scene
-            Scene scene = new Scene(universe_mat);
+            Scene scene = new Scene(skybox_mat);
 
             // Create scene elements
-            Element cyl = new RegularPolygon(new Vector(-0.5f, 0f), 4, 0.5f, colortestCylinder);
-            Element cyl2 = new RegularPolygon(new Vector(0.5f, 0f), 100, 0.5f, metal_mat);
-            Element cyl3 = new RegularPolygon(new Vector(0f, 0.866f), 3, 0.5f, brick_mat);
+            Element sqware = new RegularPolygon(new Vector(-0.5f, 0f), 4, .354f, wood_mat);
+            Element cylinder = new RegularPolygon(new Vector(0.5f, 0f), 100, .5f, bricks_mat);
+            Element tri = new RegularPolygon(new Vector(0f, 0.866f), 3, .385f, carvedWall_mat);
             Empty center = new Empty(0, 0.2868f);
-            cyl.Parent = center;
-            cyl2.Parent = center;
-            cyl3.Parent = center;
+            sqware.Parent = center;
+            cylinder.Parent = center;
+            tri.Parent = center;
             Observer pov = new Observer(Vector.Backward, 0);
 
             scene.AddElement(center);
             scene.AddElement(pov);
 
             // Add behaviours
-            //cyl.AddBehaviour(new Rotate { Speed = 18f });
-            //cyl2.AddBehaviour(new Rotate { Speed = 18f });
-            //cyl3.AddBehaviour(new Rotate { Speed = 18f });
-            //center.AddBehaviour(new Rotate { Speed = -6f });
+            sqware.AddBehaviour(new Rotate { Speed = 18f });
+            cylinder.AddBehaviour(new Rotate { Speed = 18f });
+            tri.AddBehaviour(new Rotate { Speed = 18f });
+            center.AddBehaviour(new Rotate { Speed = -6f });
             pov.AddBehaviour<DebugFps>();
             pov.AddBehaviour<NoclipMovement>();
 
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
-            //pov.AddBehaviour(mouseLook);
+            pov.AddBehaviour(mouseLook);
 
 
             // Setup Renderer
@@ -77,17 +77,17 @@ namespace GLTech2
             Renderer.FieldOfView = 85;
 
             // Add post processing effects
-            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 128);
+            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 70);
             Renderer.AddPostProcessing(antiAliasing);
-            //AA.EdgeDettection = true;
+            //antiAliasing.EdgeDettection = true;
 
             // Run!
             Renderer.Run(scene);
 
             // Release everything
             scene.Dispose();
-            metal.Dispose();
-            colortest.Dispose();
+            bricks.Dispose();
+            carvedWall.Dispose();
             Console.WriteLine("Press any key to close.");
             Console.ReadKey();
         }

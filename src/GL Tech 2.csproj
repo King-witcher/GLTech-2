@@ -124,7 +124,11 @@
     <None Include="Resources\universe.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Wood.png" />
+    <None Include="Resources\CarvedWall.png" />
+    <None Include="Resources\Bricks.png" />
     <Content Include="Resources\ColorTest.bmp" />
+    <None Include="Resources\DoomSky.png" />
     <Content Include="Resources\Test.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

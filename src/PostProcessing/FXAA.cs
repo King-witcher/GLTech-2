@@ -82,15 +82,15 @@ namespace GLTech2.PostProcessing
             uint avg(uint pixel1, uint pixel2)
             {
                 // B
-                uint res = ((pixel1 & 0xffu) + (pixel2 & 0xffu)) / 2u;
+                uint result = ((pixel1 & 0xffu) + (pixel2 & 0xffu)) / 2u;
 
                 // G
-                res |= ((pixel1 & 0xff00u) + (pixel2 & 0xff00u)) / 2u & 0xff00u;
+                result |= ((pixel1 & 0xff00u) + (pixel2 & 0xff00u)) / 2u & 0xff00u;
 
                 // R
-                res |= ((pixel1 & 0xff0000u) + (pixel2 & 0xff0000u)) / 2u & 0xff0000u;
+                result |= ((pixel1 & 0xff0000u) + (pixel2 & 0xff0000u)) / 2u & 0xff0000u;
 
-                return res;
+                return result;
             }
         }
 
