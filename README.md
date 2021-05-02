@@ -10,6 +10,9 @@ If you already have Visual Studio Community 2019 installed, just open `CLICKME.s
 
 We start by importing textures from Bitmaps. Each texture represents a single 32-bits-per-pixel image that can be used by many objects, wich can resize and offset it any different ways you want. There are two different ways that result in the same thing:
 
+	// using System.Drawing;
+	// using GLTech2; //OBVIOUSLY
+	
 	Bitmap bmp = new Bitmap($"filename.png");
 	Texture texture = new Texture(bmp); // Via constructor
 	Texture texture2 = bmp; 			// Via implicit cast
@@ -29,6 +32,7 @@ Finally, we are able to create a scene, which requires a background material and
 Lets create elements to put in the scene.
 
 	// using GLTech2.PrefabElements;
+	
 	RegularPolygon poly = new RegularPolygon(
 		position: Vector.Forward	// <0f, 1f>
 		edges: 4, 				
