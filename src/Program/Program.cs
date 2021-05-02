@@ -69,7 +69,7 @@ namespace GLTech2
 
             var mouseLook = new MouseLook();
             mouseLook.Sensitivity = 2.31f;
-            pov.AddBehaviour(mouseLook);
+            //pov.AddBehaviour(mouseLook);
 
 
             // Setup Renderer
