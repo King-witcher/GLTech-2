@@ -1,6 +1,4 @@
-﻿//See Texture32.cs before
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -17,18 +15,6 @@ namespace GLTech2
         internal float voffset; //Ainda não implementado
         internal float vrepeat; //Ainda não implmenetado
 
-        public float HorizontalOffset
-        {
-            get => hoffset;
-            set => hoffset = value;
-        }
-
-        public float HorizontalRepeat
-        {
-            get => hrepeat;
-            set => hrepeat = value;
-        }
-
         public Material(Texture texture, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
             this.hoffset = hoffset;
@@ -39,10 +25,11 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal unsafe UInt32 MapPixel(float hratio, float vratio)      //Possibly optimizable
+        internal unsafe uint MapPixel(float hratio, float vratio)      //Possibly optimizable
         {
-            int x = (int)(texture.width * (hrepeat * hratio + hoffset)) % texture.width;
-            int y = (int)(texture.height * vratio);//% texture.height;
+            // Critical performance impact
+            int x = (int)(texture.width_float * (hrepeat * hratio + hoffset)) % texture.width;
+            int y = (int)(texture.height_float * vratio);//% texture.height;
             return texture.buffer[texture.width * y + x];
         }
 

@@ -13,6 +13,19 @@ namespace GLTech2
         internal int height;
         internal int width;
 
+        // Theese are stored as float due to small optimizations.
+        internal float height_float;
+        internal float width_float;
+
+        private TextureData(uint* buffer, int width, int height)
+        {
+            this.buffer = buffer;
+            this.height = height;
+            this.width = width;
+            this.height_float = height;
+            this.width_float = width;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static TextureData* Create(Bitmap bitmap) // Possibly optimizable
         {
@@ -30,6 +43,8 @@ namespace GLTech2
             }
             result->width = bitmap.Width;
             result->height = bitmap.Height;
+            result->width_float = bitmap.Width;
+            result->height_float = bitmap.Height;
             return result;
         }
 
