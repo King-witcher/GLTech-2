@@ -25,19 +25,11 @@ namespace GLTech2
         private static float minframetime = 4;
         public static int MaxFps
         {
-            get
-            {
-                return (int)(1000f / minframetime);
-            }
+            get => (int)(1000f / minframetime);
             set
             {
-                if (value == 0)
-                    value = int.MaxValue;
-
-                float temp = 1000f / value;
-                if (temp < 3f)
-                    temp = 3f;
-                minframetime = temp;
+                Clip(ref value, 1, 250);
+                minframetime = 1000f / value;
             }
         }
 
@@ -66,13 +58,32 @@ namespace GLTech2
                     CustomWidth = Screen.PrimaryScreen.Bounds.Width;
                     customHeight = Screen.PrimaryScreen.Bounds.Height;
                 }
-
             }
         }
 
+        static float fieldOfView = 90f;
+        public static float FieldOfView
+        {
+            get => fieldOfView;
+            set
+            {
+                Clip(ref value, 1f, 179f);
+                ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
+            }
+        }
+
+
         public static bool IsRunning { get; private set; } = false;
 
-        private static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
+        static void Clip<T> (ref T value, T min, T max) where T : struct, IComparable<T>
+        {
+            if (value.CompareTo(max) > 0)
+                value = max;
+            else if (value.CompareTo(min) < 0)
+                value = min;
+        }
+
+        static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
         {
             if (IsRunning)
                 Debug.LogWarning(name + " cannot be modified while running.");
