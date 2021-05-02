@@ -91,11 +91,9 @@ namespace GLTech2
                 obj = value;
         }
 
-        internal unsafe static RenderingCache*  cache;
-
-        internal unsafe static PixelBuffer      outputBuffer;
-        private static Scene                    activeScene = null;
-
+        unsafe static RenderingCache* cache;
+        static PixelBuffer outputBuffer;
+        static Scene activeScene = null;
         public unsafe static void Run(Scene scene)
         {
             if (IsRunning)
