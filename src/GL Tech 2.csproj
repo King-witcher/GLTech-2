@@ -49,13 +49,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour.cs" />
+    <Compile Include="Behaviours\Abstract Behaviour.cs" />
     <Compile Include="Elements\Observer.cs" />
-    <Compile Include="Debug.cs" />
-    <Compile Include="Input.cs" />
+    <Compile Include="Static Debug.cs" />
+    <Compile Include="Static Keyboard.cs" />
     <Compile Include="Internal\PixelBuffer.cs" />
-    <Compile Include="Internal\ElementEnumerator.cs" />
-    <Compile Include="Element.cs" />
+    <Compile Include="Elements\Abstract Element.cs" />
     <Compile Include="Elements\Empty.cs" />
     <Compile Include="Internal\Renderer_Operations.cs" />
     <Compile Include="Internal\RenderingCache.cs" />
@@ -83,19 +82,19 @@
     <Compile Include="Internal\Display.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Renderer.cs" />
+    <Compile Include="Static Renderer.cs" />
     <Compile Include="Internal\SpriteData.cs" />
     <Compile Include="Internal\WallData.cs" />
     <Compile Include="Elements\Sprite.cs" />
-    <Compile Include="StandardBehaviours\DebugFps.cs" />
-    <Compile Include="StandardBehaviours\MouseLook.cs" />
-    <Compile Include="StandardBehaviours\NoclipController.cs" />
-    <Compile Include="StandardBehaviours\FlatMovement.cs" />
+    <Compile Include="Behaviours\DebugFps.cs" />
+    <Compile Include="Behaviours\MouseLook.cs" />
+    <Compile Include="Behaviours\NoclipController.cs" />
+    <Compile Include="Behaviours\FlatMovement.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="Elements\RegularPolygon.cs" />
-    <Compile Include="StandardBehaviours\Move.cs" />
-    <Compile Include="StandardBehaviours\Rotate.cs" />
-    <Compile Include="Time.cs" />
+    <Compile Include="Behaviours\Move.cs" />
+    <Compile Include="Behaviours\Rotate.cs" />
+    <Compile Include="Static Time.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Elements\Wall.cs" />
   </ItemGroup>

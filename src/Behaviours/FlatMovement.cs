@@ -24,7 +24,7 @@ namespace GLTech2.StandardBehaviours
         {
             // Check speed
             bool run = AlwaysRun;
-            if (Input.IsKeyDown(ChangeRun_Walk))
+            if (Keyboard.IsKeyDown(ChangeRun_Walk))
                 run = !run;
 
             float speed;
@@ -33,19 +33,19 @@ namespace GLTech2.StandardBehaviours
             else speed = WalkSpeed;
 
             // Step
-            if (Input.IsKeyDown(StepForward))
+            if (Keyboard.IsKeyDown(StepForward))
                 Element.Translate(Vector.Forward * speed * Time.DeltaTime);
-            if (Input.IsKeyDown(StepBack))
+            if (Keyboard.IsKeyDown(StepBack))
                 Element.Translate(Vector.Backward * speed * Time.DeltaTime);
-            if (Input.IsKeyDown(StepLeft))
+            if (Keyboard.IsKeyDown(StepLeft))
                 Element.Translate(Vector.Left * speed * Time.DeltaTime);
-            if (Input.IsKeyDown(StepRight))
+            if (Keyboard.IsKeyDown(StepRight))
                 Element.Translate(Vector.Right * speed * Time.DeltaTime);
 
             // Turn
-            if (Input.IsKeyDown(TurnLeft))
+            if (Keyboard.IsKeyDown(TurnLeft))
                 Element.Rotate(-TurnSpeed * Time.DeltaTime);
-            if (Input.IsKeyDown(TurnRight))
+            if (Keyboard.IsKeyDown(TurnRight))
                 Element.Rotate(TurnSpeed * Time.DeltaTime);
         }
     }

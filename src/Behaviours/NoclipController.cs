@@ -38,7 +38,7 @@ namespace GLTech2.StandardBehaviours
         float GetMaxSpeed()
         {
             bool run = AlwaysRun;
-            if (Input.IsKeyDown(ChangeRun_Walk))
+            if (Keyboard.IsKeyDown(ChangeRun_Walk))
                 run = !run;
 
             if (run)
@@ -71,13 +71,13 @@ namespace GLTech2.StandardBehaviours
         {
             Vector result = Vector.Origin;
 
-            if (Input.IsKeyDown(StepForward))
+            if (Keyboard.IsKeyDown(StepForward))
                 result += Vector.Forward;
-            if (Input.IsKeyDown(StepBack))
+            if (Keyboard.IsKeyDown(StepBack))
                 result += Vector.Backward;
-            if (Input.IsKeyDown(StepLeft))
+            if (Keyboard.IsKeyDown(StepLeft))
                 result += Vector.Left;
-            if (Input.IsKeyDown(StepRight))
+            if (Keyboard.IsKeyDown(StepRight))
                 result += Vector.Right;
 
             result *= Element.Normal;

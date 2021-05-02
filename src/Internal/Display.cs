@@ -79,12 +79,12 @@ namespace GLTech2
 
         private void Display_KeyDown(object sender, KeyEventArgs e)
         {
-            Input.KeyDown((Key)e.KeyCode);
+            Keyboard.KeyDown((Key)e.KeyCode);
         }
 
         private void Display_KeyUp(object sender, KeyEventArgs e)
         {
-            Input.KeyUp((Key)e.KeyCode);
+            Keyboard.KeyUp((Key)e.KeyCode);
         }
     }
 }

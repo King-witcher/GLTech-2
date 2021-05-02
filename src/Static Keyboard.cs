@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace GLTech2
 {
-    public static class Input
+    public static class Keyboard
     {
         static LinkedList<Key> Keys = new LinkedList<Key>();
 
