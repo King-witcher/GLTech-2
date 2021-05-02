@@ -10,6 +10,11 @@ namespace GLTech2
     {
         static void Main()
         {
+            Example();
+        }
+
+        static void Example()
+        {
             Console.WriteLine("Press any key to start.");
             Console.ReadKey();
             Console.Write("\b \b");
@@ -55,10 +60,10 @@ namespace GLTech2
             scene.AddElement(pov);
 
             // Add behaviours
-            cyl.AddBehaviour(new Rotate { Speed = 180f });
-            cyl2.AddBehaviour(new Rotate { Speed = 180f });
-            cyl3.AddBehaviour(new Rotate { Speed = 180f });
-            center.AddBehaviour(new Rotate { Speed = -60f });
+            cyl.AddBehaviour(new Rotate { Speed = 18f });
+            cyl2.AddBehaviour(new Rotate { Speed = 18f });
+            cyl3.AddBehaviour(new Rotate { Speed = 18f });
+            center.AddBehaviour(new Rotate { Speed = -6f });
             pov.AddBehaviour<DebugFps>();
             pov.AddBehaviour<NoclipMovement>();
 
