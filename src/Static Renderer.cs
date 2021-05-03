@@ -15,9 +15,9 @@ namespace GLTech2
 
     public static partial class Renderer
     {
-        public static bool CppRendering { get; } = false;
+        static bool CppRendering { get; } = false;
         public static bool ParallelRendering { get; set; } = true;
-        public static bool DoubleBuffering { get; set; } = true;
+        static bool DoubleBuffering { get; set; } = true;
 
 
         public static Scene ActiveScene => activeScene;
@@ -70,6 +70,13 @@ namespace GLTech2
                 Clip(ref value, 1f, 179f);
                 ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
             }
+        }
+
+        static bool captureMouse = true;
+        public static bool CaptureMouse
+        {
+            get => captureMouse;
+            set => captureMouse = value;    // Revisar
         }
 
 
@@ -130,9 +137,6 @@ namespace GLTech2
             // Theese lines run after the renderer window is closed.
             stopRequest = true;
 
-            if (fullScreen)
-                Cursor.Show();
-
             // Wait for the control thread to stop using outputBuffer.
             while (controlThreadRunning)
                 Thread.Yield();
@@ -157,6 +161,7 @@ namespace GLTech2
             in bool cancellationRequest,
             ref bool controlThreadRunning)
         {
+
             // Caches numbers that will use repeatedly by the render.
             ReloadCache();
 
@@ -189,14 +194,16 @@ namespace GLTech2
                 while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
 
+                Mouse.Measure();
                 activeScene.InvokeUpdate();
-                Time.NewFrame();
+                Time.Restart();
             }
 
             // Tells the main thread that outputBuffer is up to be released.
             controlThreadRunning = false;
 
             activeBuffer.Dispose();
+
             Time.Reset();
         }
 

@@ -28,7 +28,7 @@ namespace GLTech2
             frameStopwatch.Start();
         }
 
-        internal static void NewFrame()
+        internal static void Restart()
         {
             frameStopwatch.Restart();
         }

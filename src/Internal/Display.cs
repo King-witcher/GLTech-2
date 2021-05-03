@@ -16,6 +16,9 @@ namespace GLTech2
         internal Display(bool fullscreen, int width, int height, Bitmap videoSource)
         {
             InitializeComponent();
+            pictureBox.Click += OnFocus;
+            LostFocus += OnLoseFocus;
+
             source = videoSource;
 
             if (fullscreen)
@@ -28,6 +31,7 @@ namespace GLTech2
 
             // This create an infinite loop that keeps updating the image on the screen.
             pictureBox.Paint += RePaint;
+            OnFocus(null, null);
         }
 
         internal void RePaint(object _ = null, EventArgs __ = null)
@@ -58,12 +62,13 @@ namespace GLTech2
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(640, 360);
             this.Controls.Add(this.pictureBox);
-            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Display";
             this.Text = "GL Tech 2 Screen";
+            this.Load += new System.EventHandler(this.Display_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Display_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
@@ -85,6 +90,26 @@ namespace GLTech2
         private void Display_KeyUp(object sender, KeyEventArgs e)
         {
             Keyboard.KeyUp((Key)e.KeyCode);
+        }
+
+        private void Display_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void OnFocus(object sender, EventArgs e)
+        {
+            if (Renderer.CaptureMouse)
+            {
+                Mouse.Enable();
+            }
+        }
+
+        private void OnLoseFocus(object _, EventArgs __)
+        {
+            if (Renderer.CaptureMouse)
+            {
+                Mouse.Disable();
+            }
         }
     }
 }

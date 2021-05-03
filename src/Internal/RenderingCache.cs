@@ -17,12 +17,12 @@ namespace GLTech2
 
         internal RenderingCache(int width, int height, float FOV = 90f)
         {
-            const double TORAD = Math.PI / 180.0f;
+            const double TORAD = Math.PI / 180f;
 
             this.FOV = FOV;
 
-            double tan = Math.Tan(TORAD * FOV / 2);
-            colHeight1 = width / (float)(2 * tan);
+            double tan = Math.Tan(TORAD * FOV / 2f);
+            colHeight1 = width / (float)(2.0 * tan);
 
             // Allocates both angles and cosines pointers at once.
             angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);

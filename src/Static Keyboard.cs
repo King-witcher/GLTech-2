@@ -12,10 +12,6 @@ namespace GLTech2
     {
         static LinkedList<Key> Keys = new LinkedList<Key>();
 
-        public static bool CaptureMouse { get; set; } = false;
-        public static int MouseDisplacementX { get; private set; }
-        public static int MouseDisplacementY { get; private set; }
-
         public static bool IsKeyDown(Key key) => Keys.Contains(key);
         public static event Action<Key> OnKeyDown;
         public static event Action<Key> OnKeyUp;
