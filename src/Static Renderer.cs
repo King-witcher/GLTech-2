@@ -207,7 +207,7 @@ namespace GLTech2
             {
                 controlSW.Restart();
 
-                CLRRender(activeBuffer, activeScene.unmanaged);
+                CLRRenderLegacy(activeBuffer, activeScene.unmanaged);
                 PostProcess(activeBuffer);
 
                 // Copies the working buffer to the original.

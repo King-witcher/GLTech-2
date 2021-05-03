@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL Tech 2", "src\GL Tech 2.csproj", "{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49} = {C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL Tech 2 Native", "src\NativeRenderer.vcxproj", "{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFDD11BB-B082-4732-B905-A605028EA209}"
 	ProjectSection(SolutionItems) = preProject
@@ -35,14 +30,6 @@ Global
 		{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}.Release|x64.ActiveCfg = Release|Any CPU
 		{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}.Release|x64.Build.0 = Release|Any CPU
 		{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}.Release|x86.ActiveCfg = Release|Any CPU
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Debug|x64.ActiveCfg = Debug|x64
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Debug|x64.Build.0 = Debug|x64
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Debug|x86.ActiveCfg = Debug|Win32
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|Any CPU.ActiveCfg = Release|Win32
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|x64.ActiveCfg = Release|x64
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|x64.Build.0 = Release|x64
-		{C3BA75F2-03FE-4BDB-93FE-F78FFF935D49}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

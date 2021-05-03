@@ -89,7 +89,7 @@ namespace GLTech2
             // Add post processing effects
             var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 30);
             antiAliasing.ShowEdges = false;
-            //Renderer.AddEffect(antiAliasing);
+            Renderer.AddEffect(antiAliasing);
             //antiAliasing.EdgeDettection = true;
 
             // Run!
