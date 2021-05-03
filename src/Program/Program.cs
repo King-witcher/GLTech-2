@@ -80,8 +80,11 @@ namespace GLTech2
 
             // Setup Renderer
             Renderer.FullScreen = true;
+            //Renderer.CustomHeight = 900;
+            //Renderer.CustomWidth = 1600;
             Renderer.FieldOfView = 85;
             Renderer.ParallelRendering = true;
+            Renderer.DoubleBuffering = true;
 
             // Add post processing effects
             var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 30);

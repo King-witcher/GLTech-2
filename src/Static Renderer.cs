@@ -17,7 +17,7 @@ namespace GLTech2
     {
         static bool CppRendering { get; } = false;
         public static bool ParallelRendering { get; set; } = true;
-        static bool DoubleBuffering { get; set; } = true;
+
 
 
         public static Scene ActiveScene => activeScene;
@@ -33,12 +33,20 @@ namespace GLTech2
             }
         }
 
+        static bool doubleBuffering = true;
+        public static bool DoubleBuffering
+        {
+            get => doubleBuffering;
+            set => ChangeIfNotRunning("DoubleBuffering", ref doubleBuffering, value);
+        }
+
         private static int customWidth = 640;
         public static int CustomWidth
         {
             get => customWidth;
             set => ChangeIfNotRunning("CustomWidth", ref customWidth, value);
         }
+
         private static int customHeight = 360;
         public static int CustomHeight
         {
@@ -165,9 +173,25 @@ namespace GLTech2
             // Caches numbers that will use repeatedly by the render.
             ReloadCache();
 
-            // Primary buffer where the image will be rendered and postprocessed and then copyed to the
-            // original buffer.
-            PixelBuffer activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
+            // Buffer where the image will be rendered
+            PixelBuffer activeBuffer;
+            if (DoubleBuffering)
+                activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
+            else
+                activeBuffer = outputBuffer;
+
+            if (!DoubleBuffering && postProcessing.Count > 0)
+                Debug.InternalLog("Renderer",
+                    "The renderer has post processing effects but DoubleBuffering is disabled. " +
+                    "The engine will display incompletely post processed frames and cause a probably unexpected " +
+                    "behaviour.",
+                    Debug.Options.Warning);
+
+            if (DoubleBuffering && postProcessing.Count == 0)
+                Debug.InternalLog("Renderer", 
+                    "DoubleBuffering is enabled but no post processing effect is active. If you need " +
+                    "more performance or less input lag, consider disabling DoubleBuffering.",
+                    Debug.Options.Info);
 
             // Stopwatch that counts RenderTime.
             Stopwatch controlSW = new Stopwatch();
@@ -183,10 +207,12 @@ namespace GLTech2
             {
                 controlSW.Restart();
 
-                CLRRender2(activeBuffer, activeScene.unmanaged);
+                CLRRender(activeBuffer, activeScene.unmanaged);
                 PostProcess(activeBuffer);
+
                 // Copies the working buffer to the original.
-                outputBuffer.Copy(activeBuffer);
+                if (DoubleBuffering)
+                    outputBuffer.Copy(activeBuffer);
 
                 Time.renderTime = (double)controlSW.ElapsedTicks / Stopwatch.Frequency;
 

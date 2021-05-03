@@ -14,7 +14,7 @@ namespace GLTech2
         //[DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         //private unsafe static extern void NativeRender(RendererData* camera);
 
-        private unsafe static void CLRRender(PixelBuffer target, SceneData* scene)        // Must be changed
+        private unsafe static void CLRRenderLegacy(PixelBuffer target, SceneData* scene)        // Must be changed
         {
             //Caching frequently used values.
             uint* buffer = target.uint0;
@@ -80,7 +80,7 @@ namespace GLTech2
                 }
             }
         }
-        private unsafe static void CLRRender2(PixelBuffer target, SceneData* scene)        // Must be changed
+        private unsafe static void CLRRender(PixelBuffer target, SceneData* scene)        // Must be changed
         {
             //Caching frequently used values.
             uint* buffer = target.uint0;
@@ -109,11 +109,11 @@ namespace GLTech2
                 if (nearest_ratio != 2f)
                 {
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
-                    float fullColumnRatio = height / columnHeight;
-                    int column_start = (height - (int)columnHeight) / 2;
-                    int column_end = (height + (int)columnHeight) / 2;
-                    int draw_column_start = column_start;
-                    int draw_column_end = column_end;
+
+                    float column_start = (height - columnHeight) / 2f;
+                    float column_end = (height + columnHeight) / 2f;
+                    int draw_column_start = (int) column_start;
+                    int draw_column_end = (int) column_end;
                     if (draw_column_start < 0)
                         draw_column_start = 0;
                     if (draw_column_end > height)
@@ -132,8 +132,6 @@ namespace GLTech2
                     {
                         float vratio = (line - column_start) / columnHeight;
                         uint pixel = nearest->material.MapPixel(nearest_ratio, vratio);
-                        int d = draw_column_start;
-                        int c = draw_column_end; 
                         buffer[width * line + ray_id] = pixel;
                     }
                     for (int line = draw_column_end; line < height; line++)
