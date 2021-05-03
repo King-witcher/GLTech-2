@@ -162,16 +162,6 @@ namespace GLTech2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Wall {
-            get {
-                object obj = ResourceManager.GetObject("Wall", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Wood {
             get {
                 object obj = ResourceManager.GetObject("Wood", resourceCulture);

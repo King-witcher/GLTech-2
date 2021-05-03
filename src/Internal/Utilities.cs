@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    static class Utilities
+    unsafe static class Utilities
     {
+
+        public const double ToRad = Math.PI / 180f;
+
         public static void Clip<T>(ref T value, T min, T max) where T : struct, IComparable<T>
         {
             if (value.CompareTo(max) > 0)

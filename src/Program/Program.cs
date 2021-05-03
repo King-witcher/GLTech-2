@@ -40,7 +40,7 @@ namespace GLTech2
             Material bricks_mat = new Material(
                 texture: bricks,
                 hoffset: 0f,
-                hrepeat: 6.283f);
+                hrepeat: 4f);
             Material wood_mat = new Material(
                 texture: wood,
                 hoffset: 0f,
@@ -51,7 +51,7 @@ namespace GLTech2
 
             // Create scene elements
             Element sqware = new RegularPolygon(new Vector(-0.5f, 0f), 4, .354f, wood_mat);
-            Element cylinder = new RegularPolygon(new Vector(0.5f, 0f), 100, .5f, bricks_mat);
+            Element cylinder = new RegularPolygon(new Vector(0.5f, 0f), 100, .318f, bricks_mat);
             Element tri = new RegularPolygon(new Vector(0f, 0.866f), 3, .385f, carvedWall_mat);
             Empty center = new Empty(0, 0.2868f);
             sqware.Parent = center;
