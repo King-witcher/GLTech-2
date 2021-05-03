@@ -85,4 +85,9 @@ After ending that, remember to release every unmanaged resource.
 		fxaa.Dispose();
 		
 		// Behaviours desn't use unmanaged resources.
+
+Have fun.
+
+Giuseppe Lanna
+02-05-2021
 > Written with [StackEdit](https://stackedit.io/).
