@@ -74,7 +74,7 @@
     <Compile Include="Internal\PixelBuffer.cs" />
     <Compile Include="Elements\Abstract Element.cs" />
     <Compile Include="Elements\Empty.cs" />
-    <Compile Include="Internal\Renderer_Operations.cs" />
+    <Compile Include="Internal\CLRRender.cs" />
     <Compile Include="Internal\RenderingCache.cs" />
     <Compile Include="Internal\SceneData.cs" />
     <Compile Include="Internal\TextureData.cs" />
