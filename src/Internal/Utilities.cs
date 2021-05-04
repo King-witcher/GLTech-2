@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    unsafe static class Utilities
+    internal static unsafe class Utilities
     {
 
         public const float ToRad = (float) Math.PI / 180f;
