@@ -5,9 +5,19 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
+    /// <summary>
+    ///     Provides information about mouse inputs for each frame.
+    /// </summary>
     public static class Mouse
     {
+        /// <summary>
+        ///     Gets how much the mouse moved horizontally.
+        /// </summary>
         public static int HShift { get; private set; }
+
+        /// <summary>
+        ///     Gets how much the mouse moved vertically.
+        /// </summary>
         public static int VShift { get; private set; }
         
 

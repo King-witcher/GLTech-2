@@ -89,22 +89,156 @@ $(document).ready(function(){initNavTree('struct_g_l_tech2_1_1_material.html',''
 <div class="title">GLTech2.Material Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Contains information about how a texture should be offset, resized and allows to add visual aspect to a visible object.  
+ <a href="struct_g_l_tech2_1_1_material.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7eadfce418f14e024e95e6fef6e9630e"><td class="memItemLeft" align="right" valign="top"><a id="a7eadfce418f14e024e95e6fef6e9630e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Material</b> (<a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a> texture, float hoffset=0f, float hrepeat=1f, float voffset=0f, float vrepeat=1f)</td></tr>
+<tr class="memitem:a7eadfce418f14e024e95e6fef6e9630e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_material.html#a7eadfce418f14e024e95e6fef6e9630e">Material</a> (<a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a> texture, float hoffset=0f, float hrepeat=1f, float voffset=0f, float vrepeat=1f)</td></tr>
+<tr class="memdesc:a7eadfce418f14e024e95e6fef6e9630e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a new instance of material given its texture.  <a href="struct_g_l_tech2_1_1_material.html#a7eadfce418f14e024e95e6fef6e9630e">More...</a><br /></td></tr>
 <tr class="separator:a7eadfce418f14e024e95e6fef6e9630e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a835f23500f8651ea990f2d304b640fb2"><td class="memItemLeft" align="right" valign="top"><a id="a835f23500f8651ea990f2d304b640fb2"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Material</b> (<a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a> texture)</td></tr>
+<tr class="memitem:a835f23500f8651ea990f2d304b640fb2"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_material.html#a835f23500f8651ea990f2d304b640fb2">operator Material</a> (<a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a> texture)</td></tr>
+<tr class="memdesc:a835f23500f8651ea990f2d304b640fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly casts a texture instance to a <a class="el" href="struct_g_l_tech2_1_1_material.html" title="Contains information about how a texture should be offset, resized and allows to add visual aspect to...">Material</a>.  <a href="struct_g_l_tech2_1_1_material.html#a835f23500f8651ea990f2d304b640fb2">More...</a><br /></td></tr>
 <tr class="separator:a835f23500f8651ea990f2d304b640fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af15f2d14f4392e47a566d4442ce52c66"><td class="memItemLeft" align="right" valign="top"><a id="af15f2d14f4392e47a566d4442ce52c66"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Material</b> (Bitmap texture)</td></tr>
-<tr class="separator:af15f2d14f4392e47a566d4442ce52c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a500c44dfcbf48ce4b46b66a30c570a9c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_material.html#a500c44dfcbf48ce4b46b66a30c570a9c">operator Material</a> (Bitmap bitmap)</td></tr>
+<tr class="memdesc:a500c44dfcbf48ce4b46b66a30c570a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly casts a System.Drawing.Bitmap to a texture.  <a href="struct_g_l_tech2_1_1_material.html#a500c44dfcbf48ce4b46b66a30c570a9c">More...</a><br /></td></tr>
+<tr class="separator:a500c44dfcbf48ce4b46b66a30c570a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Contains information about how a texture should be offset, resized and allows to add visual aspect to a visible object. </p>
+<p><a class="el" href="struct_g_l_tech2_1_1_material.html" title="Contains information about how a texture should be offset, resized and allows to add visual aspect to...">Material</a> is a fleyweight object that refers to a texture and stores data about offset and resizing of the same. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7eadfce418f14e024e95e6fef6e9630e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eadfce418f14e024e95e6fef6e9630e">&#9670;&nbsp;</a></span>Material()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLTech2.Material.Material </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a>&#160;</td>
+          <td class="paramname"><em>texture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>hoffset</em> = <code>0f</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>hrepeat</em> = <code>1f</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>voffset</em> = <code>0f</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>vrepeat</em> = <code>1f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a new instance of material given its texture. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>A texture</td></tr>
+    <tr><td class="paramname">hoffset</td><td>Horizontal offset of the texture</td></tr>
+    <tr><td class="paramname">hrepeat</td><td>How many times the texture is repeated horizontally</td></tr>
+    <tr><td class="paramname">voffset</td><td>Not implemented yet</td></tr>
+    <tr><td class="paramname">vrepeat</td><td>Not implemented yet</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a500c44dfcbf48ce4b46b66a30c570a9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a500c44dfcbf48ce4b46b66a30c570a9c">&#9670;&nbsp;</a></span>operator Material() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static GLTech2.Material.operator <a class="el" href="struct_g_l_tech2_1_1_material.html">Material</a> </td>
+          <td>(</td>
+          <td class="paramtype">Bitmap&#160;</td>
+          <td class="paramname"><em>bitmap</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Explicitly casts a System.Drawing.Bitmap to a texture. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bitmap</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a835f23500f8651ea990f2d304b640fb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a835f23500f8651ea990f2d304b640fb2">&#9670;&nbsp;</a></span>operator Material() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit GLTech2.Material.operator <a class="el" href="struct_g_l_tech2_1_1_material.html">Material</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a>&#160;</td>
+          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly casts a texture instance to a <a class="el" href="struct_g_l_tech2_1_1_material.html" title="Contains information about how a texture should be offset, resized and allows to add visual aspect to...">Material</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td><a class="el" href="class_g_l_tech2_1_1_texture.html">Texture</a> to be cast</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

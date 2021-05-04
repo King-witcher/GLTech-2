@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"namespace_g_l_tech2.html#a1244e7efde07ae6c1d25dcedea54653ea6d4e0c82b9a585e331ed1effccd3e52a":[0,0,0,19,3],
 "namespace_g_l_tech2.html#a1244e7efde07ae6c1d25dcedea54653ea6ff4e832313d53a4d41a7c5df78cc7f3":[0,0,0,19,159],
 "namespace_g_l_tech2.html#a1244e7efde07ae6c1d25dcedea54653ea7039b07547dd9d5d70c7be1823653606":[0,0,0,19,157],
 "namespace_g_l_tech2.html#a1244e7efde07ae6c1d25dcedea54653ea727d80d0f71533e7db2dc4a841c4edb1":[0,0,0,19,175],
@@ -126,9 +127,9 @@ var NAVTREEINDEX1 =
 "namespaces.html":[0,0],
 "pages.html":[],
 "struct_g_l_tech2_1_1_material.html":[1,0,0,10],
+"struct_g_l_tech2_1_1_material.html#a500c44dfcbf48ce4b46b66a30c570a9c":[1,0,0,10,1],
 "struct_g_l_tech2_1_1_material.html#a7eadfce418f14e024e95e6fef6e9630e":[1,0,0,10,0],
 "struct_g_l_tech2_1_1_material.html#a835f23500f8651ea990f2d304b640fb2":[1,0,0,10,2],
-"struct_g_l_tech2_1_1_material.html#af15f2d14f4392e47a566d4442ce52c66":[1,0,0,10,1],
 "struct_g_l_tech2_1_1_vector.html":[1,0,0,17],
 "struct_g_l_tech2_1_1_vector.html#a0a69a6d46e40c4a39d722d8e9033dfc7":[1,0,0,17,16],
 "struct_g_l_tech2_1_1_vector.html#a112996614e8ff27d153a957950ebb943":[1,0,0,17,5],

@@ -1,25 +1,30 @@
-﻿//See Wall.cs before
-//See Vector.cs before
-//See Material.cs before
-//See Texture32.cs before
-//See Sprite.cs before
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
+    /// <summary>
+    /// Represents a scene, which stores a set of elements that can be or not rendered and, at least, one observer.
+    /// </summary>
     public unsafe sealed partial class Scene : IDisposable
     {
         internal SceneData* unmanaged;
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
 
+        /// <summary>
+        /// Gets a new instance of Scene.
+        /// </summary>
+        /// <param name="background">Background material rendered behind everything</param>
+        /// <param name="maxWalls">Max walls that the scene can fit</param>
+        /// <param name="maxSprities">Max sprities that the scene can fit</param>
         public Scene(Material background, int maxWalls = 512, int maxSprities = 512) =>
             unmanaged = SceneData.Create(maxWalls, maxSprities, background);
 
 
+        /// <summary>
+        /// Gets and sets the current observer from where the scene will be rendered.
+        /// </summary>
         public Observer ActiveObserver
         {
             get => activeObserver;
@@ -35,11 +40,28 @@ namespace GLTech2
             }
         }
 
-
+        /// <summary>
+        /// Gets how many walls the scene can fit.
+        /// </summary>
         public int MaxWalls => unmanaged->wall_max;
+
+        /// <summary>
+        /// Gets how many walls the scene fits.
+        /// </summary>
         public int WallCount => unmanaged->wall_count;
 
-
+        /// <summary>
+        ///     Add a new element and every child it has to the scene.
+        /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///         Every element can only be added once to a scene. Trying to add an element twice or an element that is already bound to another scene will generate command line warning.
+        ///     </para>
+        ///     <para>
+        ///         This method was not yet fully tested!
+        ///     </para>
+        /// </remarks>
+        /// <param name="element">An element to be added</param>
         public void AddElement(Element element)
         {
             if (element is null)
@@ -56,7 +78,6 @@ namespace GLTech2
                 element.Parent = null;
             }
 
-
             if (element is Wall)
                 UnmanagedAddWall(element as Wall);
             else if (element is Sprite)
@@ -67,10 +88,14 @@ namespace GLTech2
             elements.Add(element);
             element.scene = this;
 
-            foreach (var item in element.childs)    // possible stack overflow and I dont care if the user tries to force it xD
+            foreach (var item in element.childs)
                 AddElement(item);
         }
 
+        /// <summary>
+        ///     Adds a whole set of elements.
+        /// </summary>
+        /// <param name="elements">Set of elements</param>
         public void AddElements(IEnumerable<Element> elements)
         {
             foreach (Element item in elements)
@@ -82,6 +107,10 @@ namespace GLTech2
             }
         }
 
+        /// <summary>
+        ///     Add an array of elements via params.
+        /// </summary>
+        /// <param name="elements">Array of elements</param>
         public void AddElements(params Element[] elements)
         {
             AddElements((IEnumerable<Element>) elements);
@@ -100,6 +129,9 @@ namespace GLTech2
             ActiveObserver = p;
         }
 
+        /// <summary>
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             foreach(Element item in elements)

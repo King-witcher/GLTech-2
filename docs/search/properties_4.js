@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['module_106',['Module',['../struct_g_l_tech2_1_1_vector.html#a4fffc364f183af3bc4dcaad5d464a8ac',1,'GLTech2::Vector']]]
+  ['elapsed_151',['Elapsed',['../class_g_l_tech2_1_1_time.html#a38bb7fa8099aa2014fc6da4af5684757',1,'GLTech2::Time']]]
 ];

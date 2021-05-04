@@ -3,10 +3,18 @@ using System.Text.RegularExpressions;
 
 namespace GLTech2
 {
+    /// <summary>
+    ///     Provides an interface for printing text on the screen.
+    /// </summary>
     public static class Debug
     {
+        /// <summary>
+        ///     Gets and sets if the Debug should print system warnings. Obsolete.
+        /// </summary>
+        [Obsolete]
         public static bool DebugWarnings { get; set; } = true;
 
+        [Obsolete]
         internal static void LogWarning(string warning)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -16,12 +24,21 @@ namespace GLTech2
             Console.WriteLine();
         }
 
+        /// <summary>
+        ///     Prints a message on the screen.
+        /// </summary>
+        /// <param name="message">Message</param>
         public static void Log(string message)
         {
             System.Console.WriteLine(message);
             Console.WriteLine();
         }
 
+        /// <summary>
+        ///     Prints a message on the screen given an option.
+        /// </summary>
+        /// <param name="text">Message</param>
+        /// <param name="option">Option</param>
         public static void Log(string text, Options option)
         {
             ConsoleColor prev = Console.ForegroundColor;
@@ -100,6 +117,9 @@ namespace GLTech2
         }
 #pragma warning enable
 
+        /// <summary>
+        ///     Specifies constants that define the details of how a message should be printed.
+        /// </summary>
         public enum Options
         {
             Message,
