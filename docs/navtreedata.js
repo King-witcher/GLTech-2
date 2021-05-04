@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "GLTech 2 Documntation", "index.html", [
+  [ "GLTech 2 Documentation", "index.html", [
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ]
     ] ],
