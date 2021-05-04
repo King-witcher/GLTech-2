@@ -14,6 +14,8 @@ namespace GLTech2
 
         static void Main()
         {
+            Vector a = new Vector(-1f, 0f);
+            Console.WriteLine(a.Angle);
             Example();
         }
 
