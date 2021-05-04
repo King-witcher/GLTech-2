@@ -6,6 +6,8 @@ GL Tech 2 is a 3D engine designed with it's interface entirely in C# and parts o
 
 If you already have Visual Studio Community 2019 installed, just open `CLICKME.sln` and press F5.
 
+For "full" documentation, see https://king-witcher.github.io/GLTech-2/
+
 ## Building and rendering your first scene
 
 We start by importing textures from Bitmaps. Each texture represents a single 32-bits-per-pixel image that can be used by many objects, wich can resize and offset it any different ways you want. There are two different ways that result in the same thing:
