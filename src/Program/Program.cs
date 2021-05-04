@@ -3,19 +3,14 @@ using GLTech2.PrefabElements;
 using GLTech2.Properties;
 using System.Media;
 using GLTech2.StandardBehaviours;
-using System.Runtime.InteropServices;
 using System;
-using System.Windows.Forms;
 
 namespace GLTech2
 {
     internal static class Program
     {
-
         static void Main()
         {
-            Vector a = new Vector(-1f, 0f);
-            Console.WriteLine(a.Angle);
             Example();
         }
 
@@ -105,6 +100,8 @@ namespace GLTech2
             carvedWall.Dispose();
             Console.WriteLine("Press any key to close.");
             Console.ReadKey();
+            Console.Write("\b \b");
+            Console.WriteLine("Closing...");
         }
     }
 }
