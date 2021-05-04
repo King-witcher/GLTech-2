@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vector_78',['Vector',['../struct_g_l_tech2_1_1_vector.html',1,'GLTech2.Vector'],['../struct_g_l_tech2_1_1_vector.html#aef18436ab7d3b5d8ec85eecfb394511f',1,'GLTech2.Vector.Vector(float x, float y)'],['../struct_g_l_tech2_1_1_vector.html#a1c31a9f5e1b13c34a835131f0d603176',1,'GLTech2.Vector.Vector(float angle)']]]
+  ['wall_80',['Wall',['../class_g_l_tech2_1_1_wall.html',1,'GLTech2']]],
+  ['wallcount_81',['WallCount',['../class_g_l_tech2_1_1_scene.html#a070db74209163f6b79d46d4e72c98a14',1,'GLTech2::Scene']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vector_107',['Vector',['../struct_g_l_tech2_1_1_vector.html',1,'GLTech2']]]
+  ['wall_108',['Wall',['../class_g_l_tech2_1_1_wall.html',1,'GLTech2']]]
 ];

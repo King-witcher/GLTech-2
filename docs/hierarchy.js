@@ -33,6 +33,5 @@ var hierarchy =
     [ "GLTech2.Material", "struct_g_l_tech2_1_1_material.html", null ],
     [ "GLTech2.Mouse", "class_g_l_tech2_1_1_mouse.html", null ],
     [ "GLTech2.Renderer", "class_g_l_tech2_1_1_renderer.html", null ],
-    [ "GLTech2.Time", "class_g_l_tech2_1_1_time.html", null ],
-    [ "GLTech2.Utilities", "class_g_l_tech2_1_1_utilities.html", null ]
+    [ "GLTech2.Time", "class_g_l_tech2_1_1_time.html", null ]
 ];

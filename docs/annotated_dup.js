@@ -24,7 +24,6 @@ var annotated_dup =
       [ "Observer", "class_g_l_tech2_1_1_observer.html", "class_g_l_tech2_1_1_observer" ],
       [ "Wall", "class_g_l_tech2_1_1_wall.html", "class_g_l_tech2_1_1_wall" ],
       [ "Renderer", "class_g_l_tech2_1_1_renderer.html", "class_g_l_tech2_1_1_renderer" ],
-      [ "Utilities", "class_g_l_tech2_1_1_utilities.html", "class_g_l_tech2_1_1_utilities" ],
       [ "Material", "struct_g_l_tech2_1_1_material.html", "struct_g_l_tech2_1_1_material" ],
       [ "Scene", "class_g_l_tech2_1_1_scene.html", "class_g_l_tech2_1_1_scene" ],
       [ "Debug", "class_g_l_tech2_1_1_debug.html", "class_g_l_tech2_1_1_debug" ],
