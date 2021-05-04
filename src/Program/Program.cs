@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace GLTech2
 {
-    static class Program
+    internal static class Program
     {
 
         static void Main()
