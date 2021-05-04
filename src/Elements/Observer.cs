@@ -5,20 +5,20 @@ using System.Runtime.CompilerServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct POVData
+    internal unsafe struct ObserverData
     {
         internal Vector position;
         internal float rotation; //MUST be 0 <= x < 360
 
-        static internal POVData* Create(Vector position, float rotation) // a little bit optimizable
+        static internal ObserverData* Create(Vector position, float rotation) // a little bit optimizable
         {
-            POVData* result = (POVData*)Marshal.AllocHGlobal(sizeof(POVData));
+            ObserverData* result = (ObserverData*)Marshal.AllocHGlobal(sizeof(ObserverData));
             result->position = position;
             result->rotation = rotation;
             return result;
         }
 
-        static internal void Delete(POVData* item)
+        static internal void Delete(ObserverData* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }
@@ -26,11 +26,11 @@ namespace GLTech2
 
     public unsafe class Observer : Element, IDisposable
     {
-        internal POVData* unmanaged;
+        internal ObserverData* unmanaged;
 
         public Observer(Vector position, float rotation)
         {
-            unmanaged = POVData.Create(position, rotation);
+            unmanaged = ObserverData.Create(position, rotation);
         }
 
         private protected override Vector AbsolutePosition
@@ -50,7 +50,7 @@ namespace GLTech2
 
         public override void Dispose()
         {
-            POVData.Delete(unmanaged);
+            ObserverData.Delete(unmanaged);
             unmanaged = null;
         }
     }

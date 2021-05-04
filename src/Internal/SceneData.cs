@@ -14,7 +14,7 @@ namespace GLTech2
         internal int wall_count;
         internal int wall_max;
         internal Material background;
-        internal POVData* activeObserver;
+        internal ObserverData* activeObserver;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static SceneData* Create(int maxWalls, int maxSprities, Material background)
