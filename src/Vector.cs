@@ -9,8 +9,8 @@ namespace GLTech2
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct Vector : IEquatable<Vector>
     {
-		const float TORAD = (float)Math.PI / 180f;
-		const float TODEGREE = 180f / (float)Math.PI;
+		private const float TORAD = (float)Math.PI / 180f;
+		private const float TODEGREE = 180f / (float)Math.PI;
 
 		internal float x;
 		internal float y;
