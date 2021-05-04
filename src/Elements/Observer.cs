@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct POVData
+    internal unsafe struct POVData
     {
         internal Vector position;
         internal float rotation; //MUST be 0 <= x < 360
