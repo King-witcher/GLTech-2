@@ -1,13 +1,13 @@
 var class_g_l_tech2_1_1_element =
 [
     [ "Element", "class_g_l_tech2_1_1_element.html#ae958dbed692759905e52b8ae05b884ca", null ],
-    [ "AddBehaviour", "class_g_l_tech2_1_1_element.html#a39bcf0906a22ce9f7527d090189ffb9d", null ],
+    [ "AddBehaviour", "class_g_l_tech2_1_1_element.html#aabe6ae3c53c63648f1d43efa508b8cc5", null ],
     [ "AddBehaviour< BehaviourType >", "class_g_l_tech2_1_1_element.html#ae726742694e9a4c42f5cd735aa3fa57c", null ],
     [ "AddBehaviours", "class_g_l_tech2_1_1_element.html#a947763e0b8d826fc72e8b9ac7d34d8dc", null ],
     [ "AddBehaviours", "class_g_l_tech2_1_1_element.html#a17ac9f0b784a74f91506e1eea8d2031d", null ],
     [ "ContainsBehaviour", "class_g_l_tech2_1_1_element.html#a72ba7605cba93f044550efac37d1f001", null ],
     [ "ContainsBehaviour< BehaviourType >", "class_g_l_tech2_1_1_element.html#a70dd92529859bed4e7038f0d2e07f1dd", null ],
-    [ "DetachChildren", "class_g_l_tech2_1_1_element.html#a97bca5490ec58f1d02e6d11b8488d947", null ],
+    [ "DetachChildren", "class_g_l_tech2_1_1_element.html#a5933953f7da7f103f65b5739832dd598", null ],
     [ "DetachChilds", "class_g_l_tech2_1_1_element.html#a72a6c6676b1eccd40ac89036ca12cf4f", null ],
     [ "Dispose", "class_g_l_tech2_1_1_element.html#a0c1d09747a9346f7719f32c4ed0b670c", null ],
     [ "GetChild", "class_g_l_tech2_1_1_element.html#ae73ef650c65193263fe503d9908cbd3f", null ],

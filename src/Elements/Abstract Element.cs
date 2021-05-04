@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace GLTech2
 {
+    /// <summary>
+    ///     Represents an element that can be part of a Scene.
+    /// </summary>
     public abstract class Element : IDisposable
     {
         // Every element MUST call UpdateRelative() after construction. I have to fix it yet.
@@ -16,7 +19,14 @@ namespace GLTech2
         internal Scene scene;
         internal List<Element> childs = new List<Element>();
 
+        /// <summary>
+        ///     Its correspondent scene. If the element is not bound to any scene, returns null.
+        /// </summary>
         public Scene Scene => scene; // Maybe not necessary.
+
+        /// <summary>
+        ///     How many childs the element has.
+        /// </summary>
         public int ChildCount => childs.Count;
 
 
@@ -27,7 +37,9 @@ namespace GLTech2
         internal event Action OnMoveOrRotate;
 
 
-        // Gets and sets RELATIVE position.
+        /// <summary>
+        ///     Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 
+        /// </summary>
         public Vector Position
         {
             get
@@ -52,7 +64,15 @@ namespace GLTech2
             }
         }
 
-        // Gets and sets RELATIVE scale.
+        /// <summary>
+        ///     Gets and sets element's normal relatively to it's parent or, if it has no parent, it's absolute normal. 
+        /// </summary>
+        /// <remarks>
+        ///     Normal vector determines the rotation and the scale of an object and is used due to performance improvements when managing multiple childs.
+        ///     <para>
+        ///         Use wisely.
+        ///     </para>
+        /// </remarks>
         public Vector Normal
         {
             get
@@ -77,7 +97,9 @@ namespace GLTech2
             }
         }
 
-        // Gets and sets RELATIVE rotation through relative normal.
+        /// <summary>
+        ///     Gets and sets directly the element's rotation relative to it's parent or, if it has no parents, it's absolute rotation.
+        /// </summary>
         public float Rotation
         {
             get
@@ -104,6 +126,12 @@ namespace GLTech2
             }
         }
 
+        /// <summary>
+        ///     Gets and sets element's parent. Null is equivalent to no parent.
+        /// </summary>
+        /// <remarks>
+        ///     Setting a parent will make the object to move and rotate relatively to it's parent, and if the parent element moves/rotate, then the child follows.
+        /// </remarks>
         public Element Parent
         {
             get => parent;
@@ -169,18 +197,30 @@ namespace GLTech2
             OnMoveOrRotate?.Invoke();
         }
 
-
-
+        /// <summary>
+        ///     Moves the object in one direction relatively to it's direction; in other words, the direction of the module vector.
+        /// </summary>
+        /// <param name="direction">Direction to move</param>
         public void Translate(Vector direction)
         {
             Position += direction * Normal;
         }
 
+        /// <summary>
+        ///     Rotate the object a specified amount.
+        /// </summary>
+        /// <param name="rotation">angle in degrees</param>
         public void Rotate(float rotation)
         {
             Rotation += rotation;
         }
 
+        /// <summary>
+        ///     Dettach all childs and make their parents = null.
+        /// </summary>
+        /// <remarks>
+        ///     Not widely tested.
+        /// </remarks>
         public void DetachChilds()
         {
             foreach (Element child in childs)
@@ -190,34 +230,49 @@ namespace GLTech2
             }
         }
 
-        public void AddBehaviour(Behaviour b)
+        /// <summary>
+        ///     Adds a behaviour script to the element by instance.
+        /// </summary>
+        /// <param name="behaviour">Instance of Behaviour to be added</param>
+        /// <remarks>
+        ///     I made id just a copy of how MonoBehaviours works in Unity3D =D
+        /// </remarks>
+        public void AddBehaviour(Behaviour behaviour)
         {
-            if (b is null)
+            if (behaviour is null)
                 return;
 
-            if (ContainsBehaviour(b))
+            if (ContainsBehaviour(behaviour))
             {
                 Debug.LogWarning($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
                 return;
             }
 
-            if (b.element is null is false)
+            if (behaviour.element is null is false)
             {
                 Debug.LogWarning($"Cannot add same behaviour instance to two different elements. Element without behaviour: {this}.");
                 return;
             }
 
-            behaviours.Add(b); // Isso pode estar obsoleto, visto que agora os métodos a serem chamados são salvos em eventos.
-            b.element = this;
+            behaviours.Add(behaviour); // Isso pode estar obsoleto, visto que agora os métodos a serem chamados são salvos em eventos.
+            behaviour.element = this;
 
-            Subscribe(b);
+            Subscribe(behaviour);
         }
 
+        /// <summary>
+        ///     Add a new behaviour to the element by type.
+        /// </summary>
+        /// <typeparam name="BehaviourType">Behaviour type</typeparam>
         public void AddBehaviour<BehaviourType>() where BehaviourType : Behaviour, new()
         {
             AddBehaviour(new BehaviourType());
         }
 
+        /// <summary>
+        ///     Adds a set of behaviours.
+        /// </summary>
+        /// <param name="behaviours">Set of behaviours</param>
         public void AddBehaviours(IEnumerable<Behaviour> behaviours)
         {
             foreach (Behaviour item in behaviours)
@@ -229,11 +284,20 @@ namespace GLTech2
             }
         }
 
+        /// <summary>
+        ///     Adds a set of behaviours.
+        /// </summary>
+        /// <param name="behaviours">Array of behaviours</param>
         public void AddBehaviours(params Behaviour[] behaviours)
         {
             AddBehaviours((IEnumerable<Behaviour>) behaviours);
         }
 
+        /// <summary>
+        ///     Checks if the element contains an especific behaviour by type.
+        /// </summary>
+        /// <typeparam name="BehaviourType">Behaviour type</typeparam>
+        /// <returns>true if it contains; otherwise, false</returns>
         public bool ContainsBehaviour<BehaviourType>() where BehaviourType : Behaviour
         {
             foreach (var behaviour in behaviours)
@@ -242,6 +306,11 @@ namespace GLTech2
             return false;
         }
 
+        /// <summary>
+        ///     Checks if the element contains an especific behaviour by instance.
+        /// </summary>
+        /// <param name="b">Behaviour</typeparam>
+        /// <returns>true if it contains; otherwise, false</returns>
         public bool ContainsBehaviour(Behaviour b)
         {
             foreach (var item in behaviours)
@@ -250,12 +319,20 @@ namespace GLTech2
             return false;
         }
 
+        /// <summary>
+        ///     Removes an instance of behaviour from b.
+        /// </summary>
+        /// <param name="b">Behaviour</typeparam>
         public void RemoveBehaviour(Behaviour b)
         {
             behaviours.Remove(b);
             Unsubscribe(b);
         }
 
+        /// <summary>
+        ///     Removes all instances of Behaviour from a given type from the element.
+        /// </summary>
+        /// <typeparam name="BehaviourType"></typeparam>
         public void RemoveBehaviour<BehaviourType>() where BehaviourType : Behaviour
         {
            foreach (var behaviour in behaviours.ToArray()) // Provisional solution
@@ -263,6 +340,9 @@ namespace GLTech2
                     RemoveBehaviour(behaviour);
         }
 
+        /// <summary>
+        ///     Remove all behaviours from the element.
+        /// </summary>
         public void RemoveAllBehaviours()
         {
             foreach(Behaviour b in behaviours)
@@ -271,12 +351,20 @@ namespace GLTech2
             }
         }
 
-        public void DetachChildren(Element element) // Not tested
+        /// <summary>
+        ///     Detach all children from the element.
+        /// </summary>
+        public void DetachChildren() // Not tested
         {
             foreach (Element child in childs)
                 child.Parent = null;
         }
 
+        /// <summary>
+        ///     Gets a child from the element by index.
+        /// </summary>
+        /// <param name="index">Index</param>
+        /// <returns>Specified children</returns>
         public Element GetChild(int index)
         {
             return childs[index];
@@ -292,7 +380,9 @@ namespace GLTech2
             UpdateEvent?.Invoke();
         }
 
-        // To be implemented by subclasses
+        /// <summary>
+        ///     Releases unmanaged data, if any.
+        /// </summary>
         public virtual void Dispose()
         {
 
@@ -310,7 +400,7 @@ namespace GLTech2
             UpdateEvent -= b.UpdateMethod;
         }
 
-        event Action StartEvent;
-        event Action UpdateEvent;
+        internal event Action StartEvent;
+        internal event Action UpdateEvent;
     }
 }

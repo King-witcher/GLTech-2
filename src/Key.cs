@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
+    /// <summary>
+    ///     Represents a keyboard key.
+    /// </summary>
     public enum Key
     {
         //
