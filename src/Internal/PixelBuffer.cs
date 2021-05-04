@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Explicit)]
-    unsafe struct PixelBuffer : IDisposable
+    internal unsafe struct PixelBuffer : IDisposable
     {
         [FieldOffset(0)]
         internal int width;
