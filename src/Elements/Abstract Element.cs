@@ -138,7 +138,7 @@ namespace GLTech2
         // Update relative transform through parent and absolute transform.
         // Called when attaches 
         // Must be called after construction of every subclass.
-        private protected void UpdateRelative()
+        private void UpdateRelative()
         {
             if (parent is null)
             {
@@ -154,7 +154,7 @@ namespace GLTech2
 
         // Update absolute position through relative position and parent.
         // Called either when the parent or this element changes its position.
-        private protected void UpdateAbsolute()
+        private void UpdateAbsolute()
         {
             if (parent is null)
             {
