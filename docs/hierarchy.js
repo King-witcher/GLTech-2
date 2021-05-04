@@ -22,7 +22,6 @@ var hierarchy =
         [ "GLTech2.Wall", "class_g_l_tech2_1_1_wall.html", null ]
       ] ],
       [ "GLTech2.Observer", "class_g_l_tech2_1_1_observer.html", null ],
-      [ "GLTech2.PixelBuffer", "struct_g_l_tech2_1_1_pixel_buffer.html", null ],
       [ "GLTech2.PostProcessing.FXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_x_a_a.html", null ],
       [ "GLTech2.Scene", "class_g_l_tech2_1_1_scene.html", null ],
       [ "GLTech2.Texture", "class_g_l_tech2_1_1_texture.html", null ]
@@ -33,8 +32,6 @@ var hierarchy =
     [ "GLTech2.Keyboard", "class_g_l_tech2_1_1_keyboard.html", null ],
     [ "GLTech2.Material", "struct_g_l_tech2_1_1_material.html", null ],
     [ "GLTech2.Mouse", "class_g_l_tech2_1_1_mouse.html", null ],
-    [ "GLTech2.POVData", "struct_g_l_tech2_1_1_p_o_v_data.html", null ],
-    [ "GLTech2.Program", "class_g_l_tech2_1_1_program.html", null ],
     [ "GLTech2.Renderer", "class_g_l_tech2_1_1_renderer.html", null ],
     [ "GLTech2.Time", "class_g_l_tech2_1_1_time.html", null ],
     [ "GLTech2.Utilities", "class_g_l_tech2_1_1_utilities.html", null ]

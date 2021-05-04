@@ -22,8 +22,6 @@ var struct_g_l_tech2_1_1_vector =
     [ "operator==", "struct_g_l_tech2_1_1_vector.html#a15ee73ac7abcc240f8fab7e08b3e1a87", null ],
     [ "Projection", "struct_g_l_tech2_1_1_vector.html#ac8c1ac6f1f27f91b1d68a7433ea2dc9d", null ],
     [ "ToString", "struct_g_l_tech2_1_1_vector.html#a4e746a7ea0c162636a2604ff63640129", null ],
-    [ "TODEGREE", "struct_g_l_tech2_1_1_vector.html#abf58e26ded3dce88a3a0018bad5f180a", null ],
-    [ "TORAD", "struct_g_l_tech2_1_1_vector.html#ad4a9437ed5666db93e276ba977b8be00", null ],
     [ "Angle", "struct_g_l_tech2_1_1_vector.html#a5f23be00b8e83391bc50c9e64ad7a1e1", null ],
     [ "Backward", "struct_g_l_tech2_1_1_vector.html#aaba676429c077e27c5ce937bf6890d8b", null ],
     [ "Forward", "struct_g_l_tech2_1_1_vector.html#aa83c6eeb088131b6ba470398a2bd2c43", null ],

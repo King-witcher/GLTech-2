@@ -16,8 +16,6 @@ var class_g_l_tech2_1_1_element =
     [ "RemoveBehaviour< BehaviourType >", "class_g_l_tech2_1_1_element.html#a3cfeddb4439d01a2521bfa64154e5bec", null ],
     [ "Rotate", "class_g_l_tech2_1_1_element.html#ab4341dd58606ebaf4d17fd2d4c18d706", null ],
     [ "Translate", "class_g_l_tech2_1_1_element.html#a4859a68a668c9aa71b88a8d96cdb1c19", null ],
-    [ "UpdateAbsolute", "class_g_l_tech2_1_1_element.html#a74f8cbc8c28195f2503492e7195ce0b9", null ],
-    [ "UpdateRelative", "class_g_l_tech2_1_1_element.html#af5f50cefac666b4a196575aa21c971d3", null ],
     [ "AbsoluteNormal", "class_g_l_tech2_1_1_element.html#a585edc055b0a0256ee31dfa67cefcedb", null ],
     [ "AbsolutePosition", "class_g_l_tech2_1_1_element.html#aeed443f8b0c0bb570d9af8a8e3faa644", null ],
     [ "ChildCount", "class_g_l_tech2_1_1_element.html#a2ab96f9dcff0ff247af5eece1bb83d2a", null ],
