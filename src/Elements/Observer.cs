@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
@@ -24,6 +23,9 @@ namespace GLTech2
         }
     }
 
+    /// <summary>
+    /// Represents a point of view from which the Renderer can render a scene.
+    /// </summary>
     public unsafe class Observer : Element, IDisposable
     {
         internal ObserverData* unmanaged;

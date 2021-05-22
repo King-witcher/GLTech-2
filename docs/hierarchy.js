@@ -11,7 +11,7 @@ var hierarchy =
     [ "GLTech2.Debug", "class_g_l_tech2_1_1_debug.html", null ],
     [ "GLTech2.PostProcessing.Effect", "class_g_l_tech2_1_1_post_processing_1_1_effect.html", [
       [ "GLTech2.PostProcessing.Brightness", "class_g_l_tech2_1_1_post_processing_1_1_brightness.html", null ],
-      [ "GLTech2.PostProcessing.FXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_x_a_a.html", null ],
+      [ "GLTech2.PostProcessing.FFXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a.html", null ],
       [ "GLTech2.PostProcessing.GrayScale", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale.html", null ]
     ] ],
     [ "IDisposable", null, [
@@ -22,7 +22,7 @@ var hierarchy =
         [ "GLTech2.Wall", "class_g_l_tech2_1_1_wall.html", null ]
       ] ],
       [ "GLTech2.Observer", "class_g_l_tech2_1_1_observer.html", null ],
-      [ "GLTech2.PostProcessing.FXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_x_a_a.html", null ],
+      [ "GLTech2.PostProcessing.FFXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a.html", null ],
       [ "GLTech2.Scene", "class_g_l_tech2_1_1_scene.html", null ],
       [ "GLTech2.Texture", "class_g_l_tech2_1_1_texture.html", null ]
     ] ],

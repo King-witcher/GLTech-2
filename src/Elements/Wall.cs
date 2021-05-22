@@ -1,44 +1,50 @@
-﻿//See Vector.cs before
-//See Material.cs before
-    //See Texture32.cs before
-
-#define DEVELOPMENT
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security;
 
 namespace GLTech2
 {
+    /// <summary>
+    /// Represents a wall that can be rendered on the screen.
+    /// </summary>
     public unsafe class Wall : Element
     {
         internal WallData* unmanaged;
 
-
+        /// <summary>
+        /// Gets and sets the starting point of the wall.
+        /// </summary>
         public Vector StartPoint
         {
             get => unmanaged->geom_start;
             set => unmanaged->geom_start = value;
         }
 
+        /// <summary>
+        /// Gets and sets the ending point of the wall.
+        /// </summary>
         public Vector EndPoint
         {
             get => unmanaged->geom_start + unmanaged->geom_direction;
             set => unmanaged->geom_direction = value - unmanaged->geom_start;
         }
 
+        /// <summary>
+        /// Gets and sets the length of the wall.
+        /// </summary>
         public float Length
         {
             get => unmanaged->geom_direction.Module;
             set => unmanaged->geom_direction *= value / unmanaged->geom_direction.Module;
         }
 
+        /// <summary>
+        /// Gets and sets the material of the wall.
+        /// </summary>
         public Material Material
         {
+            get => unmanaged->material;
             set
             {
                 unmanaged->material = value;
@@ -60,8 +66,6 @@ namespace GLTech2
             }
         }
 
-
-
         public Wall(Vector start, Vector end, Material material)
         {
             unmanaged = WallData.Create(start, end, material);
@@ -71,8 +75,6 @@ namespace GLTech2
         {
             unmanaged = WallData.Create(start, angle_deg, length, material);
         }
-
-
 
         public static Wall[] FromBitmap(Bitmap source, params Color[] ignoreList)
         {

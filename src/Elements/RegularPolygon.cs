@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace GLTech2.PrefabElements
 {
+    /// <summary>
+    /// Provides an easier way to create regular polygons of walls.
+    /// </summary>
     public sealed class RegularPolygon : Element
     {
+        /// <summary>
+        /// Gets a new instance of RegularPolygon
+        /// </summary>
+        /// <param name="position">The center of the polygon</param>
+        /// <param name="edges">How many edges the polygon has</param>
+        /// <param name="radius">The radius of the polygon</param>
+        /// <param name="material">The material of the polygon</param>
         public RegularPolygon(Vector position, int edges, float radius, Material material)
         {
             if (edges <= 2)

@@ -4,7 +4,7 @@ var annotated_dup =
       [ "PostProcessing", "namespace_g_l_tech2_1_1_post_processing.html", [
         [ "Effect", "class_g_l_tech2_1_1_post_processing_1_1_effect.html", null ],
         [ "Brightness", "class_g_l_tech2_1_1_post_processing_1_1_brightness.html", "class_g_l_tech2_1_1_post_processing_1_1_brightness" ],
-        [ "FXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_x_a_a.html", "class_g_l_tech2_1_1_post_processing_1_1_f_x_a_a" ],
+        [ "FFXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a.html", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a" ],
         [ "GrayScale", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale.html", null ]
       ] ],
       [ "PrefabElements", "namespace_g_l_tech2_1_1_prefab_elements.html", [

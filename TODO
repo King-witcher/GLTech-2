@@ -1,0 +1,3 @@
+ - New FXAA implementation.
+ 
+ - Make Texture and PixelBuffer the same thing. Material must be called Texture after that.

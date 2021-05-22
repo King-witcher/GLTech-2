@@ -71,7 +71,7 @@ namespace GLTech2
             pov.AddBehaviour<NoclipController>();
 
             var mouseLook = new MouseLook();
-            mouseLook.Sensitivity = 2.31f;
+            mouseLook.Sensitivity = 2.2f;
             pov.AddBehaviour(mouseLook);
 
 
@@ -84,9 +84,6 @@ namespace GLTech2
             Renderer.DoubleBuffering = true;
 
             // Add post processing effects
-            var antiAliasing = new FXAA(Renderer.CustomWidth, Renderer.CustomHeight, 30);
-            antiAliasing.ShowEdges = false;
-            Renderer.AddEffect(antiAliasing);
             //antiAliasing.EdgeDettection = true;
 
             // Run!
