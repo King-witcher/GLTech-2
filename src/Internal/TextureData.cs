@@ -6,20 +6,37 @@ using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Explicit)]
     internal unsafe struct TextureData
     {
-        internal uint* buffer;
-        internal int height;
+        [FieldOffset(0)]
         internal int width;
+        [FieldOffset(4)]
+        internal int height;
+
 
         // Theese are stored as float due to small optimizations.
+        [FieldOffset(8)]
         internal float height_float;
+        [FieldOffset(12)]
         internal float width_float;
+
+        // Union
+        [FieldOffset(16)]
+        internal uint* uint0;
+        [FieldOffset(16)]
+        public RGB* rgb0;
+        public RGB this[int x, int y]
+        {
+            get => rgb0[x + width * y];
+            set => rgb0[x + width * y] = value;
+        }
 
         private TextureData(uint* buffer, int width, int height)
         {
-            this.buffer = buffer;
+            this.rgb0 = null;
+            this.uint0 = buffer; //Changes rgb0
+
             this.height = height;
             this.width = width;
             this.height_float = height;
@@ -37,8 +54,8 @@ namespace GLTech2
             {
                 var bmpdata = clone.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
                 int bmpsize = bmpdata.Stride * bmpdata.Height;
-                result->buffer = (UInt32*)Marshal.AllocHGlobal(bmpsize);
-                Buffer.MemoryCopy((void*)bmpdata.Scan0, result->buffer, bmpsize, bmpsize);
+                result->uint0 = (UInt32*)Marshal.AllocHGlobal(bmpsize);
+                Buffer.MemoryCopy((void*)bmpdata.Scan0, result->uint0, bmpsize, bmpsize);
                 clone.UnlockBits(bmpdata);
             }
             result->width = bitmap.Width;
@@ -50,7 +67,7 @@ namespace GLTech2
 
         internal static void Delete(TextureData* item)
         {
-            Marshal.FreeHGlobal((IntPtr)item->buffer);
+            Marshal.FreeHGlobal((IntPtr)item->uint0);
             Marshal.FreeHGlobal((IntPtr)item);
         }
 

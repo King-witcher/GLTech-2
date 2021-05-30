@@ -26,7 +26,7 @@ namespace GLTech2
         /// <summary>
         ///     Gets an IntPtr that represents a pointer to the first pixel of the buffer.
         /// </summary>
-        public IntPtr Scan0 => (IntPtr) unmanaged->buffer;
+        public IntPtr Scan0 => (IntPtr) unmanaged->uint0;
         public PixelFormat PixelFormat => PixelFormat.Format32bppArgb;
 
         /// <summary>

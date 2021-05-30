@@ -44,7 +44,7 @@ namespace GLTech2
             // Critical performance impact
             int x = (int)(texture.width_float * (hrepeat * hratio + hoffset)) % texture.width;
             int y = (int)(texture.height_float * vratio);//% texture.height;
-            return texture.buffer[texture.width * y + x];
+            return texture.uint0[texture.width * y + x];
         }
 
         //Estou deixando isso para facilitar a utilização de uma determinada texture em vários materiais sem necessidade de criar

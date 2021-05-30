@@ -1,30 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Explicit)]
-    internal struct RGB
+    public struct RGB
     {
         //Union
         [FieldOffset(0)]
-        internal uint rgb;
+        public uint rgb;
         [FieldOffset(0)]
-        internal byte b;
+        public byte b;
         [FieldOffset(1)]
-        internal byte g;
+        public byte g;
         [FieldOffset(2)]
-        internal byte r;
+        public byte r;
         [FieldOffset(3)]
         private byte a;
 
         public float Luminosity => (r + g + b) / (255f * 3f);
         public byte Luminosity256 => (byte)((r + g + b) / 3);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RGB Average(RGB rgb)
+        {
+            rgb.r = (byte)((r + rgb.r) >> 1);
+            rgb.g = (byte)((g + rgb.g) >> 1);
+            rgb.b = (byte)((b + rgb.b) >> 1);
+
+            return rgb;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGB Mix(RGB rgb, float factor)
@@ -42,16 +47,6 @@ namespace GLTech2
             parcel1 = (ushort)(b * (1 - factor));
             parcel2 = (ushort)(rgb.b * factor);
             rgb.b = (byte)(parcel1 + parcel2);
-
-            return rgb;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RGB Mix(RGB rgb)
-        {
-            rgb.r = (byte)((r + rgb.r) >> 1);
-            rgb.g = (byte)((g + rgb.g) >> 1);
-            rgb.b = (byte)((b + rgb.b) >> 1);
 
             return rgb;
         }
