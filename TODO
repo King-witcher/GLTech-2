@@ -1,7 +1,12 @@
- - revisar
+ 
+ - Mudar a forma como uma cena é criada para funcionar por meio de herança.
+
+ - New FXAA implementation.
+
+----------------------------------------------------------------------------------------------
+
+ - revisar fusão entre pixelbuffer, texture e material
 
  - Unir pixelbuffer e texturebuffer
- 
- - New FXAA implementation.
- 
+
  - Make Texture and PixelBuffer the same thing. Material must be called Texture after that.
