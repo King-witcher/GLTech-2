@@ -30,19 +30,19 @@ namespace GLTech2
 
             // Create materials
             Texture skybox_mat = new Texture(
-                texture: skybox,
+                buffer: skybox,
                 hoffset: 0f,
                 hrepeat: 1f);
             Texture carvedWall_mat = new Texture(
-                texture: carvedWall,
+                buffer: carvedWall,
                 hoffset: 0f,
                 hrepeat: 1f);
             Texture bricks_mat = new Texture(
-                texture: bricks,
+                buffer: bricks,
                 hoffset: 0f,
                 hrepeat: 4f);
             Texture wood_mat = new Texture(
-                texture: wood,
+                buffer: wood,
                 hoffset: 0f,
                 hrepeat: 2f);
 

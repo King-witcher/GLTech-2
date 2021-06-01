@@ -33,7 +33,7 @@ namespace GLTech2.PostProcessing
             if (target.width != previousFrame.width || target.height != previousFrame.height)
                 return;
 
-            temporaryBuffer.FastCopyFrom(target);
+            temporaryBuffer.FastClone(target);
 
             if (!EdgeDettection)
             {
@@ -67,8 +67,8 @@ namespace GLTech2.PostProcessing
                     }
                 });
 
-                target.FastCopyFrom(temporaryBuffer);
-                previousFrame.FastCopyFrom(target);
+                target.FastClone(temporaryBuffer);
+                previousFrame.FastClone(target);
             }
             else
             {
@@ -96,12 +96,12 @@ namespace GLTech2.PostProcessing
                         temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
-                previousFrame.FastCopyFrom(target);
-                target.FastCopyFrom(temporaryBuffer);
+                previousFrame.FastClone(target);
+                target.FastClone(temporaryBuffer);
             }
 
-            target.FastCopyFrom(temporaryBuffer);
-            previousFrame.FastCopyFrom(target);
+            target.FastClone(temporaryBuffer);
+            previousFrame.FastClone(target);
             return;
 
             float adjust(float x) => -x * x + 2 * x;

@@ -290,7 +290,7 @@ namespace GLTech2
 
                 // Copies the working buffer to the original.
                 if (DoubleBuffering)
-                    outputBuffer.FastCopyFrom(activeBuffer);
+                    outputBuffer.FastClone(activeBuffer);
 
                 Time.renderTime = (double)controlSW.ElapsedTicks / Stopwatch.Frequency;
 

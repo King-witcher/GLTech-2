@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
+    /// <summary>
+    /// Represents a 32-bits-per-pixel pixel buffer.
+    /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct PixelBuffer
     {
         [FieldOffset(0)]
-        public int width;
+        internal int width;
         [FieldOffset(4)]
-        public int height;
+        internal int height;
 
         // Theese are stored as float due to small optimizations.
         [FieldOffset(8)]
@@ -23,50 +26,59 @@ namespace GLTech2
 
         // Union
         [FieldOffset(16)]
-        public uint* uint0;
+        internal uint* uint0;
         [FieldOffset(16)]
-        public RGB* rgb0;
+        internal RGB* rgb0;
 
+        /// <summary>
+        /// Gets a RGB pixel given its cordinates.
+        /// </summary>
+        /// <param name="x">The x cordinate</param>
+        /// <param name="y">The y cordinate</param>
+        /// <returns></returns>
         public RGB this[int x, int y]
         {
             get => rgb0[x + width * y];
             set => rgb0[x + width * y] = value;
         }
 
-        private PixelBuffer(uint* buffer, int width, int height)
-        {
-            this.rgb0 = null;
-            this.uint0 = buffer; //Changes rgb0
-
-            this.height = height;
-            this.width = width;
-            this.height_float = height;
-            this.width_float = width;
-        }
-
         /// <summary>
-        ///     Gets the height of the image.
+        /// Gets the height of the buffer.
         /// </summary>
         public int Height => height;
 
         /// <summary>
-        ///     Gets the witdh of the image.
+        /// Gets the witdh of the buffer.
         /// </summary>
         public int Width => width;
 
         /// <summary>
-        ///     Gets an IntPtr that represents a pointer to the first pixel of the buffer.
+        /// Gets an IntPtr that represents a pointer to the first pixel of the buffer.
         /// </summary>
         public IntPtr Scan0 => (IntPtr)uint0;
+
+        /// <summary>
+        /// Gets the pointer to first RGB pixel from the buffer.
+        /// </summary>
+        public RGB* RGB0 => rgb0;
+
+        /// <summary>
+        /// Gets the pointer to the first pixel of the buffer as uint.
+        /// </summary>
+        public uint* Uint0 => uint0;
+
+        /// <summary>
+        /// PixelFormat.Format32bppArgb
+        /// </summary>
         public PixelFormat PixelFormat => PixelFormat.Format32bppArgb;
 
         /// <summary>
-        ///     Gets a new instance of Texture equivalent to the specified bitmap.
+        /// Gets a new instance of PixelBuffer equivalent to the specified bitmap.
         /// </summary>
         /// <remarks>
-        ///     Instantiating a new Texture is not a boxing, but cloning operation.
+        /// Instantiating a new PixelBuffer is not a boxing, but a cloning operation and the buffer must be disposed when unused.
         /// </remarks>
-        /// <param name="source">Source</param>
+        /// <param name="source">The source bitmap</param>
         public PixelBuffer(Bitmap source)
         {
             Rectangle rect = new Rectangle(0, 0, source.Width, source.Height);
@@ -86,7 +98,12 @@ namespace GLTech2
             height_float = source.Height;
         }
 
-        internal PixelBuffer(int width, int height)
+        /// <summary>
+        /// Gets a new empty instance of PixelBuffer given it's dimentions.
+        /// </summary>
+        /// <param name="width">Witdth</param>
+        /// <param name="height">Height</param>
+        public PixelBuffer(int width, int height)
         {
             if (width <= 0 || height <= 0)
                 throw new ArgumentOutOfRangeException();
@@ -95,22 +112,25 @@ namespace GLTech2
             this.height = height;
             this.width_float = width;
             this.height_float = height;
-            rgb0 = null;
+            rgb0 = null; // Assigned by union
             uint0 = (uint*)Marshal.AllocHGlobal(width * height * sizeof(uint));
         }
 
-        internal void FastCopyFrom(PixelBuffer buffer)
-        {
-            Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);
-        }
-
-        public void CopyFrom(PixelBuffer buffer)
+        /// <summary>
+        /// Clones all data from another buffer.
+        /// </summary>
+        /// <param name="source">The source buffer</param>
+        public void Clone(PixelBuffer source)
 		{
-            if (width != buffer.width || height != buffer.height)
+            if (width != source.width || height != source.height)
                 throw new ArgumentException("Buffers must have the same size.");
-            Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);
+            Buffer.MemoryCopy(source.uint0, this.uint0, 4 * height * width, 4 * height * width);
         }
 
+        /// <summary>
+        /// Runs, in parallel, a RGB -> RGB function into every pixel of the buffer.
+        /// </summary>
+        /// <param name="transformation"></param>
         [MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]
         public void Foreach(Func<RGB, RGB> transformation)
         {
@@ -129,11 +149,16 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Releases all unmanaged data.
+        /// Releases all unmanaged data.
         /// </summary>
         public void Dispose()
         {
             Marshal.FreeHGlobal(Scan0);
+        }
+
+        internal void FastClone(PixelBuffer buffer)
+        {
+            Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);
         }
 
         /// <summary>
@@ -152,12 +177,6 @@ namespace GLTech2
         public static explicit operator Bitmap(PixelBuffer texture)
         {
             return new Bitmap(texture.Width, texture.Height, 4 * texture.Width, texture.PixelFormat, texture.Scan0);
-        }
-
-        internal static void Delete(PixelBuffer* item)
-        {
-            Marshal.FreeHGlobal((IntPtr)item->uint0);
-            Marshal.FreeHGlobal((IntPtr)item);
         }
     }
 }

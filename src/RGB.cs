@@ -1,26 +1,47 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
+    /// <summary>
+    /// Represents a 32 bits RGB color.
+    /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct RGB
     {
         //Union
         [FieldOffset(0)]
-        public uint rgb;
+        internal uint rgb;
         [FieldOffset(0)]
-        public byte b;
+        internal byte b;
         [FieldOffset(1)]
-        public byte g;
+        internal byte g;
         [FieldOffset(2)]
-        public byte r;
+        internal byte r;
         [FieldOffset(3)]
         private byte a;
 
-        public float Luminosity => (r + g + b) / (255f * 3f);
-        public byte Luminosity256 => (byte)((r + g + b) / 3);
+        /// <summary>
+        /// Gets the luma of the pixel.
+        /// </summary>
+        public float Luma => (0.2126f * r * r + 0.7152f * g * g + 0.0722f * b * b) / (255f * 255f);
 
+        /// <summary>
+        /// Gets a less precise but faster calculated value of the luma of the color.
+        /// </summary>
+        public float FastLuma => (0.2126f * r + 0.7152f * g + 0.0722f * b) / (255f);
+
+        /// <summary>
+        /// Gets the 0-255 brightness of the pixel
+        /// </summary>
+        public byte Brightness => (byte)((r + g + b) / 3);
+
+        /// <summary>
+        /// Gets the average between this and another pixel.
+        /// </summary>
+        /// <param name="rgb">Another pixel</param>
+        /// <returns>The average between this and the other pixel.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGB Average(RGB rgb)
         {
@@ -31,6 +52,12 @@ namespace GLTech2
             return rgb;
         }
 
+        /// <summary>
+        /// Gets a weighted average between this and another pixel.
+        /// </summary>
+        /// <param name="rgb">Another pixel</param>
+        /// <param name="factor">Weight of the other pixel</param>
+        /// <returns>The weighted average between this and the other pixel</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGB Mix(RGB rgb, float factor)
         {
@@ -51,6 +78,13 @@ namespace GLTech2
             return rgb;
         }
 
+        /// <summary>
+        /// Multiplies the intensity of a pixel by a certain amount.
+        /// </summary>
+        /// <param name="rgb">The pixel</param>
+        /// <param name="factor">The amount</param>
+        /// <returns>Resultint color</returns>
+        [Obsolete]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RGB operator *(RGB rgb, float factor)
         {

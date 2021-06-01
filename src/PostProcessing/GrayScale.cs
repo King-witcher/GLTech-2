@@ -13,6 +13,6 @@ namespace GLTech2.PostProcessing
             target.Foreach(RGBToGray);
         }
 
-        private RGB RGBToGray(RGB original) => original.Luminosity256 * 0x010101u;
+        private RGB RGBToGray(RGB original) => original.Brightness * 0x010101u;
     }
 }
