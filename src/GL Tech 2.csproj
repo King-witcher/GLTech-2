@@ -148,6 +148,7 @@
     <None Include="Resources\DoomSky.png" />
     <None Include="Resources\d_e1m1.wav" />
     <None Include="Resources\GrayHexagons.png" />
+    <None Include="Resources\Logo.png" />
     <Content Include="Resources\Test.bmp" />
   </ItemGroup>
   <ItemGroup>
