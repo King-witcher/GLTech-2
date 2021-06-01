@@ -63,10 +63,10 @@ namespace GLTech2
             scene.AddElement(pov);
 
             // Add behaviours
-            sqware.AddBehaviour(new Rotate { Speed = 18f });
-            cylinder.AddBehaviour(new Rotate { Speed = 18f });
-            tri.AddBehaviour(new Rotate { Speed = 18f });
-            center.AddBehaviour(new Rotate { Speed = -6f });
+            sqware.AddBehaviour(new Rotate { Speed = 180f });
+            cylinder.AddBehaviour(new Rotate { Speed = 180f });
+            tri.AddBehaviour(new Rotate { Speed = 180f });
+            center.AddBehaviour(new Rotate { Speed = -20f });
             pov.AddBehaviour<DebugFps>();
             pov.AddBehaviour<NoclipController>();
 
