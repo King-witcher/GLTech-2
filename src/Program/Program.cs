@@ -31,6 +31,7 @@ namespace GLTech2
             using (PixelBuffer carvedWall_buffer = (PixelBuffer)Resources.CarvedWall)
             using (PixelBuffer bricks_buffer = (PixelBuffer)Resources.Bricks)
             using (PixelBuffer wood_buffer = (PixelBuffer)Resources.Wood)
+            using (PixelBuffer grayHexagons_buffer = (PixelBuffer)Resources.GrayHexagons)
             {
                 // Scene
                 Texture background = new Texture(
@@ -90,9 +91,9 @@ namespace GLTech2
                 // Big triangle
                 {
                     Texture tex = new Texture(
-                        buffer: wood_buffer,
+                        buffer: grayHexagons_buffer,
                         hoffset: 0f,
-                        hrepeat: 4f);
+                        hrepeat: 32f);
 
                     Element e = new RegularPolygon(Vector.Origin, 4, 2, tex);
 
