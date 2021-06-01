@@ -23,25 +23,25 @@ namespace GLTech2
             Console.Write("\b \b");
 
             // Load textures frmo bitmaps
-            Texture skybox = (Texture)Resources.DoomSky;
-            Texture carvedWall = (Texture)Resources.CarvedWall;
-            Texture bricks = (Texture)Resources.Bricks;
-            Texture wood = (Texture)Resources.Wood;
+            TextureBuffer skybox = (TextureBuffer)Resources.DoomSky;
+            TextureBuffer carvedWall = (TextureBuffer)Resources.CarvedWall;
+            TextureBuffer bricks = (TextureBuffer)Resources.Bricks;
+            TextureBuffer wood = (TextureBuffer)Resources.Wood;
 
             // Create materials
-            Material skybox_mat = new Material(
+            Texture skybox_mat = new Texture(
                 texture: skybox,
                 hoffset: 0f,
                 hrepeat: 1f);
-            Material carvedWall_mat = new Material(
+            Texture carvedWall_mat = new Texture(
                 texture: carvedWall,
                 hoffset: 0f,
                 hrepeat: 1f);
-            Material bricks_mat = new Material(
+            Texture bricks_mat = new Texture(
                 texture: bricks,
                 hoffset: 0f,
                 hrepeat: 4f);
-            Material wood_mat = new Material(
+            Texture wood_mat = new Texture(
                 texture: wood,
                 hoffset: 0f,
                 hrepeat: 2f);

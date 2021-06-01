@@ -16,7 +16,7 @@ namespace GLTech2
 
         private protected override Vector AbsoluteNormal { get; set; }
 
-        public Sprite(Vector position, Material material)
+        public Sprite(Vector position, Texture material)
         {
             unmanaged = SpriteData.Create(position, material);
         }

@@ -18,7 +18,7 @@ namespace GLTech2.PrefabElements
         /// <param name="edges">How many edges the polygon has</param>
         /// <param name="radius">The radius of the polygon</param>
         /// <param name="material">The material of the polygon</param>
-        public RegularPolygon(Vector position, int edges, float radius, Material material)
+        public RegularPolygon(Vector position, int edges, float radius, Texture material)
         {
             if (edges <= 2)
                 throw new ArgumentException("\"edges\" must be greater than 2.");

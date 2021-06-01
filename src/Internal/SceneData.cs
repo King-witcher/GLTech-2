@@ -13,11 +13,11 @@ namespace GLTech2
         internal WallData** walls;
         internal int wall_count;
         internal int wall_max;
-        internal Material background;
+        internal Texture background;
         internal ObserverData* activeObserver;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SceneData* Create(int maxWalls, int maxSprities, Material background)
+        internal static SceneData* Create(int maxWalls, int maxSprities, Texture background)
         {
             int total_positions = maxWalls + maxSprities + 1;
             SceneData* result = (SceneData*)Marshal.AllocHGlobal(sizeof(SceneData));

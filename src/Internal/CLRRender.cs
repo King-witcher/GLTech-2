@@ -20,7 +20,7 @@ namespace GLTech2
             uint* buffer = target.uint0;
             int width = target.width;
             int height = target.height;
-            Material background = scene->background;
+            Texture background = scene->background;
 
             if (ParallelRendering)
             {
@@ -86,7 +86,7 @@ namespace GLTech2
             uint* buffer = target.uint0;
             int width = target.width;
             int height = target.height;
-            Material background = scene->background;
+            Texture background = scene->background;
 
             if (ParallelRendering)
             {

@@ -8,10 +8,10 @@ namespace GLTech2
     internal unsafe struct SpriteData
     {
         internal Vector position;
-        internal Material material;
+        internal Texture material;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SpriteData* Create(Vector position, Material material)
+        internal static SpriteData* Create(Vector position, Texture material)
         {
             SpriteData* result = (SpriteData*)Marshal.AllocHGlobal(sizeof(SpriteData));
             result->position = position;

@@ -42,7 +42,7 @@ namespace GLTech2
         /// <summary>
         /// Gets and sets the material of the wall.
         /// </summary>
-        public Material Material
+        public Texture Material
         {
             get => unmanaged->material;
             set
@@ -66,12 +66,12 @@ namespace GLTech2
             }
         }
 
-        public Wall(Vector start, Vector end, Material material)
+        public Wall(Vector start, Vector end, Texture material)
         {
             unmanaged = WallData.Create(start, end, material);
         }
         
-        public Wall(Vector start, float angle_deg, float length, Material material)
+        public Wall(Vector start, float angle_deg, float length, Texture material)
         {
             unmanaged = WallData.Create(start, angle_deg, length, material);
         }
@@ -99,11 +99,11 @@ namespace GLTech2
                     if (ignoreArgb.Contains(srcArgb)) continue;
                     else
                     {
-                        Texture blockTexture;
+                        TextureBuffer blockTexture;
                         using (Bitmap blockBitmap = new Bitmap(1, 1))
                         {
                             blockBitmap.SetPixel(0, 0, source.GetPixel(line, column));
-                            blockTexture = new Texture(blockBitmap);
+                            blockTexture = new TextureBuffer(blockBitmap);
                         }
                         Vector vert1 = new Vector(line, -column);
                         Vector vert2 = new Vector(line, -column - 1);
@@ -119,7 +119,7 @@ namespace GLTech2
             return walls;
         }
 
-        public static Wall[] FromBitmap(Bitmap source, IDictionary<int, Material> materials)
+        public static Wall[] FromBitmap(Bitmap source, IDictionary<int, Texture> materials)
         {
             Wall[] walls = new Wall[4 * source.Width * source.Height];
             int index = 0;
@@ -145,7 +145,7 @@ namespace GLTech2
             return walls;
         }
 
-        public static Wall[] CreateSequence(Material material, params Vector[] verts)
+        public static Wall[] CreateSequence(Texture material, params Vector[] verts)
         {
             if (verts == null)
                 throw new ArgumentNullException("Verts cannot be null.");
@@ -153,7 +153,7 @@ namespace GLTech2
                 return new Wall[0];
 
             Wall[] result = new Wall[verts.Length - 1];
-            Material material_ = material;
+            Texture material_ = material;
             int walls = verts.Length - 1;
 
             material_.hrepeat /= walls;
@@ -167,7 +167,7 @@ namespace GLTech2
             return result;
         }
 
-        public static Wall[] CreatePolygon(Material material, params Vector[] verts) //Beta
+        public static Wall[] CreatePolygon(Texture material, params Vector[] verts) //Beta
         {
             if (verts == null)
                 throw new ArgumentNullException("Verts cannot be null.");
@@ -177,7 +177,7 @@ namespace GLTech2
             int total_walls = verts.Length;
             Wall[] result = new Wall[total_walls];
 
-            Material currentMaterial = material;
+            Texture currentMaterial = material;
             currentMaterial.hrepeat /= total_walls;
 
             for (int i = 0; i < total_walls - 1; i++)

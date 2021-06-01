@@ -9,9 +9,9 @@ namespace GLTech2
     {
         internal Vector geom_direction;
         internal Vector geom_start;
-        internal Material material; // Yes, by value.
+        internal Texture material; // Yes, by value.
 
-        internal static WallData* Create(Vector start, Vector end, Material material)
+        internal static WallData* Create(Vector start, Vector end, Texture material)
         {
             WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             result->material = material;
@@ -20,7 +20,7 @@ namespace GLTech2
             return result;
         }
 
-        internal static WallData* Create(Vector start, float angle, float length, Material material)
+        internal static WallData* Create(Vector start, float angle, float length, Texture material)
         {
             WallData* result = (WallData*)Marshal.AllocHGlobal(sizeof(WallData));
             Vector dir = new Vector(angle) * length;

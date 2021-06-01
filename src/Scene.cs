@@ -18,7 +18,7 @@ namespace GLTech2
         /// <param name="background">Background material rendered behind everything</param>
         /// <param name="maxWalls">Max walls that the scene can fit</param>
         /// <param name="maxSprities">Max sprities that the scene can fit</param>
-        public Scene(Material background, int maxWalls = 512, int maxSprities = 512) =>
+        public Scene(Texture background, int maxWalls = 512, int maxSprities = 512) =>
             unmanaged = SceneData.Create(maxWalls, maxSprities, background);
 
 
