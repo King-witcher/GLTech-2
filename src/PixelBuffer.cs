@@ -11,7 +11,7 @@ namespace GLTech2
     /// Represents a 32-bits-per-pixel pixel buffer.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct PixelBuffer
+    public unsafe struct PixelBuffer : IDisposable
     {
         [FieldOffset(0)]
         internal int width;
