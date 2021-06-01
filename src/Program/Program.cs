@@ -23,10 +23,10 @@ namespace GLTech2
             Console.Write("\b \b");
 
             // Load textures frmo bitmaps
-            TextureBuffer skybox = (TextureBuffer)Resources.DoomSky;
-            TextureBuffer carvedWall = (TextureBuffer)Resources.CarvedWall;
-            TextureBuffer bricks = (TextureBuffer)Resources.Bricks;
-            TextureBuffer wood = (TextureBuffer)Resources.Wood;
+            PixelBuffer skybox = (PixelBuffer)Resources.DoomSky;
+            PixelBuffer carvedWall = (PixelBuffer)Resources.CarvedWall;
+            PixelBuffer bricks = (PixelBuffer)Resources.Bricks;
+            PixelBuffer wood = (PixelBuffer)Resources.Wood;
 
             // Create materials
             Texture skybox_mat = new Texture(

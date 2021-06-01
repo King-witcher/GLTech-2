@@ -3,11 +3,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct TextureBuffer
+    public unsafe struct PixelBuffer
     {
         [FieldOffset(0)]
         public int width;
@@ -32,7 +33,7 @@ namespace GLTech2
             set => rgb0[x + width * y] = value;
         }
 
-        private TextureBuffer(uint* buffer, int width, int height)
+        private PixelBuffer(uint* buffer, int width, int height)
         {
             this.rgb0 = null;
             this.uint0 = buffer; //Changes rgb0
@@ -66,9 +67,8 @@ namespace GLTech2
         ///     Instantiating a new Texture is not a boxing, but cloning operation.
         /// </remarks>
         /// <param name="source">Source</param>
-        public TextureBuffer(Bitmap source)
+        public PixelBuffer(Bitmap source)
         {
-
             Rectangle rect = new Rectangle(0, 0, source.Width, source.Height);
             using (var clone = source.Clone(rect, PixelFormat.Format32bppArgb) ??
                 throw new ArgumentException("Bitmap parameter cannot be null."))
@@ -86,6 +86,48 @@ namespace GLTech2
             height_float = source.Height;
         }
 
+        internal PixelBuffer(int width, int height)
+        {
+            if (width <= 0 || height <= 0)
+                throw new ArgumentOutOfRangeException();
+
+            this.width = width;
+            this.height = height;
+            this.width_float = width;
+            this.height_float = height;
+            rgb0 = null;
+            uint0 = (uint*)Marshal.AllocHGlobal(width * height * sizeof(uint));
+        }
+
+        internal void FastCopyFrom(PixelBuffer buffer)
+        {
+            Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);
+        }
+
+        public void CopyFrom(PixelBuffer buffer)
+		{
+            if (width != buffer.width || height != buffer.height)
+                throw new ArgumentException("Buffers must have the same size.");
+            Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);
+        }
+
+        [MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]
+        public void Foreach(Func<RGB, RGB> transformation)
+        {
+            int height = this.height;
+            int width = this.width;
+            uint* buffer = this.uint0;
+
+            Parallel.For(0, width, (x) =>
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    int cur = width * y + x;
+                    buffer[cur] = transformation(buffer[cur]);
+                }
+            });
+        }
+
         /// <summary>
         ///     Releases all unmanaged data.
         /// </summary>
@@ -98,21 +140,21 @@ namespace GLTech2
         ///     Explicitly casts from System.Drawing.Bitmap to Texture.
         /// </summary>
         /// <param name="bitmap">Bitmap to be cast</param>
-        public static explicit operator TextureBuffer(Bitmap bitmap)
+        public static explicit operator PixelBuffer(Bitmap bitmap)
         {
-            return new TextureBuffer(bitmap);
+            return new PixelBuffer(bitmap);
         }
 
         /// <summary>
         ///     Explicitly casts from Texture to System.Drawing.Bitmap.
         /// </summary>
         /// <param name="texture"></param>
-        public static explicit operator Bitmap(TextureBuffer texture)
+        public static explicit operator Bitmap(PixelBuffer texture)
         {
             return new Bitmap(texture.Width, texture.Height, 4 * texture.Width, texture.PixelFormat, texture.Scan0);
         }
 
-        internal static void Delete(TextureBuffer* item)
+        internal static void Delete(PixelBuffer* item)
         {
             Marshal.FreeHGlobal((IntPtr)item->uint0);
             Marshal.FreeHGlobal((IntPtr)item);

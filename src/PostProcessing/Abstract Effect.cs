@@ -6,6 +6,6 @@ namespace GLTech2.PostProcessing
     /// </summary>
     public abstract class Effect
     {
-        internal abstract void Process(PixelBuffer target);
+        public abstract void Process(PixelBuffer target);
     }
 }

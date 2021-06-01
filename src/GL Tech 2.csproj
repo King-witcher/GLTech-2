@@ -71,7 +71,6 @@
     <Compile Include="Elements\Observer.cs" />
     <Compile Include="Static Debug.cs" />
     <Compile Include="Static Keyboard.cs" />
-    <Compile Include="Internal\PixelBuffer.cs" />
     <Compile Include="Elements\Abstract Element.cs" />
     <Compile Include="Elements\Empty.cs" />
     <Compile Include="Internal\CLRRender.cs" />
@@ -112,7 +111,7 @@
     <Compile Include="Behaviours\Rotate.cs" />
     <Compile Include="Static Time.cs" />
     <Compile Include="Internal\Utilities.cs" />
-    <Compile Include="TextureBuffer.cs" />
+    <Compile Include="PixelBuffer.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Elements\Wall.cs" />
   </ItemGroup>

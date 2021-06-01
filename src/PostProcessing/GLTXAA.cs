@@ -28,12 +28,12 @@ namespace GLTech2.PostProcessing
 
         public bool EdgeDettection { get; set; } = false;
 
-        internal override void Process(PixelBuffer target)
+        public override void Process(PixelBuffer target)
         {
             if (target.width != previousFrame.width || target.height != previousFrame.height)
                 return;
 
-            temporaryBuffer.Copy(target);
+            temporaryBuffer.FastCopyFrom(target);
 
             if (!EdgeDettection)
             {
@@ -67,8 +67,8 @@ namespace GLTech2.PostProcessing
                     }
                 });
 
-                target.Copy(temporaryBuffer);
-                previousFrame.Copy(target);
+                target.FastCopyFrom(temporaryBuffer);
+                previousFrame.FastCopyFrom(target);
             }
             else
             {
@@ -96,12 +96,12 @@ namespace GLTech2.PostProcessing
                         temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
-                previousFrame.Copy(target);
-                target.Copy(temporaryBuffer);
+                previousFrame.FastCopyFrom(target);
+                target.FastCopyFrom(temporaryBuffer);
             }
 
-            target.Copy(temporaryBuffer);
-            previousFrame.Copy(target);
+            target.FastCopyFrom(temporaryBuffer);
+            previousFrame.FastCopyFrom(target);
             return;
 
             float adjust(float x) => -x * x + 2 * x;

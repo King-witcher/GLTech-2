@@ -20,7 +20,7 @@ namespace GLTech2.PostProcessing
             this.factor = factor;
         }
 
-        internal override void Process(PixelBuffer target)
+        public override void Process(PixelBuffer target)
         {
             Parallel.For(0, target.width, (x) =>
             {

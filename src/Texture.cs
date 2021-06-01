@@ -17,7 +17,7 @@ namespace GLTech2
     {
         internal float hoffset;
         internal float hrepeat;
-        internal TextureBuffer texture; //Propositalmente salvo por valor
+        internal PixelBuffer texture; //Propositalmente salvo por valor
         internal float voffset; //Ainda não implementado
         internal float vrepeat; //Ainda não implmenetado
 
@@ -29,7 +29,7 @@ namespace GLTech2
         /// <param name="hrepeat">How many times the texture is repeated horizontally</param>
         /// <param name="voffset">Not implemented yet</param>
         /// <param name="vrepeat">Not implemented yet</param>
-        public Texture(TextureBuffer texture, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
+        public Texture(PixelBuffer texture, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
             this.hoffset = hoffset;
             this.hrepeat = hrepeat;
@@ -57,7 +57,7 @@ namespace GLTech2
         ///     Implicitly casts a texture instance to a Material.
         /// </summary>
         /// <param name="texture">Texture to be cast</param>
-        public static implicit operator Texture(TextureBuffer texture) =>
+        public static implicit operator Texture(PixelBuffer texture) =>
             new Texture(texture);
 
         /// <summary>
@@ -68,6 +68,6 @@ namespace GLTech2
         ///     Note that casting bitmaps directly to Materials will anonymously create a new Texture object that uses unmanaged resources each time it's done, but you won't be able to dispose them.
         /// </remarks>
         public static explicit operator Texture(Bitmap bitmap) =>
-            new Texture(new TextureBuffer(bitmap));
+            new Texture(new PixelBuffer(bitmap));
     }
 }

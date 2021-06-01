@@ -8,7 +8,7 @@ namespace GLTech2.PostProcessing
 {
     public sealed class GrayScale : Effect
     {
-        internal override void Process(PixelBuffer target)
+        public override void Process(PixelBuffer target)
         {
             target.Foreach(RGBToGray);
         }

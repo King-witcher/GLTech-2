@@ -99,11 +99,11 @@ namespace GLTech2
                     if (ignoreArgb.Contains(srcArgb)) continue;
                     else
                     {
-                        TextureBuffer blockTexture;
+                        PixelBuffer blockTexture;
                         using (Bitmap blockBitmap = new Bitmap(1, 1))
                         {
                             blockBitmap.SetPixel(0, 0, source.GetPixel(line, column));
-                            blockTexture = new TextureBuffer(blockBitmap);
+                            blockTexture = new PixelBuffer(blockBitmap);
                         }
                         Vector vert1 = new Vector(line, -column);
                         Vector vert2 = new Vector(line, -column - 1);

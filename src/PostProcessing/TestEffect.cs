@@ -8,7 +8,7 @@ namespace GLTech2.PostProcessing
 {
     internal class TestEffect : Effect
     {
-        internal override void Process(PixelBuffer target)
+        public override void Process(PixelBuffer target)
         {
         }
     }
