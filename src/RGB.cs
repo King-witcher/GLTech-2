@@ -22,6 +22,15 @@ namespace GLTech2
         [FieldOffset(3)]
         private byte a;
 
+        public RGB(byte red, byte green, byte blue)
+		{
+            rgb = 0;
+            a = 255;
+            r = red;
+            g = green;
+            b = blue;
+		}
+
         /// <summary>
         /// Gets the luma of the pixel.
         /// </summary>
@@ -33,9 +42,25 @@ namespace GLTech2
         public float FastLuma => (0.2126f * r + 0.7152f * g + 0.0722f * b) / (255f);
 
         /// <summary>
-        /// Gets the 0-255 brightness of the pixel
+        /// Gets the 0-255 brightness of the pixel.
         /// </summary>
         public byte Brightness => (byte)((r + g + b) / 3);
+
+        /// <summary>
+        /// The red component
+        /// </summary>
+        public byte R => r;
+
+        /// <summary>
+        /// The green component
+        /// </summary>
+        public byte G => g;
+
+
+        /// <summary>
+        /// The blue component
+        /// </summary>
+        public byte B => b;
 
         /// <summary>
         /// Gets the average between this and another pixel.
@@ -116,5 +141,14 @@ namespace GLTech2
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGB(uint rgb) => new RGB{rgb = rgb};
+
+        /// <summary>
+        /// Implicitly converts a tuple into a RGB struct.
+        /// </summary>
+        /// <param name="components">The r, g, b components.</param>
+        public static implicit operator RGB((byte r, byte g, byte b) components)
+		{
+            return new RGB(components.r, components.g, components.b);
+		}
     }
 }

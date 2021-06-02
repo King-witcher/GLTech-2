@@ -342,5 +342,14 @@ namespace GLTech2
 			bool ydif = left.y != right.y;
 			return xdif || ydif;
 		}
+
+		/// <summary>
+		/// Converts a tuple into a GLTech2.Vector struct.
+		/// </summary>
+		/// <param name="components">the components</param>
+		public static implicit operator Vector ((float x, float y) components)
+		{
+			return new Vector(components.x, components.y);
+		}
 	}
 }
