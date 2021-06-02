@@ -129,19 +129,47 @@ namespace GLTech2
                 {
                     int srcArgb = source.GetPixel(srcLine, srcColumn).ToArgb();
 
-                    if (textures.TryGetValue(srcArgb, out var material))
+                    if (textures.TryGetValue(srcArgb, out var texure))
                     {
-                        Vector vert1 = new Vector(srcLine, -srcColumn);
-                        Vector vert2 = new Vector(srcLine, -srcColumn - 1);
-                        Vector vert3 = new Vector(srcLine + 1, -srcColumn - 1);
-                        Vector vert4 = new Vector(srcLine + 1, -srcColumn);
-                        walls[index++] = new Wall(vert1, vert2, material);
-                        walls[index++] = new Wall(vert2, vert3, material);
-                        walls[index++] = new Wall(vert3, vert4, material);
-                        walls[index++] = new Wall(vert4, vert1, material);
+                        Vector vert1 = (srcLine, -srcColumn);
+                        Vector vert2 = (srcLine, -srcColumn - 1);
+                        Vector vert3 = (srcLine + 1, -srcColumn - 1);
+                        Vector vert4 = (srcLine + 1, -srcColumn);
+                        walls[index++] = new Wall(vert1, vert2, texure);
+                        walls[index++] = new Wall(vert2, vert3, texure);
+                        walls[index++] = new Wall(vert3, vert4, texure);
+                        walls[index++] = new Wall(vert4, vert1, texure);
                     }
                 }
             }
+            return walls;
+        }
+
+        /// <summary>
+        /// Gets a new set of walls given a pixelbuffer. I'll explain how it works later.
+        /// </summary>
+        /// <param name="source">The pixelbuffer that contains information about the map</param>
+        /// <param name="textures">The dicionary that maps colors to textures</param>
+        /// <returns>The resulting set of walls</returns>
+        public static Wall[] FromPixelBuffer(PixelBuffer source, IDictionary<RGB, Texture> textures)
+        {
+            Wall[] walls = new Wall[4 * source.Width * source.Height];
+            int index = 0;
+
+            for (int column = 0; column < source.Width; column++)
+                for (int line = 0; line < source.Width; line++)
+                    if (textures.TryGetValue(source[column, line], out var texure))
+                    {
+                        Vector vert1 = (line, -column);
+                        Vector vert2 = (line, -column - 1);
+                        Vector vert3 = (line + 1, -column - 1);
+                        Vector vert4 = (line + 1, -column);
+                        walls[index++] = new Wall(vert1, vert2, texure);
+                        walls[index++] = new Wall(vert2, vert3, texure);
+                        walls[index++] = new Wall(vert3, vert4, texure);
+                        walls[index++] = new Wall(vert4, vert1, texure);
+                    }
+
             return walls;
         }
 

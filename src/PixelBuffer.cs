@@ -33,13 +33,13 @@ namespace GLTech2
         /// <summary>
         /// Gets a RGB pixel given its cordinates.
         /// </summary>
-        /// <param name="x">The x cordinate</param>
-        /// <param name="y">The y cordinate</param>
+        /// <param name="column">The column</param>
+        /// <param name="line">The line</param>
         /// <returns></returns>
-        public RGB this[int x, int y]
+        public RGB this[int column, int line]
         {
-            get => rgb0[x + width * y];
-            set => rgb0[x + width * y] = value;
+            get => rgb0[column + width * line];
+            set => rgb0[column + width * line] = value;
         }
 
         /// <summary>
