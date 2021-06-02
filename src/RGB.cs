@@ -56,7 +56,6 @@ namespace GLTech2
         /// </summary>
         public byte G => g;
 
-
         /// <summary>
         /// The blue component
         /// </summary>
@@ -140,9 +139,22 @@ namespace GLTech2
         /// Implicitly casts a tuple into a RGB struct.
         /// </summary>
         /// <param name="components">The r, g, b components.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGB((byte r, byte g, byte b) components)
-		{
+        {
             return new RGB(components.r, components.g, components.b);
-		}
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator RGB(System.Drawing.Color color)
+        {
+            return new RGB(color.R, color.G, color.B);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Drawing.Color(RGB rgb)
+        {
+            return System.Drawing.Color.FromArgb(255, rgb.r, rgb.g, rgb.b);
+        }
     }
 }
