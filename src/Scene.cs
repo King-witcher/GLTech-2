@@ -35,8 +35,8 @@ namespace GLTech2
                     activeObserver = value;
                     unmanaged->activeObserver = value.unmanaged;
                 }
-                else if (Debug.DebugWarnings)
-                    Console.WriteLine("Can\'t set a camera that is not in this scene.");
+                else
+                    Debug.InternalLog("Scene", "Can\'t set a camera that is not in this scene.", Debug.Options.Error);
             }
         }
 
