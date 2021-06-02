@@ -60,7 +60,7 @@ namespace GLTech2
                         }
                         else
                         {
-                            uint pixel = nearest->material.MapPixel(nearest_ratio, vratio);
+                            uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
                             buffer[width * line + ray_id] = pixel;
                         }
                     }
@@ -131,7 +131,7 @@ namespace GLTech2
                     for (int line = draw_column_start; line < draw_column_end; line++)
                     {
                         float vratio = (line - column_start) / columnHeight;
-                        uint pixel = nearest->material.MapPixel(nearest_ratio, vratio);
+                        uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
                         buffer[width * line + ray_id] = pixel;
                     }
                     for (int line = draw_column_end; line < height; line++)

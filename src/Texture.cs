@@ -39,7 +39,7 @@ namespace GLTech2
         {
             // Critical performance impact
             int x = (int)(buffer.width_float * (hrepeat * hratio + hoffset)) % buffer.width;
-            int y = (int)(buffer.height_float * vratio);//% texture.height;
+            int y = (int)(buffer.height_float * vratio);//% buffer.height;
             return buffer.uint0[buffer.width * y + x];
         }
 

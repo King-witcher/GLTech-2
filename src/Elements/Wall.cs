@@ -42,12 +42,12 @@ namespace GLTech2
         /// <summary>
         /// Gets and sets the material of the wall.
         /// </summary>
-        public Texture Material
+        public Texture Texture
         {
-            get => unmanaged->material;
+            get => unmanaged->texture;
             set
             {
-                unmanaged->material = value;
+                unmanaged->texture = value;
             }
         }
 
@@ -66,14 +66,14 @@ namespace GLTech2
             }
         }
 
-        public Wall(Vector start, Vector end, Texture material)
+        public Wall(Vector start, Vector end, Texture texture)
         {
-            unmanaged = WallData.Create(start, end, material);
+            unmanaged = WallData.Create(start, end, texture);
         }
         
-        public Wall(Vector start, float angle_deg, float length, Texture material)
+        public Wall(Vector start, float angle_deg, float length, Texture texture)
         {
-            unmanaged = WallData.Create(start, angle_deg, length, material);
+            unmanaged = WallData.Create(start, angle_deg, length, texture);
         }
 
         public static Wall[] FromBitmap(Bitmap source, params Color[] ignoreList)
@@ -119,7 +119,7 @@ namespace GLTech2
             return walls;
         }
 
-        public static Wall[] FromBitmap(Bitmap source, IDictionary<int, Texture> materials)
+        public static Wall[] FromBitmap(Bitmap source, IDictionary<int, Texture> textures)
         {
             Wall[] walls = new Wall[4 * source.Width * source.Height];
             int index = 0;
@@ -129,7 +129,7 @@ namespace GLTech2
                 {
                     int srcArgb = source.GetPixel(srcLine, srcColumn).ToArgb();
 
-                    if (materials.TryGetValue(srcArgb, out var material))
+                    if (textures.TryGetValue(srcArgb, out var material))
                     {
                         Vector vert1 = new Vector(srcLine, -srcColumn);
                         Vector vert2 = new Vector(srcLine, -srcColumn - 1);
@@ -145,7 +145,7 @@ namespace GLTech2
             return walls;
         }
 
-        public static Wall[] CreateSequence(Texture material, params Vector[] verts)
+        public static Wall[] CreateSequence(Texture textures, params Vector[] verts)
         {
             if (verts == null)
                 throw new ArgumentNullException("Verts cannot be null.");
@@ -153,21 +153,21 @@ namespace GLTech2
                 return new Wall[0];
 
             Wall[] result = new Wall[verts.Length - 1];
-            Texture material_ = material;
+            Texture texture_ = textures;
             int walls = verts.Length - 1;
 
-            material_.hrepeat /= walls;
+            texture_.hrepeat /= walls;
 
             for (int i = 0; i < walls; i++)
             {
-                material_.hoffset = material.hoffset + material.hrepeat * i / walls;
-                result[i] = new Wall(verts[i], verts[i + 1], material_);
+                texture_.hoffset = textures.hoffset + textures.hrepeat * i / walls;
+                result[i] = new Wall(verts[i], verts[i + 1], texture_);
             }
 
             return result;
         }
 
-        public static Wall[] CreatePolygon(Texture material, params Vector[] verts) //Beta
+        public static Wall[] CreatePolygon(Texture texture, params Vector[] verts) //Beta
         {
             if (verts == null)
                 throw new ArgumentNullException("Verts cannot be null.");
@@ -177,17 +177,17 @@ namespace GLTech2
             int total_walls = verts.Length;
             Wall[] result = new Wall[total_walls];
 
-            Texture currentMaterial = material;
-            currentMaterial.hrepeat /= total_walls;
+            Texture currentTexture = texture;
+            currentTexture.hrepeat /= total_walls;
 
             for (int i = 0; i < total_walls - 1; i++)
             {
-                currentMaterial.hoffset = material.hoffset + material.hrepeat * i / (total_walls);
-                result[i] = new Wall(verts[i], verts[i + 1], currentMaterial);
+                currentTexture.hoffset = texture.hoffset + texture.hrepeat * i / (total_walls);
+                result[i] = new Wall(verts[i], verts[i + 1], currentTexture);
             }
 
-            currentMaterial.hoffset = material.hoffset + material.hrepeat * (total_walls - 1) / total_walls;
-            result[total_walls - 1] = new Wall(verts[total_walls - 1], verts[0], currentMaterial);
+            currentTexture.hoffset = texture.hoffset + texture.hrepeat * (total_walls - 1) / total_walls;
+            result[total_walls - 1] = new Wall(verts[total_walls - 1], verts[0], currentTexture);
 
             return result;
         }
