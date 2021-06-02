@@ -131,19 +131,13 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RGB operator /(RGB color, float divisor)
-        {
-            return color * (1 / divisor);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator uint(RGB rgb) => rgb.rgb;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGB(uint rgb) => new RGB{rgb = rgb};
 
         /// <summary>
-        /// Implicitly converts a tuple into a RGB struct.
+        /// Implicitly casts a tuple into a RGB struct.
         /// </summary>
         /// <param name="components">The r, g, b components.</param>
         public static implicit operator RGB((byte r, byte g, byte b) components)

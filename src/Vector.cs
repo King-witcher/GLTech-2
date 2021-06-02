@@ -285,7 +285,7 @@ namespace GLTech2
 				left.y * right.y - left.x * right.x);
 
 		/// <summary>
-		///		Gets the division between two vectors as if they were complex numbers as y + xi.
+		///	Gets the division between two vectors as if they were complex numbers as y + xi.
 		/// </summary>
 		/// <param name="dividend">Dividend</param>
 		/// <param name="divider">Divider</param>
@@ -302,8 +302,11 @@ namespace GLTech2
 		}
 
 		/// <summary>
-		/// Just obvious thing. Will take a while until being documented.
+		///	Gets the product between a vector and a scalar.
 		/// </summary>
+		/// <param name="scalar">Scalar</param>
+		/// <param name="vector">Vector</param>
+		/// <returns>The product between a vector and a scalar.</returns>
 		public static Vector operator *(float scalar, Vector vector) =>
 			new Vector(
 				vector.x * scalar,
