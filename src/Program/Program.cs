@@ -53,7 +53,7 @@ namespace GLTech2
                             hoffset: 0f,
                             hrepeat: 2f);
 
-                        Element e = new RegularPolygon(new Vector(-0.5f, 0f), 4, .354f, tex);
+                        Element e = new RegularPolygon((-0.5f, 0f), 4, .354f, tex);
 
                         e.AddBehaviour(new Rotate { Speed = 180f });
                         e.Parent = pivot;
@@ -66,7 +66,7 @@ namespace GLTech2
                             hoffset: 0f,
                             hrepeat: 4f);
 
-                        Element e = new RegularPolygon(new Vector(0.5f, 0f), 100, .318f, tex);
+                        Element e = new RegularPolygon((0.5f, 0f), 100, .318f, tex);
 
                         e.AddBehaviour(new Rotate { Speed = 180f });
                         e.Parent = pivot;
@@ -79,7 +79,7 @@ namespace GLTech2
                             hoffset: 0f,
                             hrepeat: 1f);
 
-                        Element e = new RegularPolygon(new Vector(0f, 0.866f), 3, .385f, tex);
+                        Element e = new RegularPolygon((0f, 0.866f), 3, .385f, tex);
 
                         e.AddBehaviour(new Rotate { Speed = 180f });
                         e.Parent = pivot;
