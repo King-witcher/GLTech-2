@@ -113,6 +113,12 @@ namespace GLTech2
                     scene.AddElement(pov);
                 }
 
+                // Gamma Correction
+				{
+                    Effect gamma = new GammaCorrection(1.5f);
+                    Renderer.AddEffect(gamma);
+				}
+
                 // Setup Renderer
                 Renderer.FullScreen = true;
                 Renderer.FieldOfView = 85;
