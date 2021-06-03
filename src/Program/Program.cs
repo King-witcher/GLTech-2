@@ -115,8 +115,8 @@ namespace GLTech2
 
                 // Gamma Correction
 				{
-                    Effect gamma = new GammaCorrection(1.5f);
-                    Renderer.AddEffect(gamma);
+                    Effect effect = new GammaCorrection(1.5f);
+                    Renderer.AddEffect(effect);
 				}
 
                 // Setup Renderer

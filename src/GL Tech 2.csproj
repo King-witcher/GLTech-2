@@ -83,7 +83,6 @@
     <Compile Include="PostProcessing\FXAA.cs" />
     <Compile Include="PostProcessing\GammaCorrection.cs" />
     <Compile Include="PostProcessing\Abstract Effect.cs" />
-    <Compile Include="PostProcessing\TestEffect.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Texture.cs" />
