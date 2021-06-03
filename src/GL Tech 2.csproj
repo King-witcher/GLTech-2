@@ -80,7 +80,6 @@
     <Compile Include="PostProcessing\GrayScale.cs" />
     <Compile Include="RGB.cs" />
     <Compile Include="PostProcessing\GLTXAA.cs" />
-    <Compile Include="PostProcessing\FXAA.cs" />
     <Compile Include="PostProcessing\GammaCorrection.cs" />
     <Compile Include="PostProcessing\Abstract Effect.cs" />
     <Compile Include="Program\Program.cs" />
