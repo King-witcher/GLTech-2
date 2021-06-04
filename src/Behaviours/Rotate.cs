@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE0051
 
-namespace GLTech2.StandardBehaviours
+namespace GLTech2.PrefabBehaviours
 {
     public sealed class Rotate : Behaviour
     {

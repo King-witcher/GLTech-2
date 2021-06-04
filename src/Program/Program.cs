@@ -2,7 +2,7 @@
 using GLTech2.PrefabElements;
 using GLTech2.Properties;
 using System.Media;
-using GLTech2.StandardBehaviours;
+using GLTech2.PrefabBehaviours;
 using System;
 
 namespace GLTech2

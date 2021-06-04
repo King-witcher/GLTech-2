@@ -1,5 +1,5 @@
 ﻿
-namespace GLTech2.StandardBehaviours
+namespace GLTech2.PrefabBehaviours
 {
     public sealed class MouseLook : Behaviour
     {

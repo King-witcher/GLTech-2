@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GLTech2.StandardBehaviours
+namespace GLTech2.PrefabBehaviours
 {
     public sealed class NoclipController : Behaviour
     {
