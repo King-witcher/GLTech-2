@@ -1,17 +1,17 @@
 var hierarchy =
 [
     [ "GLTech2.Behaviour", "class_g_l_tech2_1_1_behaviour.html", [
-      [ "GLTech2.StandardBehaviours.DebugFps", "class_g_l_tech2_1_1_standard_behaviours_1_1_debug_fps.html", null ],
-      [ "GLTech2.StandardBehaviours.FlatMovement", "class_g_l_tech2_1_1_standard_behaviours_1_1_flat_movement.html", null ],
-      [ "GLTech2.StandardBehaviours.MouseLook", "class_g_l_tech2_1_1_standard_behaviours_1_1_mouse_look.html", null ],
-      [ "GLTech2.StandardBehaviours.Move", "class_g_l_tech2_1_1_standard_behaviours_1_1_move.html", null ],
-      [ "GLTech2.StandardBehaviours.NoclipController", "class_g_l_tech2_1_1_standard_behaviours_1_1_noclip_controller.html", null ],
-      [ "GLTech2.StandardBehaviours.Rotate", "class_g_l_tech2_1_1_standard_behaviours_1_1_rotate.html", null ]
+      [ "GLTech2.PrefabBehaviours.DebugFps", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps.html", null ],
+      [ "GLTech2.PrefabBehaviours.FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", null ],
+      [ "GLTech2.PrefabBehaviours.MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", null ],
+      [ "GLTech2.PrefabBehaviours.Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", null ],
+      [ "GLTech2.PrefabBehaviours.NoclipController", "class_g_l_tech2_1_1_prefab_behaviours_1_1_noclip_controller.html", null ],
+      [ "GLTech2.PrefabBehaviours.Rotate", "class_g_l_tech2_1_1_prefab_behaviours_1_1_rotate.html", null ]
     ] ],
     [ "GLTech2.Debug", "class_g_l_tech2_1_1_debug.html", null ],
     [ "GLTech2.PostProcessing.Effect", "class_g_l_tech2_1_1_post_processing_1_1_effect.html", [
-      [ "GLTech2.PostProcessing.Brightness", "class_g_l_tech2_1_1_post_processing_1_1_brightness.html", null ],
       [ "GLTech2.PostProcessing.FFXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a.html", null ],
+      [ "GLTech2.PostProcessing.GammaCorrection", "class_g_l_tech2_1_1_post_processing_1_1_gamma_correction.html", null ],
       [ "GLTech2.PostProcessing.GrayScale", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale.html", null ]
     ] ],
     [ "IDisposable", null, [
@@ -22,6 +22,7 @@ var hierarchy =
         [ "GLTech2.Wall", "class_g_l_tech2_1_1_wall.html", null ]
       ] ],
       [ "GLTech2.Observer", "class_g_l_tech2_1_1_observer.html", null ],
+      [ "GLTech2.PixelBuffer", "struct_g_l_tech2_1_1_pixel_buffer.html", null ],
       [ "GLTech2.PostProcessing.FFXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a.html", null ],
       [ "GLTech2.Scene", "class_g_l_tech2_1_1_scene.html", null ]
     ] ],
@@ -30,7 +31,6 @@ var hierarchy =
     ] ],
     [ "GLTech2.Keyboard", "class_g_l_tech2_1_1_keyboard.html", null ],
     [ "GLTech2.Mouse", "class_g_l_tech2_1_1_mouse.html", null ],
-    [ "GLTech2.PixelBuffer", "struct_g_l_tech2_1_1_pixel_buffer.html", null ],
     [ "GLTech2.Renderer", "class_g_l_tech2_1_1_renderer.html", null ],
     [ "GLTech2.RGB", "struct_g_l_tech2_1_1_r_g_b.html", null ],
     [ "GLTech2.Texture", "struct_g_l_tech2_1_1_texture.html", null ],

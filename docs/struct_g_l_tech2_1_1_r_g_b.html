@@ -96,6 +96,9 @@ $(document).ready(function(){initNavTree('struct_g_l_tech2_1_1_r_g_b.html',''); 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a0cd1da95bb3bf942d36af3abfcd0df60"><td class="memItemLeft" align="right" valign="top"><a id="a0cd1da95bb3bf942d36af3abfcd0df60"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RGB</b> (byte red, byte green, byte blue)</td></tr>
+<tr class="separator:a0cd1da95bb3bf942d36af3abfcd0df60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab2c4faa80b934334349d1d968d24f85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#aab2c4faa80b934334349d1d968d24f85">Average</a> (<a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> rgb)</td></tr>
 <tr class="memdesc:aab2c4faa80b934334349d1d968d24f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the average between this and another pixel.  <a href="struct_g_l_tech2_1_1_r_g_b.html#aab2c4faa80b934334349d1d968d24f85">More...</a><br /></td></tr>
 <tr class="separator:aab2c4faa80b934334349d1d968d24f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,15 +111,21 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9190fec094338ee7993b3323b559e8ba"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#a9190fec094338ee7993b3323b559e8ba">operator*</a> (<a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> rgb, float factor)</td></tr>
 <tr class="memdesc:a9190fec094338ee7993b3323b559e8ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the intensity of a pixel by a certain amount.  <a href="struct_g_l_tech2_1_1_r_g_b.html#a9190fec094338ee7993b3323b559e8ba">More...</a><br /></td></tr>
 <tr class="separator:a9190fec094338ee7993b3323b559e8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82d7ddad3c4b7f249d0cef3ff43ee1ad"><td class="memItemLeft" align="right" valign="top"><a id="a82d7ddad3c4b7f249d0cef3ff43ee1ad"></a>
-static <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> color, float divisor)</td></tr>
-<tr class="separator:a82d7ddad3c4b7f249d0cef3ff43ee1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfce98497a2ba73bf5964ba2a0ccc9c6"><td class="memItemLeft" align="right" valign="top"><a id="abfce98497a2ba73bf5964ba2a0ccc9c6"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint</b> (<a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> rgb)</td></tr>
 <tr class="separator:abfce98497a2ba73bf5964ba2a0ccc9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff731728c5493d3d6d2555462e53ce44"><td class="memItemLeft" align="right" valign="top"><a id="aff731728c5493d3d6d2555462e53ce44"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator RGB</b> (uint rgb)</td></tr>
 <tr class="separator:aff731728c5493d3d6d2555462e53ce44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1077ed7e9b1ed1caa2f6a0adef1dc7"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">operator RGB</a> ((byte r, byte g, byte b) components)</td></tr>
+<tr class="memdesc:a1c1077ed7e9b1ed1caa2f6a0adef1dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly casts a tuple into a <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a> struct.  <a href="struct_g_l_tech2_1_1_r_g_b.html#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">More...</a><br /></td></tr>
+<tr class="separator:a1c1077ed7e9b1ed1caa2f6a0adef1dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd9ae8c10e92ad52121a49f8926f181a"><td class="memItemLeft" align="right" valign="top"><a id="acd9ae8c10e92ad52121a49f8926f181a"></a>
+static&#160;</td><td class="memItemRight" valign="bottom"><b>operator RGB</b> (System.Drawing.Color color)</td></tr>
+<tr class="separator:acd9ae8c10e92ad52121a49f8926f181a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18e283aefb49dd329b34262d1cff62ae"><td class="memItemLeft" align="right" valign="top"><a id="a18e283aefb49dd329b34262d1cff62ae"></a>
+static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator System.Drawing.Color</b> (<a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> rgb)</td></tr>
+<tr class="separator:a18e283aefb49dd329b34262d1cff62ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -127,8 +136,17 @@ Properties</h2></td></tr>
 <tr class="memdesc:a6f6ee5057e6cacfb746a957ce48bbb34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a less precise but faster calculated value of the luma of the color.  <a href="struct_g_l_tech2_1_1_r_g_b.html#a6f6ee5057e6cacfb746a957ce48bbb34">More...</a><br /></td></tr>
 <tr class="separator:a6f6ee5057e6cacfb746a957ce48bbb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f124783544290db4144388fb586fc82"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#a3f124783544290db4144388fb586fc82">Brightness</a><code> [get]</code></td></tr>
-<tr class="memdesc:a3f124783544290db4144388fb586fc82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 0-255 brightness of the pixel  <a href="struct_g_l_tech2_1_1_r_g_b.html#a3f124783544290db4144388fb586fc82">More...</a><br /></td></tr>
+<tr class="memdesc:a3f124783544290db4144388fb586fc82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 0-255 brightness of the pixel.  <a href="struct_g_l_tech2_1_1_r_g_b.html#a3f124783544290db4144388fb586fc82">More...</a><br /></td></tr>
 <tr class="separator:a3f124783544290db4144388fb586fc82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec302465cc957a0bfe61e2247e690ca0"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#aec302465cc957a0bfe61e2247e690ca0">R</a><code> [get]</code></td></tr>
+<tr class="memdesc:aec302465cc957a0bfe61e2247e690ca0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The red component  <a href="struct_g_l_tech2_1_1_r_g_b.html#aec302465cc957a0bfe61e2247e690ca0">More...</a><br /></td></tr>
+<tr class="separator:aec302465cc957a0bfe61e2247e690ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ae53f3f73934fea4c5087b38ed5b1d1"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#a5ae53f3f73934fea4c5087b38ed5b1d1">G</a><code> [get]</code></td></tr>
+<tr class="memdesc:a5ae53f3f73934fea4c5087b38ed5b1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The green component  <a href="struct_g_l_tech2_1_1_r_g_b.html#a5ae53f3f73934fea4c5087b38ed5b1d1">More...</a><br /></td></tr>
+<tr class="separator:a5ae53f3f73934fea4c5087b38ed5b1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a507e57da1e34fa8b1db0398aae0bcc"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#a6a507e57da1e34fa8b1db0398aae0bcc">B</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6a507e57da1e34fa8b1db0398aae0bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The blue component  <a href="struct_g_l_tech2_1_1_r_g_b.html#a6a507e57da1e34fa8b1db0398aae0bcc">More...</a><br /></td></tr>
+<tr class="separator:a6a507e57da1e34fa8b1db0398aae0bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a 32 bits <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a> color. </p>
@@ -198,6 +216,40 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a1c1077ed7e9b1ed1caa2f6a0adef1dc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">&#9670;&nbsp;</a></span>operator RGB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit GLTech2.RGB.operator <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> </td>
+          <td>(</td>
+          <td class="paramtype">(byte r, byte g, byte b)&#160;</td>
+          <td class="paramname"><em>components</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly casts a tuple into a <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a> struct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">components</td><td>The r, g, b components.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a9190fec094338ee7993b3323b559e8ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9190fec094338ee7993b3323b559e8ba">&#9670;&nbsp;</a></span>operator*()</h2>
 
@@ -245,6 +297,30 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a6a507e57da1e34fa8b1db0398aae0bcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a507e57da1e34fa8b1db0398aae0bcc">&#9670;&nbsp;</a></span>B</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">byte GLTech2.RGB.B</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The blue component </p>
+
+</div>
+</div>
 <a id="a3f124783544290db4144388fb586fc82"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3f124783544290db4144388fb586fc82">&#9670;&nbsp;</a></span>Brightness</h2>
 
@@ -265,7 +341,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the 0-255 brightness of the pixel </p>
+<p>Gets the 0-255 brightness of the pixel. </p>
 
 </div>
 </div>
@@ -293,6 +369,30 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a5ae53f3f73934fea4c5087b38ed5b1d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ae53f3f73934fea4c5087b38ed5b1d1">&#9670;&nbsp;</a></span>G</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">byte GLTech2.RGB.G</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The green component </p>
+
+</div>
+</div>
 <a id="a36f122c9e537969f962ccbfe6fbd39e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a36f122c9e537969f962ccbfe6fbd39e4">&#9670;&nbsp;</a></span>Luma</h2>
 
@@ -314,6 +414,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the luma of the pixel. </p>
+
+</div>
+</div>
+<a id="aec302465cc957a0bfe61e2247e690ca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec302465cc957a0bfe61e2247e690ca0">&#9670;&nbsp;</a></span>R</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">byte GLTech2.RGB.R</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The red component </p>
 
 </div>
 </div>

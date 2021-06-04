@@ -157,7 +157,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac53c0ba90c42913a5bc40fc46cd6c2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the division between two vectors as if they were complex numbers as y + xi.  <a href="struct_g_l_tech2_1_1_vector.html#ac53c0ba90c42913a5bc40fc46cd6c2ba">More...</a><br /></td></tr>
 <tr class="separator:ac53c0ba90c42913a5bc40fc46cd6c2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3670cbd3527c8f6f69534ec1f0c6cc42"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a3670cbd3527c8f6f69534ec1f0c6cc42">operator*</a> (float scalar, <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> vector)</td></tr>
-<tr class="memdesc:a3670cbd3527c8f6f69534ec1f0c6cc42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Just obvious thing. Will take a while until being documented.  <a href="struct_g_l_tech2_1_1_vector.html#a3670cbd3527c8f6f69534ec1f0c6cc42">More...</a><br /></td></tr>
+<tr class="memdesc:a3670cbd3527c8f6f69534ec1f0c6cc42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the product between a vector and a scalar.  <a href="struct_g_l_tech2_1_1_vector.html#a3670cbd3527c8f6f69534ec1f0c6cc42">More...</a><br /></td></tr>
 <tr class="separator:a3670cbd3527c8f6f69534ec1f0c6cc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a220db41208e786906d34890d93e55c44"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a220db41208e786906d34890d93e55c44">operator*</a> (<a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> vector, float scalar)</td></tr>
 <tr class="memdesc:a220db41208e786906d34890d93e55c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Just obvious thing. Will take a while until being documented.  <a href="struct_g_l_tech2_1_1_vector.html#a220db41208e786906d34890d93e55c44">More...</a><br /></td></tr>
@@ -171,6 +171,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:adfbdc60d881ee3d480a629c6770e4963"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#adfbdc60d881ee3d480a629c6770e4963">operator!=</a> (<a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> left, <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> right)</td></tr>
 <tr class="memdesc:adfbdc60d881ee3d480a629c6770e4963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Just obvious thing. Will take a while until being documented.  <a href="struct_g_l_tech2_1_1_vector.html#adfbdc60d881ee3d480a629c6770e4963">More...</a><br /></td></tr>
 <tr class="separator:adfbdc60d881ee3d480a629c6770e4963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23874927ce78c859f16a44fb3c9cb307"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a23874927ce78c859f16a44fb3c9cb307">operator Vector</a> ((float x, float y) components)</td></tr>
+<tr class="memdesc:a23874927ce78c859f16a44fb3c9cb307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a tuple into a <a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">GLTech2.Vector</a> struct.  <a href="struct_g_l_tech2_1_1_vector.html#a23874927ce78c859f16a44fb3c9cb307">More...</a><br /></td></tr>
+<tr class="separator:a23874927ce78c859f16a44fb3c9cb307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -554,6 +557,40 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a23874927ce78c859f16a44fb3c9cb307"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23874927ce78c859f16a44fb3c9cb307">&#9670;&nbsp;</a></span>operator Vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit GLTech2.Vector.operator <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> </td>
+          <td>(</td>
+          <td class="paramtype">(float x, float y)&#160;</td>
+          <td class="paramname"><em>components</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a tuple into a <a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">GLTech2.Vector</a> struct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">components</td><td>the components</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="adfbdc60d881ee3d480a629c6770e4963"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adfbdc60d881ee3d480a629c6770e4963">&#9670;&nbsp;</a></span>operator!=()</h2>
 
@@ -626,7 +663,15 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Just obvious thing. Will take a while until being documented. </p>
+<p>Gets the product between a vector and a scalar. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scalar</td><td>Scalar</td></tr>
+    <tr><td class="paramname">vector</td><td><a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">Vector</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The product between a vector and a scalar.</dd></dl>
 
 </div>
 </div>

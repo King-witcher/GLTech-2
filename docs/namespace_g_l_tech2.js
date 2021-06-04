@@ -1,9 +1,9 @@
 var namespace_g_l_tech2 =
 [
     [ "PostProcessing", "namespace_g_l_tech2_1_1_post_processing.html", "namespace_g_l_tech2_1_1_post_processing" ],
+    [ "PrefabBehaviours", "namespace_g_l_tech2_1_1_prefab_behaviours.html", "namespace_g_l_tech2_1_1_prefab_behaviours" ],
     [ "PrefabElements", "namespace_g_l_tech2_1_1_prefab_elements.html", "namespace_g_l_tech2_1_1_prefab_elements" ],
     [ "Properties", "namespace_g_l_tech2_1_1_properties.html", null ],
-    [ "StandardBehaviours", "namespace_g_l_tech2_1_1_standard_behaviours.html", "namespace_g_l_tech2_1_1_standard_behaviours" ],
     [ "Behaviour", "class_g_l_tech2_1_1_behaviour.html", "class_g_l_tech2_1_1_behaviour" ],
     [ "Element", "class_g_l_tech2_1_1_element.html", "class_g_l_tech2_1_1_element" ],
     [ "Empty", "class_g_l_tech2_1_1_empty.html", "class_g_l_tech2_1_1_empty" ],

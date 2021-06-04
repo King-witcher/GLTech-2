@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['isrunning_225',['IsRunning',['../class_g_l_tech2_1_1_renderer.html#a010488028f3058d6d633c84c2c6381d4',1,'GLTech2::Renderer']]]
+  ['height_234',['Height',['../struct_g_l_tech2_1_1_pixel_buffer.html#a5097d923184bf79ae10af7738cadcf0f',1,'GLTech2::PixelBuffer']]],
+  ['hshift_235',['HShift',['../class_g_l_tech2_1_1_mouse.html#ad9fb0513f012e695f4317c678223e550',1,'GLTech2::Mouse']]]
 ];

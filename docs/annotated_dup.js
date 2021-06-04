@@ -3,20 +3,20 @@ var annotated_dup =
     [ "GLTech2", "namespace_g_l_tech2.html", [
       [ "PostProcessing", "namespace_g_l_tech2_1_1_post_processing.html", [
         [ "Effect", "class_g_l_tech2_1_1_post_processing_1_1_effect.html", "class_g_l_tech2_1_1_post_processing_1_1_effect" ],
-        [ "Brightness", "class_g_l_tech2_1_1_post_processing_1_1_brightness.html", "class_g_l_tech2_1_1_post_processing_1_1_brightness" ],
         [ "FFXAA", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a.html", "class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a" ],
+        [ "GammaCorrection", "class_g_l_tech2_1_1_post_processing_1_1_gamma_correction.html", "class_g_l_tech2_1_1_post_processing_1_1_gamma_correction" ],
         [ "GrayScale", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale.html", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale" ]
+      ] ],
+      [ "PrefabBehaviours", "namespace_g_l_tech2_1_1_prefab_behaviours.html", [
+        [ "DebugFps", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps" ],
+        [ "FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement" ],
+        [ "MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look" ],
+        [ "Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move" ],
+        [ "NoclipController", "class_g_l_tech2_1_1_prefab_behaviours_1_1_noclip_controller.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_noclip_controller" ],
+        [ "Rotate", "class_g_l_tech2_1_1_prefab_behaviours_1_1_rotate.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_rotate" ]
       ] ],
       [ "PrefabElements", "namespace_g_l_tech2_1_1_prefab_elements.html", [
         [ "RegularPolygon", "class_g_l_tech2_1_1_prefab_elements_1_1_regular_polygon.html", "class_g_l_tech2_1_1_prefab_elements_1_1_regular_polygon" ]
-      ] ],
-      [ "StandardBehaviours", "namespace_g_l_tech2_1_1_standard_behaviours.html", [
-        [ "DebugFps", "class_g_l_tech2_1_1_standard_behaviours_1_1_debug_fps.html", "class_g_l_tech2_1_1_standard_behaviours_1_1_debug_fps" ],
-        [ "FlatMovement", "class_g_l_tech2_1_1_standard_behaviours_1_1_flat_movement.html", "class_g_l_tech2_1_1_standard_behaviours_1_1_flat_movement" ],
-        [ "MouseLook", "class_g_l_tech2_1_1_standard_behaviours_1_1_mouse_look.html", "class_g_l_tech2_1_1_standard_behaviours_1_1_mouse_look" ],
-        [ "Move", "class_g_l_tech2_1_1_standard_behaviours_1_1_move.html", "class_g_l_tech2_1_1_standard_behaviours_1_1_move" ],
-        [ "NoclipController", "class_g_l_tech2_1_1_standard_behaviours_1_1_noclip_controller.html", "class_g_l_tech2_1_1_standard_behaviours_1_1_noclip_controller" ],
-        [ "Rotate", "class_g_l_tech2_1_1_standard_behaviours_1_1_rotate.html", "class_g_l_tech2_1_1_standard_behaviours_1_1_rotate" ]
       ] ],
       [ "Behaviour", "class_g_l_tech2_1_1_behaviour.html", "class_g_l_tech2_1_1_behaviour" ],
       [ "Element", "class_g_l_tech2_1_1_element.html", "class_g_l_tech2_1_1_element" ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['noclipcontroller_137',['NoclipController',['../class_g_l_tech2_1_1_standard_behaviours_1_1_noclip_controller.html',1,'GLTech2::StandardBehaviours']]]
+  ['noclipcontroller_143',['NoclipController',['../class_g_l_tech2_1_1_prefab_behaviours_1_1_noclip_controller.html',1,'GLTech2::PrefabBehaviours']]]
 ];

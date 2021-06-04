@@ -10,6 +10,7 @@ var struct_g_l_tech2_1_1_vector =
     [ "GetDistance", "struct_g_l_tech2_1_1_vector.html#a4c035d7086f7d5d05316e7dc54db5c14", null ],
     [ "GetHashCode", "struct_g_l_tech2_1_1_vector.html#a441bd5662c2ed489860fc82e22d07368", null ],
     [ "GetPolygon", "struct_g_l_tech2_1_1_vector.html#a1fdfe38118308d5de5e94bf33a50e333", null ],
+    [ "operator Vector", "struct_g_l_tech2_1_1_vector.html#a23874927ce78c859f16a44fb3c9cb307", null ],
     [ "operator!=", "struct_g_l_tech2_1_1_vector.html#adfbdc60d881ee3d480a629c6770e4963", null ],
     [ "operator*", "struct_g_l_tech2_1_1_vector.html#a3670cbd3527c8f6f69534ec1f0c6cc42", null ],
     [ "operator*", "struct_g_l_tech2_1_1_vector.html#a8ab5441808ba814fabd24a1059b390ac", null ],

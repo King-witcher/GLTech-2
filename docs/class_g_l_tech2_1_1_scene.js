@@ -1,5 +1,6 @@
 var class_g_l_tech2_1_1_scene =
 [
+    [ "Scene", "class_g_l_tech2_1_1_scene.html#adcdbcecf3508e116e99113611bb432a3", null ],
     [ "Scene", "class_g_l_tech2_1_1_scene.html#a15ffbcf5fbe322bce81d5ed80e31424e", null ],
     [ "AddElement", "class_g_l_tech2_1_1_scene.html#abdb094a97415efcf60c4dc3025ab4ef8", null ],
     [ "AddElements", "class_g_l_tech2_1_1_scene.html#a6cc6d962ec708609fe323329e6d1321f", null ],

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['nativerendering_233',['NativeRendering',['../class_g_l_tech2_1_1_renderer.html#a60f6d38d194fb18cb0e7731bc48e41c1',1,'GLTech2::Renderer']]],
-  ['normal_234',['Normal',['../class_g_l_tech2_1_1_element.html#a27bdbdce9b1e0d4ae19726cf9e302ca3',1,'GLTech2::Element']]]
+  ['maxfps_240',['MaxFps',['../class_g_l_tech2_1_1_renderer.html#a0c1f688ce1db9e2d5fd52309af58e10e',1,'GLTech2::Renderer']]],
+  ['maxwalls_241',['MaxWalls',['../class_g_l_tech2_1_1_scene.html#abb11e7872088d4d58abd1abf009d1b6a',1,'GLTech2::Scene']]],
+  ['module_242',['Module',['../struct_g_l_tech2_1_1_vector.html#a4fffc364f183af3bc4dcaad5d464a8ac',1,'GLTech2::Vector']]]
 ];
