@@ -145,7 +145,7 @@ namespace GLTech2
             }
         }
 
-        static bool captureMouse = true;
+        static bool captureMouse = false;
         /// <summary>
         ///     Gets and sets whether the engine should or not capture mouse movements.
         /// </summary>
@@ -189,6 +189,15 @@ namespace GLTech2
         /// </remarks>
         public unsafe static void Run(Scene scene)
         {
+            if (scene.ActiveObserver is null)
+			{
+                Debug.InternalLog("Renderer",
+                    "The scene you are trying to render doesn't have an active observer.",
+                    Debug.Options.Warning);
+                return;
+            }
+
+
             if (IsRunning)
                 return;
             IsRunning = true;
