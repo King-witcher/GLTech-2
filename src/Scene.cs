@@ -13,6 +13,11 @@ namespace GLTech2
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
 
+        /// <summary>
+        /// Gets a new instance of Scene.
+        /// </summary>
+        /// <param name="maxWalls">Max walls that the scene can fit</param>
+        /// <param name="maxSprities">Max sprities that the scene can fit</param>
         public Scene(int maxWalls = 512, int maxSprities = 512)
 		{
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));

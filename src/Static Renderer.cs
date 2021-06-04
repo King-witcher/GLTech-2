@@ -192,9 +192,11 @@ namespace GLTech2
             if (scene.ActiveObserver is null)
 			{
                 Debug.InternalLog("Renderer",
-                    "The scene you are trying to render doesn't have an active observer.",
-                    Debug.Options.Error);
-                return;
+                    "The scene you are trying to render doesn't have an active observer. \n" +
+                    "Adding a default observer at origin.",
+                    Debug.Options.Warning);
+
+                scene.ActiveObserver = new Observer(Vector.Origin, 0);
             }
 
 
