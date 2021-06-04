@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 
 namespace GLTech2
@@ -11,6 +12,12 @@ namespace GLTech2
         internal SceneData* unmanaged;
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
+
+        public Scene(int maxWalls = 512, int maxSprities = 512)
+		{
+            Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
+            unmanaged = SceneData.Create(maxWalls, maxSprities, background);
+        }
 
         /// <summary>
         /// Gets a new instance of Scene.
