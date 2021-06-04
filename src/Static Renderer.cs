@@ -242,9 +242,6 @@ namespace GLTech2
             sourceBitmap.Dispose();
 
             IsRunning = false;
-
-			Console.WriteLine("Renderer finished. Press any key to continue.");
-            Console.ReadKey();
         }
 
         private static unsafe void ReloadCache()
