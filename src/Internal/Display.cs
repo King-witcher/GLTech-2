@@ -11,7 +11,6 @@ namespace GLTech2
     internal sealed class Display : Form, IDisposable
     {
         private PictureBox pictureBox;  // Will only be released by GC
-		private Label label1;
 		private Label label2;
 		private Bitmap source;
 
@@ -45,7 +44,6 @@ namespace GLTech2
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Display));
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -58,19 +56,6 @@ namespace GLTech2
 			this.pictureBox.Size = new System.Drawing.Size(640, 360);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-			this.label1.Location = new System.Drawing.Point(357, 28);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(271, 19);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Algumas texturas podem conter direitos autorais.";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			// 
 			// label2
 			// 
@@ -92,7 +77,6 @@ namespace GLTech2
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.ClientSize = new System.Drawing.Size(640, 360);
 			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
 			this.Controls.Add(this.pictureBox);
 			this.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
