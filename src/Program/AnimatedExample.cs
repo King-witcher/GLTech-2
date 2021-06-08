@@ -88,9 +88,7 @@ namespace GLTech2
 
                     pov.AddBehaviour<DebugPosition>();
                     pov.AddBehaviour<NoclipController>();
-                    var mouseLook = new MouseLook();
-                    mouseLook.Sensitivity = 2.2f;
-                    pov.AddBehaviour(mouseLook);
+                    pov.AddBehaviour(new MouseLook(2.2f));
 
                     scene.AddElement(pov);
                 }
