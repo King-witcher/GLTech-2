@@ -1,3 +1,4 @@
+ - Mudar a fomrma como uma cena libera recursos n'ao gerenciado: agora ela precisa ter uma coleção de disposables.
  
  - Mudar a forma como uma cena é criada para funcionar por meio de herança.
 

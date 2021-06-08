@@ -66,6 +66,12 @@ namespace GLTech2
             }
         }
 
+        /// <summary>
+        /// Gets a new instance of wall.
+        /// </summary>
+        /// <param name="start">Starting point</param>
+        /// <param name="end">End point</param>
+        /// <param name="texture">Texture</param>
         public Wall(Vector start, Vector end, Texture texture)
         {
             unmanaged = WallData.Create(start, end, texture);
@@ -76,6 +82,7 @@ namespace GLTech2
             unmanaged = WallData.Create(start, angle_deg, length, texture);
         }
 
+        [Obsolete]
         public static Wall[] FromBitmap(Bitmap source, params Color[] ignoreList)
         {
             if (ignoreList.Length == 0)
@@ -119,6 +126,7 @@ namespace GLTech2
             return walls;
         }
 
+        [Obsolete]
         public static Wall[] FromBitmap(Bitmap source, IDictionary<int, Texture> textures)
         {
             Wall[] walls = new Wall[4 * source.Width * source.Height];
@@ -151,6 +159,7 @@ namespace GLTech2
         /// <param name="source">The pixelbuffer that contains information about the map</param>
         /// <param name="textures">The dicionary that maps colors to textures</param>
         /// <returns>The resulting set of walls</returns>
+        [Obsolete]
         public static Wall[] FromPixelBuffer(PixelBuffer source, IDictionary<RGB, Texture> textures)
         {
             Wall[] walls = new Wall[4 * source.Width * source.Height];
@@ -173,6 +182,7 @@ namespace GLTech2
             return walls;
         }
 
+        [Obsolete]
         public static Wall[] CreateSequence(Texture textures, params Vector[] verts)
         {
             if (verts == null)
@@ -195,6 +205,7 @@ namespace GLTech2
             return result;
         }
 
+        [Obsolete]
         public static Wall[] CreatePolygon(Texture texture, params Vector[] verts) //Beta
         {
             if (verts == null)

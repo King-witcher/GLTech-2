@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F58406C3-FA76-493E-A7E1-26CCB2BBD6F9}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GLTech2</RootNamespace>
     <AssemblyName>glt2_net</AssemblyName>
@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="Behaviours\Abstract Behaviour.cs" />
     <Compile Include="Elements\Observer.cs" />
+    <Compile Include="Program\AnimatedExample.cs" />
+    <Compile Include="Program\GridExample.cs" />
     <Compile Include="Static Debug.cs" />
     <Compile Include="Static Keyboard.cs" />
     <Compile Include="Elements\Abstract Element.cs" />
@@ -124,6 +126,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Resources\Black.png" />
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\metal.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\wall.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\universe.png" />
@@ -147,6 +149,7 @@
     <None Include="Resources\d_e1m1.wav" />
     <None Include="Resources\GrayHexagons.png" />
     <None Include="Resources\Logo.png" />
+    <Content Include="Resources\MapGrid.bmp" />
     <Content Include="Resources\Test.bmp" />
   </ItemGroup>
   <ItemGroup>

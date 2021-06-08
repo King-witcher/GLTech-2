@@ -152,6 +152,16 @@ namespace GLTech2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MapGrid {
+            get {
+                object obj = ResourceManager.GetObject("MapGrid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Metal {
             get {
                 object obj = ResourceManager.GetObject("Metal", resourceCulture);

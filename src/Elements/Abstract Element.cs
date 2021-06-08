@@ -309,7 +309,7 @@ namespace GLTech2
         /// <summary>
         ///     Checks if the element contains an especific behaviour by instance.
         /// </summary>
-        /// <param name="b">Behaviour</typeparam>
+        /// <param name="b">Behaviour</param>
         /// <returns>true if it contains; otherwise, false</returns>
         public bool ContainsBehaviour(Behaviour b)
         {
@@ -322,7 +322,7 @@ namespace GLTech2
         /// <summary>
         ///     Removes an instance of behaviour from b.
         /// </summary>
-        /// <param name="b">Behaviour</typeparam>
+        /// <param name="b">Behaviour</param>
         public void RemoveBehaviour(Behaviour b)
         {
             behaviours.Remove(b);

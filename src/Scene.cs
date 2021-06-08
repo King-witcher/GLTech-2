@@ -19,9 +19,106 @@ namespace GLTech2
         /// <param name="maxWalls">Max walls that the scene can fit</param>
         /// <param name="maxSprities">Max sprities that the scene can fit</param>
         public Scene(int maxWalls = 512, int maxSprities = 512)
-		{
+        {
+            if (maxWalls <= 0)
+                throw new ArgumentException("maxWalls cannot be < 1.");
+            if (maxSprities <= 0)
+                throw new ArgumentException("maxSprities cannot be < 1.");
+
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
             unmanaged = SceneData.Create(maxWalls, maxSprities, background);
+        }
+
+        /// <summary>
+        /// Creates a new scene and builds a map based on a PixelBuffer. Each pixel will be converted to a block, except for black pixels.
+        /// </summary>
+        /// <param name="map">A PixelBuffer that represents the map</param>
+        /// <param name="textures">A IDictionary that maps pixel colors from the PixelBuffer to textures</param>
+        /// <param name="maxWalls">Max walls that the scene can fit</param>
+        /// <param name="maxSprities">Max sprities that the scene can fit</param>
+        public Scene(PixelBuffer map, IDictionary<RGB, Texture> textures, int maxWalls = 512, int maxSprities = 512) : this(maxWalls, maxSprities)
+        {
+            if (textures is null)
+                throw new ArgumentNullException("textureMap");
+
+            BuildFromPixelBuffer(map, textures);
+        }
+
+        /// <summary>
+        /// Creates a new scene and builds a map based on a PixelBuffer. Each pixel will be converted to a block, except for black pixels.
+        /// </summary>
+        /// <param name="map">A PixelBuffer that represents the map</param>
+        /// <param name="maxWalls">Max walls that the scene can fit</param>
+        /// <param name="maxSprities">Max sprities that the scene can fit</param>
+        public Scene(PixelBuffer map, int maxWalls = 5000, int maxSprities = 512) : this(maxWalls, maxSprities)
+        {
+            BuildFromPixelBuffer(map);
+        }
+
+        // Must be optimized.
+        private void BuildFromPixelBuffer(PixelBuffer map)
+        {
+            Dictionary<RGB, Texture> textures = new Dictionary<RGB, Texture>();
+
+            // Gets a new texture if exists, otherwise creates it.
+            Texture getTexture(RGB rgb)
+            {
+                if (textures.TryGetValue(rgb, out Texture texture))
+                    return texture;
+                else
+                {
+                    PixelBuffer buffer = new PixelBuffer(1, 1);     // Must be added to disposables
+                    buffer[0, 0] = rgb;
+                    Texture tex = new Texture(buffer);
+                    textures[rgb] = tex;
+                    return tex;
+                }
+            }
+
+            for (int column = 0; column < map.Width; column++)
+            {
+                for (int line = 0; line < map.Width; line++)
+                {
+                    // Checks for transparency.
+                    if (map[column, line] == (RGB)(0, 0, 0))
+                        continue;
+
+                    Texture texture = getTexture(map[column, line]);
+
+                    Vector vert1 = (line, -column);
+                    Vector vert2 = (line, -column - 1);
+                    Vector vert3 = (line + 1, -column - 1);
+                    Vector vert4 = (line + 1, -column);
+
+                    AddElement(new Wall(vert1, vert2, texture));
+                    AddElement(new Wall(vert2, vert3, texture));
+                    AddElement(new Wall(vert3, vert4, texture));
+                    AddElement(new Wall(vert4, vert1, texture));
+                }
+            }
+        }
+
+        // Must be optimized.
+        private void BuildFromPixelBuffer(PixelBuffer map, IDictionary<RGB, Texture> textures)
+        {
+            for (int column = 0; column < map.Width; column++)
+            {
+                for (int line = 0; line < map.Width; line++)
+                {
+                    if (textures.TryGetValue(map[column, line], out Texture texture))
+                    {
+                        Vector vert1 = (line, -column);
+                        Vector vert2 = (line, -column - 1);
+                        Vector vert3 = (line + 1, -column - 1);
+                        Vector vert4 = (line + 1, -column);
+
+                        AddElement(new Wall(vert1, vert2, texture));
+                        AddElement(new Wall(vert2, vert3, texture));
+                        AddElement(new Wall(vert3, vert4, texture));
+                        AddElement(new Wall(vert4, vert1, texture));
+                    }
+                }
+            }
         }
 
         /// <summary>
