@@ -47,7 +47,7 @@ namespace GLTech2
 
                 // Renderer customization
                 Renderer.FullScreen = true;
-                Renderer.FieldOfView = 85f;
+                Renderer.FieldOfView = 110f;
                 Renderer.ParallelRendering = true;
                 Renderer.DoubleBuffering = true;
                 Renderer.CaptureMouse = true;
