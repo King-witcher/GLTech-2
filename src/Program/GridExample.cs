@@ -38,6 +38,7 @@ namespace GLTech2
                 {
                     Observer pov = new Observer((6.5f, -5f), 270);
 
+                    pov.AddBehaviour<DebugFPS>();
                     pov.AddBehaviour<DebugPosition>();
                     pov.AddBehaviour<NoclipController>();
                     pov.AddBehaviour(new MouseLook(2.2f));
