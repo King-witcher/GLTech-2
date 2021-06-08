@@ -56,6 +56,7 @@ namespace GLTech2
 			this.pictureBox.Size = new System.Drawing.Size(640, 360);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
+			this.pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
 			// 
 			// label2
 			// 
@@ -63,11 +64,11 @@ namespace GLTech2
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-			this.label2.Location = new System.Drawing.Point(511, 9);
+			this.label2.Location = new System.Drawing.Point(508, 9);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(117, 19);
+			this.label2.Size = new System.Drawing.Size(120, 19);
 			this.label2.TabIndex = 2;
-			this.label2.Text = "GL Tech 2, build 0106";
+			this.label2.Text = "GL Tech 2, build 0806";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			// 
 			// Display
@@ -128,5 +129,10 @@ namespace GLTech2
                 Mouse.Disable();
             }
         }
-    }
+
+		private void pictureBox_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
