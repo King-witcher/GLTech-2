@@ -8,7 +8,8 @@ var annotated_dup =
         [ "GrayScale", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale.html", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale" ]
       ] ],
       [ "PrefabBehaviours", "namespace_g_l_tech2_1_1_prefab_behaviours.html", [
-        [ "DebugFps", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps" ],
+        [ "DebugFPS", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s" ],
+        [ "DebugPosition", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position" ],
         [ "FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement" ],
         [ "MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look" ],
         [ "Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move" ],
@@ -25,6 +26,7 @@ var annotated_dup =
       [ "Wall", "class_g_l_tech2_1_1_wall.html", "class_g_l_tech2_1_1_wall" ],
       [ "Renderer", "class_g_l_tech2_1_1_renderer.html", "class_g_l_tech2_1_1_renderer" ],
       [ "PixelBuffer", "struct_g_l_tech2_1_1_pixel_buffer.html", "struct_g_l_tech2_1_1_pixel_buffer" ],
+      [ "Program", "class_g_l_tech2_1_1_program.html", null ],
       [ "RGB", "struct_g_l_tech2_1_1_r_g_b.html", "struct_g_l_tech2_1_1_r_g_b" ],
       [ "Scene", "class_g_l_tech2_1_1_scene.html", "class_g_l_tech2_1_1_scene" ],
       [ "Debug", "class_g_l_tech2_1_1_debug.html", "class_g_l_tech2_1_1_debug" ],

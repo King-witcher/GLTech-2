@@ -11,6 +11,7 @@ var namespace_g_l_tech2 =
     [ "Wall", "class_g_l_tech2_1_1_wall.html", "class_g_l_tech2_1_1_wall" ],
     [ "Renderer", "class_g_l_tech2_1_1_renderer.html", "class_g_l_tech2_1_1_renderer" ],
     [ "PixelBuffer", "struct_g_l_tech2_1_1_pixel_buffer.html", "struct_g_l_tech2_1_1_pixel_buffer" ],
+    [ "Program", "class_g_l_tech2_1_1_program.html", null ],
     [ "RGB", "struct_g_l_tech2_1_1_r_g_b.html", "struct_g_l_tech2_1_1_r_g_b" ],
     [ "Scene", "class_g_l_tech2_1_1_scene.html", "class_g_l_tech2_1_1_scene" ],
     [ "Debug", "class_g_l_tech2_1_1_debug.html", "class_g_l_tech2_1_1_debug" ],

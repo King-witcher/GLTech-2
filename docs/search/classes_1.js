@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['debug_130',['Debug',['../class_g_l_tech2_1_1_debug.html',1,'GLTech2']]],
-  ['debugfps_131',['DebugFps',['../class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps.html',1,'GLTech2::PrefabBehaviours']]]
+  ['debug_133',['Debug',['../class_g_l_tech2_1_1_debug.html',1,'GLTech2']]],
+  ['debugfps_134',['DebugFPS',['../class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html',1,'GLTech2::PrefabBehaviours']]],
+  ['debugposition_135',['DebugPosition',['../class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html',1,'GLTech2::PrefabBehaviours']]]
 ];

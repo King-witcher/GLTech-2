@@ -1,7 +1,8 @@
 var hierarchy =
 [
     [ "GLTech2.Behaviour", "class_g_l_tech2_1_1_behaviour.html", [
-      [ "GLTech2.PrefabBehaviours.DebugFps", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps.html", null ],
+      [ "GLTech2.PrefabBehaviours.DebugFPS", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html", null ],
+      [ "GLTech2.PrefabBehaviours.DebugPosition", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html", null ],
       [ "GLTech2.PrefabBehaviours.FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", null ],
       [ "GLTech2.PrefabBehaviours.MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", null ],
       [ "GLTech2.PrefabBehaviours.Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", null ],
@@ -31,6 +32,7 @@ var hierarchy =
     ] ],
     [ "GLTech2.Keyboard", "class_g_l_tech2_1_1_keyboard.html", null ],
     [ "GLTech2.Mouse", "class_g_l_tech2_1_1_mouse.html", null ],
+    [ "GLTech2.Program", "class_g_l_tech2_1_1_program.html", null ],
     [ "GLTech2.Renderer", "class_g_l_tech2_1_1_renderer.html", null ],
     [ "GLTech2.RGB", "struct_g_l_tech2_1_1_r_g_b.html", null ],
     [ "GLTech2.Texture", "struct_g_l_tech2_1_1_texture.html", null ],

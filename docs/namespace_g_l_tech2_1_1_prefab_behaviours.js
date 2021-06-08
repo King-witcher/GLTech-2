@@ -1,6 +1,7 @@
 var namespace_g_l_tech2_1_1_prefab_behaviours =
 [
-    [ "DebugFps", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_fps" ],
+    [ "DebugFPS", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s" ],
+    [ "DebugPosition", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position" ],
     [ "FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement" ],
     [ "MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look" ],
     [ "Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move" ],
