@@ -160,6 +160,15 @@ namespace GLTech2
         public int WallCount => unmanaged->wall_count;
 
         /// <summary>
+        /// Gets and sets the background texture of the Scene.
+        /// </summary>
+        public Texture Background
+		{
+            get => unmanaged->background;
+            set => unmanaged->background = value;
+        }
+
+        /// <summary>
         ///     Add a new element and every child it has to the scene.
         /// </summary>
         /// <remarks>

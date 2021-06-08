@@ -86,7 +86,7 @@ namespace GLTech2
                 {
                     Observer pov = new Observer(Vector.Backward, 0);
 
-                    pov.AddBehaviour<DebugFps>();
+                    pov.AddBehaviour<DebugPosition>();
                     pov.AddBehaviour<NoclipController>();
                     var mouseLook = new MouseLook();
                     mouseLook.Sensitivity = 2.2f;
