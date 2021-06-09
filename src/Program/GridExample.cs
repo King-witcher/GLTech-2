@@ -35,12 +35,13 @@ namespace GLTech2
 
                 // Observer
                 {
-                    Observer pov = new Observer((6.5f, -5f), 270);
+                    Observer pov = new Observer(Vector.Origin, 0);
+                    //Observer pov = new Observer((6.5f, -5f), 270);
 
                     pov.AddBehaviour<DebugFPS>();
                     pov.AddBehaviour<DebugPosition>();
                     pov.AddBehaviour<DebugWallCount>();
-                    pov.AddBehaviour<NoclipController>();
+                    pov.AddBehaviour<FlatMovement>();
                     pov.AddBehaviour(new MouseLook(2.2f));
 
                     scene.AddElement(pov);

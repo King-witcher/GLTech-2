@@ -77,7 +77,7 @@ namespace GLTech2
 
             for (int column = 0; column < map.Width; column++)
             {
-                for (int line = 0; line < map.Width; line++)
+                for (int line = 0; line < map.Height; line++)
                 {
                     // Checks for transparency.
                     if (map[column, line] == (RGB)(0, 0, 0))
@@ -85,10 +85,10 @@ namespace GLTech2
 
                     Texture texture = getTexture(map[column, line]);
 
-                    Vector vert1 = (line, -column);
-                    Vector vert2 = (line, -column - 1);
-                    Vector vert3 = (line + 1, -column - 1);
-                    Vector vert4 = (line + 1, -column);
+                    Vector vert1 = (line, column);
+                    Vector vert2 = (line + 1, column);
+                    Vector vert3 = (line + 1, column + 1);
+                    Vector vert4 = (line, column + 1);
 
                     AddElement(new Wall(vert1, vert2, texture));
                     AddElement(new Wall(vert2, vert3, texture));
@@ -103,19 +103,89 @@ namespace GLTech2
         {
             for (int column = 0; column < map.Width; column++)
             {
-                for (int line = 0; line < map.Width; line++)
+                for (int line = 0; line < map.Height; line++)
                 {
                     if (textures.TryGetValue(map[column, line], out Texture texture))
                     {
-                        Vector vert1 = (line, -column);
-                        Vector vert2 = (line, -column - 1);
-                        Vector vert3 = (line + 1, -column - 1);
-                        Vector vert4 = (line + 1, -column);
+                        Vector vert1 = (line, column);
+                        Vector vert2 = (line + 1, column);
+                        Vector vert3 = (line + 1, column + 1);
+                        Vector vert4 = (line, column + 1);
 
                         AddElement(new Wall(vert1, vert2, texture));
                         AddElement(new Wall(vert2, vert3, texture));
                         AddElement(new Wall(vert3, vert4, texture));
                         AddElement(new Wall(vert4, vert1, texture));
+                    }
+                }
+            }
+        }
+
+        private void BuildFromPixelBuffer2(PixelBuffer map, IDictionary<RGB, Texture> textures)
+        {
+            // Paint borders
+            // Left
+            for (int line = 0; line < map.Height; line++)
+            {
+                if (textures.TryGetValue(map[0, line], out Texture texture))
+                {
+                    Vector start = (line, 0);
+                    Vector end = (line + 1, 0);
+                    AddElement(new Wall(start, end, texture));
+                }
+            }
+
+            // Right
+            for (int line = 0; line < map.Height; line++)
+            {
+                if (textures.TryGetValue(map[map.Width - 1, line], out Texture texture))
+                {
+                    Vector start = (line + 1, map.Width);
+                    Vector end = (line, map.Width);
+                    AddElement(new Wall(start, end, texture));
+                }
+            }
+
+            // Top
+            for (int column = 0; column < map.Width; column++)
+            {
+                if (textures.TryGetValue(map[column, 0], out Texture texture))
+                {
+                    Vector start = (0, column + 1);
+                    Vector end = (0, column);
+                    AddElement(new Wall(start, end, texture));
+                }
+            }
+
+            // Bottom
+            for (int column = 0; column < map.Width; column++)
+            {
+                if (textures.TryGetValue(map[column, map.Height - 1], out Texture texture))
+                {
+                    Vector start = (map.Height, column);
+                    Vector end = (map.Height, column + 1);
+                    AddElement(new Wall(start, end, texture));
+                }
+            }
+
+
+            bool[] upperIsFilled = new bool[map.Width];
+            for (int line = 0; line < map.Height - 1; line++)
+            {
+                bool leftIsFilled = false;
+                for (int col = 0; col < map.Width - 1; col++)
+                {
+                    bool currentIsFilled = textures.TryGetValue(map[col, line], out Texture texture);
+                    Texture tex = default;
+
+
+                    if (leftIsFilled ^ currentIsFilled)
+					{
+                        Vector start = (line + (leftIsFilled ? 1 : 0), col);
+                        Vector end = (line + (currentIsFilled ? 1 : 0), col);
+                        AddElement(new Wall(start, end, texture));
+
+                        leftIsFilled = currentIsFilled;
                     }
                 }
             }
