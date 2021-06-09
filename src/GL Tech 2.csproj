@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviours\Abstract Behaviour.cs" />
+    <Compile Include="Behaviours\DebugWallCount.cs" />
     <Compile Include="Behaviours\DebugPosition.cs" />
     <Compile Include="Elements\Observer.cs" />
     <Compile Include="Program\AnimatedExample.cs" />

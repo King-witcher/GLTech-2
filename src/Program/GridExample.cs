@@ -39,6 +39,7 @@ namespace GLTech2
 
                     pov.AddBehaviour<DebugFPS>();
                     pov.AddBehaviour<DebugPosition>();
+                    pov.AddBehaviour<DebugWallCount>();
                     pov.AddBehaviour<NoclipController>();
                     pov.AddBehaviour(new MouseLook(2.2f));
 
