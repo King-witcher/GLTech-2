@@ -12,18 +12,18 @@ namespace GLTech2
 		private const float TORAD = (float)Math.PI / 180f;
 		private const float TODEGREE = 180f / (float)Math.PI;
 
-		internal float x;
-		internal float y;
+		internal readonly float x;
+		internal readonly float y;
 
 		/// <summary>
 		///     Gets and sets the X cordinate of the vector.
 		/// </summary>
-		public float X { get => x; set => x = value; }
+		public float X { get => x; }
 
 		/// <summary>
 		///     Gets and sets the Y cordinate of the vector.
 		/// </summary>
-		public float Y { get => y; set => y = value; }
+		public float Y { get => y; }
 
 		/// <summary>
 		///     Creates a new instance of vector instance based on its cordinates.
