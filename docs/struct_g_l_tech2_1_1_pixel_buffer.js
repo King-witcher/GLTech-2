@@ -5,7 +5,7 @@ var struct_g_l_tech2_1_1_pixel_buffer =
     [ "Clone", "struct_g_l_tech2_1_1_pixel_buffer.html#a707200c62e2a3e43ba2fd5bf1ef82a02", null ],
     [ "Dispose", "struct_g_l_tech2_1_1_pixel_buffer.html#aa0da7bf121a380b3061a24d0542c0f77", null ],
     [ "Foreach", "struct_g_l_tech2_1_1_pixel_buffer.html#a96a34cd5a6577451738e2634948b129e", null ],
-    [ "operator Bitmap", "struct_g_l_tech2_1_1_pixel_buffer.html#a9212759acf392374ac2254a26590020c", null ],
+    [ "operator Bitmap", "struct_g_l_tech2_1_1_pixel_buffer.html#a0078f62d62589eb8edcc8d52d9b3ee08", null ],
     [ "operator PixelBuffer", "struct_g_l_tech2_1_1_pixel_buffer.html#a9bedec0e4a91113deed979351d27386a", null ],
     [ "Height", "struct_g_l_tech2_1_1_pixel_buffer.html#a5097d923184bf79ae10af7738cadcf0f", null ],
     [ "PixelFormat", "struct_g_l_tech2_1_1_pixel_buffer.html#ac989899b628d4a691d5187daf1b3fabc", null ],

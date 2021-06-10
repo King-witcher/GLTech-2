@@ -3,6 +3,7 @@ var hierarchy =
     [ "GLTech2.Behaviour", "class_g_l_tech2_1_1_behaviour.html", [
       [ "GLTech2.PrefabBehaviours.DebugFPS", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html", null ],
       [ "GLTech2.PrefabBehaviours.DebugPosition", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html", null ],
+      [ "GLTech2.PrefabBehaviours.DebugWallCount", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_wall_count.html", null ],
       [ "GLTech2.PrefabBehaviours.FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", null ],
       [ "GLTech2.PrefabBehaviours.MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", null ],
       [ "GLTech2.PrefabBehaviours.Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", null ],
@@ -19,6 +20,7 @@ var hierarchy =
       [ "GLTech2.Element", "class_g_l_tech2_1_1_element.html", [
         [ "GLTech2.Empty", "class_g_l_tech2_1_1_empty.html", null ],
         [ "GLTech2.Observer", "class_g_l_tech2_1_1_observer.html", null ],
+        [ "GLTech2.PrefabElements.GridMap", "class_g_l_tech2_1_1_prefab_elements_1_1_grid_map.html", null ],
         [ "GLTech2.PrefabElements.RegularPolygon", "class_g_l_tech2_1_1_prefab_elements_1_1_regular_polygon.html", null ],
         [ "GLTech2.Wall", "class_g_l_tech2_1_1_wall.html", null ]
       ] ],

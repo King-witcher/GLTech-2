@@ -120,8 +120,8 @@ static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator R
 <tr class="memitem:a1c1077ed7e9b1ed1caa2f6a0adef1dc7"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">operator RGB</a> ((byte r, byte g, byte b) components)</td></tr>
 <tr class="memdesc:a1c1077ed7e9b1ed1caa2f6a0adef1dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly casts a tuple into a <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a> struct.  <a href="struct_g_l_tech2_1_1_r_g_b.html#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">More...</a><br /></td></tr>
 <tr class="separator:a1c1077ed7e9b1ed1caa2f6a0adef1dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd9ae8c10e92ad52121a49f8926f181a"><td class="memItemLeft" align="right" valign="top"><a id="acd9ae8c10e92ad52121a49f8926f181a"></a>
-static&#160;</td><td class="memItemRight" valign="bottom"><b>operator RGB</b> (System.Drawing.Color color)</td></tr>
+<tr class="memitem:acd9ae8c10e92ad52121a49f8926f181a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_r_g_b.html#acd9ae8c10e92ad52121a49f8926f181a">operator RGB</a> (System.Drawing.Color color)</td></tr>
+<tr class="memdesc:acd9ae8c10e92ad52121a49f8926f181a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly converts a System.Drawing.Color instance to <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a>. <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a> does not store the A component.  <a href="struct_g_l_tech2_1_1_r_g_b.html#acd9ae8c10e92ad52121a49f8926f181a">More...</a><br /></td></tr>
 <tr class="separator:acd9ae8c10e92ad52121a49f8926f181a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18e283aefb49dd329b34262d1cff62ae"><td class="memItemLeft" align="right" valign="top"><a id="a18e283aefb49dd329b34262d1cff62ae"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator System.Drawing.Color</b> (<a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> rgb)</td></tr>
@@ -217,7 +217,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="a1c1077ed7e9b1ed1caa2f6a0adef1dc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">&#9670;&nbsp;</a></span>operator RGB()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1077ed7e9b1ed1caa2f6a0adef1dc7">&#9670;&nbsp;</a></span>operator RGB() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,6 +244,40 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">components</td><td>The r, g, b components.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acd9ae8c10e92ad52121a49f8926f181a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd9ae8c10e92ad52121a49f8926f181a">&#9670;&nbsp;</a></span>operator RGB() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static GLTech2.RGB.operator <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html">RGB</a> </td>
+          <td>(</td>
+          <td class="paramtype">System.Drawing.Color&#160;</td>
+          <td class="paramname"><em>color</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Explicitly converts a System.Drawing.Color instance to <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a>. <a class="el" href="struct_g_l_tech2_1_1_r_g_b.html" title="Represents a 32 bits RGB color.">RGB</a> does not store the A component. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td>The color to be converted</td></tr>
   </table>
   </dd>
 </dl>
