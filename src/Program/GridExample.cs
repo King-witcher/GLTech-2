@@ -31,7 +31,7 @@ namespace GLTech2
                         dict[(128, 0, 255)] = hexagons;
                     }
 
-                    GridMap gridMap = new GridMap(grid, dict);;
+                    GridMap gridMap = new GridMap(grid, dict);
                     scene.AddElement(gridMap);
                 }
 
