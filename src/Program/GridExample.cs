@@ -1,4 +1,5 @@
 ﻿using GLTech2.PrefabBehaviours;
+using GLTech2.PrefabElements;
 using System.Collections.Generic;
 
 namespace GLTech2
@@ -8,29 +9,30 @@ namespace GLTech2
     {
         static void GridExample()
         {
-            using (PixelBuffer pb = new PixelBuffer(Resources.MapGrid))
-            using (PixelBuffer white_buffer = new PixelBuffer(Resources.Bricks))
-            using (PixelBuffer green_buffer = new PixelBuffer(Resources.Wood))
-            using (PixelBuffer purple_buffer = new PixelBuffer(Resources.GrayHexagons))
+            using (PixelBuffer grid = new PixelBuffer(Resources.MapGrid))
+            using (PixelBuffer bricks_buffer = new PixelBuffer(Resources.Bricks))
+            using (PixelBuffer wood_buffer = new PixelBuffer(Resources.Wood))
+            using (PixelBuffer hexagons_buffer = new PixelBuffer(Resources.GrayHexagons))
             using (PixelBuffer background_buffer = new PixelBuffer(Resources.DoomSky))
             {
-                Scene scene;
-                {
+                Texture background = new Texture(background_buffer);
+                Scene scene = new Scene(background);
+
+				// GridMap
+				{
                     Dictionary<RGB, Texture> dict = new Dictionary<RGB, Texture>();
                     {
-                        Texture white = new Texture(white_buffer, 0, 2f);
-                        Texture green = new Texture(green_buffer, 0, 1f);
-                        Texture purple = new Texture(purple_buffer, 0, 2f);
+                        Texture bricks = new Texture(bricks_buffer, 0, 2f);
+                        Texture wood = new Texture(wood_buffer, 0, 1f);
+                        Texture hexagons = new Texture(hexagons_buffer, 0, 2f);
 
-                        dict[(255, 255, 255)] = white;
-                        dict[(0, 192, 0)] = green;
-                        dict[(128, 0, 255)] = purple;
+                        dict[(255, 255, 255)] = bricks;
+                        dict[(0, 192, 0)] = wood;
+                        dict[(128, 0, 255)] = hexagons;
                     }
 
-                    scene = new Scene(pb, dict, 5000);
-
-                    Texture background = new Texture(background_buffer);
-                    scene.Background = background;
+                    GridMap gridMap = new GridMap(grid, dict);;
+                    scene.AddElement(gridMap);
                 }
 
                 // Observer

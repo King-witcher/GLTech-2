@@ -145,6 +145,10 @@ namespace GLTech2
             return new RGB(components.r, components.g, components.b);
         }
 
+        /// <summary>
+        /// Explicitly converts a System.Drawing.Color instance to RGB. RGB does not store the A component.
+        /// </summary>
+        /// <param name="color">The color to be converted</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator RGB(System.Drawing.Color color)
         {

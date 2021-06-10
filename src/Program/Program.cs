@@ -6,6 +6,11 @@ namespace GLTech2
     {
         static void Main()
         {
+            Vector a = (0, 10);
+            a.Angle = 3f;
+
+			Console.WriteLine(a);
+
             Console.WriteLine("Press any key to start.");
             Console.ReadKey();
             Console.Write("\b \b");

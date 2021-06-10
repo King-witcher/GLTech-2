@@ -162,7 +162,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Explicitly casts from System.Drawing.Bitmap to Texture.
+        /// Explicitly casts from System.Drawing.Bitmap to Texture.
         /// </summary>
         /// <param name="bitmap">Bitmap to be cast</param>
         public static explicit operator PixelBuffer(Bitmap bitmap)
@@ -171,10 +171,10 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Explicitly casts from Texture to System.Drawing.Bitmap.
+        /// Implicitly casts from Texture to System.Drawing.Bitmap.
         /// </summary>
         /// <param name="texture"></param>
-        public static explicit operator Bitmap(PixelBuffer texture)
+        public static implicit operator Bitmap(PixelBuffer texture)
         {
             return new Bitmap(texture.Width, texture.Height, 4 * texture.Width, texture.PixelFormat, texture.Scan0);
         }

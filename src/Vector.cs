@@ -296,8 +296,8 @@ namespace GLTech2
 			if (delta == 0)
 				throw new DivideByZeroException("Divider vector cannot be <0, 0>.");
 
-			float x = (dividend.y * divider.y + dividend.x * divider.x) / delta;
-			float y = (dividend.x * divider.y - dividend.y * divider.x) / delta;
+			float x = (dividend.x * divider.y - dividend.y * divider.x) / delta;
+			float y = (dividend.y * divider.y + dividend.x * divider.x) / delta;
 			return new Vector(x, y);
 		}
 
