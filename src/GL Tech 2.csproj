@@ -152,7 +152,10 @@
     <None Include="Resources\d_e1m1.wav" />
     <None Include="Resources\GrayHexagons.png" />
     <None Include="Resources\Logo.png" />
+    <None Include="Resources\DoomMountains.png" />
     <Content Include="Resources\MapGrid.bmp" />
+    <None Include="Resources\MountainsAndSky.png" />
+    <None Include="Resources\Sky4 - 5.png" />
     <Content Include="Resources\Test.bmp" />
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal unsafe uint MapPixel(float hratio, float vratio)      //Possibly optimizable
+        internal unsafe uint MapPixel(float hratio, float vratio)
         {
             // Critical performance impact
             int x = (int)(buffer.width_float * (hrepeat * hratio + hoffset)) % buffer.width;

@@ -37,7 +37,7 @@ namespace GLTech2
 
                 // Observer
                 {
-                    Observer pov = new Observer(Vector.Origin, 0);
+                    Observer pov = new Observer((5, 5), 180);
                     //Observer pov = new Observer((6.5f, -5f), 270);
 
                     pov.AddBehaviour<DebugFPS>();

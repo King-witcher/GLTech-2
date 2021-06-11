@@ -16,7 +16,6 @@ namespace GLTech2
             Console.Write("\b \b");
 
             GridExample();
-            AnimatedExample();
 
             Console.WriteLine("Press any key to close.");
             Console.ReadKey();
