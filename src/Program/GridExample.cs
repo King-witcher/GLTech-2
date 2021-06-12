@@ -22,9 +22,15 @@ namespace GLTech2
 				{
                     Dictionary<RGB, Texture> dict = new Dictionary<RGB, Texture>();
                     {
-                        Texture bricks = new Texture(bricks_buffer, 0, 2f);
-                        Texture wood = new Texture(wood_buffer, 0, 1f);
-                        Texture hexagons = new Texture(hexagons_buffer, 0, 2f);
+                        Texture bricks = new Texture(
+                            buffer: bricks_buffer,
+                            hrepeat: 2f);
+                        Texture wood = new Texture(
+                            buffer: wood_buffer,
+                            hrepeat: 1f);
+                        Texture hexagons = new Texture(
+                            buffer: hexagons_buffer,
+                            hrepeat: 2f);
 
                         dict[(255, 255, 255)] = bricks;
                         dict[(0, 192, 0)] = wood;
@@ -38,7 +44,6 @@ namespace GLTech2
                 // Observer
                 {
                     Observer pov = new Observer((5, 5), 180);
-                    //Observer pov = new Observer((6.5f, -5f), 270);
 
                     pov.AddBehaviour<DebugFPS>();
                     pov.AddBehaviour<DebugPosition>();
