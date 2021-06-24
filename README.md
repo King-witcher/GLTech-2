@@ -10,4 +10,4 @@ For "full" documentation, see https://king-witcher.github.io/GLTech-2/
 
 ## Important note
 
-GL Tech 2 was deprecated June 24th of 2021, when it was migrated to .NET 5.0, starting to be called GL Tech 2.1. Please, see github.com/King-witcher/GL-Tech-2.1.
+GL Tech 2 was deprecated June 24th of 2021, when it was migrated to .NET 5.0, starting to be called GL Tech 2.1. Please, see https://github.com/King-witcher/GL-Tech-2.1.
